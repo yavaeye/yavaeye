@@ -6,8 +6,8 @@ class User
   field :openid
   field :nick
   field :email
-  field :subscribes type: Hash, default: {}
-  field :unfollower_count type: Integer, default: 0
+  field :subscribes, type: Hash, default: {}
+  field :unfollower_count, type: Integer, default: 0
 
   has_many :messages
   has_many :achievements

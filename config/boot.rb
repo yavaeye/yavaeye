@@ -13,6 +13,10 @@ require "active_support/core_ext"
 require 'mongoid'
 require 'mongoid_token'
 
+Dir.glob "./{lib,app/models,app/controllers}/*.rb" do |f|
+  require f
+end
+
 configure :development do |c|
   require "sinatra/reloader"
   c.also_reload "./lib/*.rb"
@@ -29,3 +33,4 @@ configure :development do |c|
 end
 
 set :sessions, true
+
