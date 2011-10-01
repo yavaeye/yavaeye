@@ -14,24 +14,19 @@ require 'active_support/core_ext'
 require 'mongoid'
 require 'mongoid_token'
 
-Dir.glob "./{lib,app/models,app/controllers,app/helpers}/*.rb" do |f|
-  require f
-end
-
-configure :development do |c|
+configure :development do
   require "sinatra/reloader"
-  c.also_reload "./lib/*.rb"
-  c.also_reload "./app/models/*.rb"
-  c.also_reload "./app/controllers/*.rb"
-  c.also_reload "./app/helpers/*.rb"
-
-  require 'compass'
+  require "compass"
   Compass.configuration do |c|
     c.project_path = '.'
     c.sass_dir = 'sass'
   end
 
   set :sass, Compass.sass_engine_options
+end
+
+Dir.glob "./{lib,app/models,app/helpers,app/controllers}/*.rb" do |f|
+  require f
 end
 
 set :sessions, true
