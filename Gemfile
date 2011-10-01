@@ -2,7 +2,8 @@ source :rubygems
 
 gem 'rack-flash'
 gem 'slim'
-gem 'sinatra'
+gem 'sinatra', '~> 1.3.0'
+gem 'sinatra-contrib', '~> 1.3.0'
 gem 'bcrypt-ruby'
 gem 'activesupport'
 gem 'bson_ext'
@@ -23,3 +24,4 @@ group :development, :test do
   gem 'factory_girl'
   gem 'capistrano'
 end
+
