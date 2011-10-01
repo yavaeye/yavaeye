@@ -16,7 +16,6 @@ end
 
 group :development, :test do
   gem 'rack-coffee', require: 'rack/coffee'
-  gem 'sinatra-reloader'
   gem 'coffee-script'
   gem 'compass'
   gem 'socksify', git: "git://github.com/luikore/socksify-ruby.git"
