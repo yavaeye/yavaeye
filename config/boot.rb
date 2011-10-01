@@ -25,9 +25,9 @@ configure :development do
   set :sass, Compass.sass_engine_options
 end
 
+set :sessions, true
+
 Dir.glob "./{lib,app/models,app/helpers,app/controllers}/*.rb" do |f|
   require f
 end
-
-set :sessions, true
 
