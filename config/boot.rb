@@ -6,10 +6,11 @@ require "bundler"
 Bundler.setup (ENV['RACK_ENV'] || :development).to_sym
 Bundler.require
 require 'sinatra'
+require 'sinatra/contrib'
 require 'rack-flash'
 require 'slim'
-require "bcrypt"
-require "active_support/core_ext"
+require 'bcrypt'
+require 'active_support/core_ext'
 require 'mongoid'
 require 'mongoid_token'
 
