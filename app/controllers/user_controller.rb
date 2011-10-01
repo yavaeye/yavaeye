@@ -1,12 +1,12 @@
-get '/u/login' do
+get '/user/login' do
 
 end
 
-get '/u/logout' do
+get '/user/logout' do
 
 end
 
-get '/u/profile' do
+get '/user/profile' do
 
 end
 

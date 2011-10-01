@@ -1,16 +1,16 @@
-get '/m' do
+get '/message' do
 
 end
 
-get '/m/read' do
+get '/message/read' do
 
 end
 
-post '/m/read' do
+post '/message/read' do
 
 end
 
-delete '/m/:id' do
+delete '/message/:id' do
 
 end
 

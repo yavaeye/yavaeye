@@ -13,7 +13,7 @@ require "active_support/core_ext"
 require 'mongoid'
 require 'mongoid_token'
 
-Dir.glob "./{lib,app/models,app/controllers}/*.rb" do |f|
+Dir.glob "./{lib,app/models,app/controllers,app/helpers}/*.rb" do |f|
   require f
 end
 
@@ -22,6 +22,7 @@ configure :development do |c|
   c.also_reload "./lib/*.rb"
   c.also_reload "./app/models/*.rb"
   c.also_reload "./app/controllers/*.rb"
+  c.also_reload "./app/helpers/*.rb"
 
   require 'compass'
   Compass.configuration do |c|

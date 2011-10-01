@@ -1,12 +1,12 @@
-get '/c/:post_id' do |post_id|
+get '/comment/:post_id' do |post_id|
 
 end
 
-post '/c' do
+post '/comment' do
 
 end
 
-delete '/c/:id' do |id|
+delete '/comment/:id' do |id|
 
 end
 

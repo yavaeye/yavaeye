@@ -2,27 +2,27 @@ get '/' do
 
 end
 
-get '/p/:token' do |token|
+get '/post/:token' do |token|
 
 end
 
-get '/p/new' do
+get '/post/new' do
 
 end
 
-post '/p' do
+post '/post' do
 
 end
 
-get '/p/:token/edit' do |token|
+get '/post/:token/edit' do |token|
 
 end
 
-put '/p/:token' do |token|
+put '/post/:token' do |token|
 
 end
 
-delete '/p/:token' do |token|
+delete '/post/:token' do |token|
 
 end
 

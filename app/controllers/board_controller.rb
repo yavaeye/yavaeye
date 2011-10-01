@@ -1,36 +1,36 @@
-get '/y/:slug' do |slug|
+get '/board/:slug' do |slug|
 
 end
 
-get '/y' do
+get '/board' do
 
 end
 
-get '/y/new' do
+get '/board/new' do
 
 end
 
-post '/y' do
+post '/board' do
 
 end
 
-get '/y/:slug/edit' do
+get '/board/:slug/edit' do
 
 end
 
-put '/y' do
+put '/board' do
 
 end
 
-delete '/y' do
+delete '/board' do
 
 end
 
-post '/y/subscribe' do
+post '/board/subscribe' do
 
 end
 
-delete '/y/unsubscribe' do
+delete '/board/unsubscribe' do
 
 end
 
