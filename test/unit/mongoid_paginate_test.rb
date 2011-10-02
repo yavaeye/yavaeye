@@ -14,7 +14,7 @@ class MongoidPaginateTest < Test::Unit::TestCase
 
   def setup
     1.upto(20).each do |i|
-      Person.create(rank: i)
+      Person.create!(rank: i)
     end
   end
 
