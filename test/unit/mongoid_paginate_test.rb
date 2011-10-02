@@ -22,6 +22,7 @@ class MongoidPaginateTest < Test::Unit::TestCase
     token = Person.last.token
     @people = Person.paginate_by_token(token)
     assert_equal 15, @people.to_a.size
+    assert_equal false, @people.to_a.any? { |person| person.token == token }
   end
 
   def test_paginate
