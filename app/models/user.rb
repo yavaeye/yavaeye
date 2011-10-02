@@ -6,7 +6,7 @@ class User
   field :openid
   field :nick
   field :email
-  field :subscribes, type: Hash, default: {}
+  field :unsubscribes, type: Hash, default: {}
   field :unfollower_ids, type: Array, default: []
   field :unfollowing_ids, type: Array, default: []
 
@@ -37,6 +37,17 @@ class User
     User.where(:_id.in => unfollower_ids)
   end
 
+  def follow id
+    return if id == _id
+    user = User.where(_id: id).first
+    if user
+      user.unfollower_ids.delete _id
+      user.save
+      unfollowing_ids.delete id
+      save
+    end
+  end
+
   def unfollow id
     return if id == _id
     user = User.where(_id: id).first
@@ -44,6 +55,22 @@ class User
       user.unfollower_ids << _id
       user.save
       unfollowing_ids << id
+      save
+    end
+  end
+
+  def subscribe slug
+    board = Board.where(slug: slug).first
+    if board
+      unsubscribes.delete board.slug
+      save
+    end
+  end
+
+  def unsubscribe slug
+    board = Board.where(slug: slug).first
+    if board
+      unsubscribes[board.slug] = board.name
       save
     end
   end
