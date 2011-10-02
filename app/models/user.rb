@@ -7,7 +7,8 @@ class User
   field :nick
   field :email
   field :subscribes, type: Hash, default: {}
-  field :unfollower_count, type: Integer, default: 0
+  field :unfollower_ids, type: Array, default: []
+  field :unfollowing_ids, type: Array, default: []
 
   has_many :messages
   has_many :achievements
@@ -28,5 +29,23 @@ class User
     embedded_in :user, inverse_of: :profile
   end
 
+  def unfollowings
+    User.where(:_id.in => unfollowing_ids)
+  end
+
+  def unfollowers
+    User.where(:_id.in => unfollower_ids)
+  end
+
+  def unfollow id
+    return if id == _id
+    user = User.where(_id: id).first
+    if user
+      user.unfollower_ids << _id
+      user.save
+      unfollowing_ids << id
+      save
+    end
+  end
 end
 
