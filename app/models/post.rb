@@ -1,6 +1,7 @@
 class Post
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Paginate
   include Mongoid::Paranoia
   include Mongoid::Token
 
@@ -21,5 +22,10 @@ class Post
   validates_presence_of :title
   validates_length_of :title, maximum: 128
   validates_length_of :content, maximum: 10240
+
+  before_save do
+    self.segments = Mseg.segment title
+  end
+
 end
 
