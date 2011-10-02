@@ -1,3 +1,5 @@
 .DS_Store
-.static
+.sass-cache
 db/
+public/yavaeye.js
+public/yavaeye.css

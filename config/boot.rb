@@ -17,13 +17,6 @@ require 'rmmseg'
 
 configure :development do
   require "sinatra/reloader"
-  require "compass"
-  Compass.configuration do |c|
-    c.project_path = '.'
-    c.sass_dir = 'sass'
-  end
-
-  set :sass, Compass.sass_engine_options
 end
 
 set :sessions, true

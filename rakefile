@@ -17,3 +17,8 @@ task "test" do
   end
 end
 
+desc "compile css and js"
+task :asset do
+  require "./script/asset"
+  Asset.new(true).compile
+end
