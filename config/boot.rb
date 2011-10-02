@@ -18,6 +18,7 @@ require 'rmmseg'
 
 set :sessions, true
 use Rack::Session::Cookie
+require_relative 'database'
 
 configure :development do
   require "./script/asset"
