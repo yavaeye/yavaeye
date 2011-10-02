@@ -13,6 +13,7 @@ require 'bcrypt'
 require 'active_support/core_ext'
 require 'mongoid'
 require 'mongoid_token'
+require 'rmmseg'
 
 configure :development do
   require "sinatra/reloader"

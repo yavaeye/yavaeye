@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/luikore/rmmseg-cpp.git
+  revision: 66e45768256271f188f7753d4132fe2ab503d5e0
+  specs:
+    rmmseg-cpp (0.2.7)
+
+GIT
   remote: git://github.com/luikore/socksify-ruby.git
   revision: bdd99ff2227d4f90f28b34b770b068ccf2b90dfe
   specs:
@@ -108,6 +114,7 @@ DEPENDENCIES
   rack-coffee
   rack-flash
   rack-test
+  rmmseg-cpp!
   sinatra (~> 1.3.0)
   sinatra-contrib (~> 1.3.0)
   slim

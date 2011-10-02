@@ -9,6 +9,7 @@ gem 'activesupport'
 gem 'bson_ext'
 gem 'mongoid'
 gem 'mongoid_token'
+gem 'rmmseg-cpp', git: "git://github.com/luikore/rmmseg-cpp.git"
 
 group :production do
   gem 'unicorn'
