@@ -24,7 +24,7 @@ class Post
   validates_length_of :content, maximum: 10240
 
   before_save do
-    self.segments = Mseg.segment title
+    self.segments = Seg.segment title
   end
 
 end
