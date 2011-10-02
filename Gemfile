@@ -1,8 +1,8 @@
 source :rubygems
 
-gem 'rack-flash'
 gem 'slim'
 gem 'sinatra', '~> 1.3.0'
+gem 'sinatra-flash'
 gem 'sinatra-contrib', '~> 1.3.0'
 gem 'bcrypt-ruby'
 gem 'activesupport'

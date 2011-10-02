@@ -29,6 +29,7 @@ class Asset < Struct.new(:compress, :coffee_dir, :sass_dir, :public_dir)
     coffee_files = Dir.glob coffee_dir + '/**/*.coffee'
     out_file = "#{public_dir}/yavaeye.js"
     return if uptodate?(out_file, js_files + coffee_files)
+    puts "compiling yavaeye.js"
 
     js = ''
     js_files.each do |f|
@@ -49,6 +50,7 @@ class Asset < Struct.new(:compress, :coffee_dir, :sass_dir, :public_dir)
     in_file = "#{sass_dir}/yavaeye.sass"
     out_file = "#{public_dir}/yavaeye.css"
     return if uptodate?(out_file, [in_file])
+    puts "compiling yavaeye.css"
 
     system %Q[sass --compass #{'--style compressed' if compress} < "#{in_file}" > "#{out_file}"]
   end
