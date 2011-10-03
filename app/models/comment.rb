@@ -13,13 +13,20 @@ class Comment
 
   after_create do
     return if user.id == post.user.id
-    mention = Mention.where(event: post.id).first
+    mention "post"
+    mention "reply"
+  end
+
+  private
+
+  def mention type
+    mention = Mention.where(event: post.id, type: type).first
     if mention
       (mention.triggers << user.nick).uniq!
       mention.read = false
       mention.save
     else
-      Mention.new(type: "post", triggers: [user.nick], event: post.id, text: "reply your post").deliver
+      Mention.new(type: type, triggers: [user.nick], event: post.id, text: "post").deliver
     end
   end
 end

@@ -34,18 +34,22 @@ class Mention < Message
   def deliver
     case type
     when 'post'
-      post = Post.where(_id: event).first
-      return unless post
+      post = Post.find(event)
       post.user.messages << self
       post.user.save
-    when 'unfollow' then
-      user = User.where(_id: event).first
-      return unless user
+    when 'reply'
+      post = Post.find(event)
+      post.comments.each do |c|
+        next if c.user.nick == triggers.first
+        c.user.messages << self
+        c.user.save
+      end
+    when 'unfollow'
+      user = User.find(event)
       user.messages << self
       user.save
-    when 'unsubscribe' then
-      board = Board.where(_id: event).first
-      return unless board
+    when 'unsubscribe'
+      board = Board.find(event)
       board.user.messages << self
       board.user.save
     else
@@ -59,8 +63,7 @@ class Notification < Message
 
   def deliver
     case type
-    when 'founder'
-      text = %Q{}
+    when 'founder' then
     when 'achievement' then
     else
     end
