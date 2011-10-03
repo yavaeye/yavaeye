@@ -1,0 +1,74 @@
+@import "compass/typography"
+@import "compass/utilities"
+
+$mono: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace
+$sans: Helvetica, Arial, sans-serif
+$serif: Georgia, Times, Times New Roman, serif
+$blue: #0181EB
+
+body
+  line-height: 1.5em
+  font-family: $sans
+  font-size: 14px
+
+table
+  @include inner-table-borders(1px, #eee)
+  @include outer-table-borders(1px, #eee)
+th, td
+  padding: 2px 4px
+th
+  background: #eee
+  font-weight: bold
+
+a
+  +link-colors($blue, lighten($blue, 15), $blue, $blue)
+  +hover-link
+
+h1, h2
+  font-size: 26px
+h3, h4
+  font-size: 22px
+h5, h6
+  font-size: 18px
+
+input[type=text]
+  padding: .3em .5em
+  @extend .sans
+  line-height: 1.1em
+  +border-radius(4px)
+  +background-clip(padding-box)
+  border: 1px solid #aaa
+  color: #999
+  &:focus
+    color: #444
+    border-color: #80b1df
+    background-color: #fff
+    outline: none
+
+label
+  font-weight: bold
+
+button, .button
+  +link-colors(#fff, #fff, #fff, #fff)
+  font-family: $sans
+  font-size: 14px
+  display: inline-block
+  line-height: 1.5em
+  padding: 2px 5px
+  margin: 2px
+  margin-left: 0
+  border: 0
+  color: #fff
+  background: #000
+  +background-clip(padding-box)
+  +border-radius(4px)
+  cursor: pointer
+  &:hover
+    text-decoration: none
+    background: #444
+
+.round-corner
+  +border-radius(4px)
+
+.error
+  color: red

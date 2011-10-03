@@ -47,12 +47,14 @@ class Asset < Struct.new(:compress, :coffee_dir, :sass_dir, :public_dir)
   end
 
   def compile_css
-    in_file = "#{sass_dir}/yavaeye.sass"
+    in_files = Dir.glob sass_dir + '/**/*.sass'
     out_file = "#{public_dir}/yavaeye.css"
-    return if uptodate?(out_file, [in_file])
-    puts "compiling yavaeye.css"
+    return if uptodate?(out_file, in_files)
+    puts "compress yavaeye.css"
 
-    system %Q[sass --compass #{'--style compressed' if compress} < "#{in_file}" > "#{out_file}"]
+    in_file = "#{sass_dir}/yavaeye.sass"
+    env_opt = compress ? '-t compressed' : '-l'
+    system %Q[sass --compass #{env_opt} < "#{in_file}" > "#{out_file}"]
   end
 end
 

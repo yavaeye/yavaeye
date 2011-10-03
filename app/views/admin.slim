@@ -1,11 +1,35 @@
-! doctype html
+doctype html
 html
   head
     meta http-equiv="content-type" content="text/html; charset=utf-8"
-    title = "鸭眼网-最糟糕的开发社区"
-    meta name="keywords" content="最糟糕的开发社区"
+    title = "Admin"
     script type="text/javascript" src="/yavaeye.js"
-    link rel="text/stylesheet" src="/yavaeye.css"
+    link rel="stylesheet" type="text/css" href="/yavaeye.css"
 
   body
+    .notice = flash[:notice]
+    .error = flash[:error]
+    nav.primary
+      - @models.each do |model|
+        a href="/admin/#{model.name.downcase}" class="#{@model == model ? 'active' : ''}"
+          = model.name
+          |  (
+          = model.count
+          ' )
     == yield
+
+    css:
+      body { padding:10px; }
+      h1, h2 { margin:12px 0; }
+      nav a { margin:3px; margin-left:0; display:inline-block; padding:1px 6px; }
+      nav.primary a { background:#eef; }
+      nav.secondary a { background:#eee; }
+      nav a:hover, nav a.active { color:#fff; background:#000; text-decoration:none; }
+      form label { display:block; width:100%; margin-bottom:8px; }
+      form input[type=text], form textarea { width:100%; }
+      .content { margin-top:8px; }
+    
+    javascript:
+      $(function(){
+        $('nav a').addClass('round-corner');
+      });

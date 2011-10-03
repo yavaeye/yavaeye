@@ -1,0 +1,13 @@
+- @fields.each do |(name, type, full_name, id)|
+  label
+    = name
+    .error = @object.errors[name].join ','
+    - if type == 'textarea'
+      textarea name=full_name id=id
+    - else
+      input type=type name=full_name id=id value=@object.send(name)
+
+div.actions
+  input.button type="submit" value="save"
+  '
+  button onclick="window.location='/admin/#{params[:model]}';return false" cancel

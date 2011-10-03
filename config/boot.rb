@@ -16,7 +16,9 @@ require 'mongoid'
 require 'mongoid_token'
 require 'rmmseg'
 
+set :root, File.expand_path('.')
 set :sessions, true
+set :views, settings.root + '/app/views'
 use Rack::Session::Cookie
 require_relative 'database'
 

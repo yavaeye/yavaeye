@@ -1,0 +1,24 @@
+- @prefix = "/admin/#{params[:model]}"
+nav.secondary
+  a.active href=@prefix list
+  a href="#@prefix/new" new
+
+.content
+  table
+    tr
+      th id
+      - @fields.each do |(name)|
+        th = name
+      th create
+      th update
+      th
+    - @objects.each do |object|
+      tr
+        td = object.id
+        - @fields.each do |(name)|
+          td = object.send name
+        td == object.created_at.strftime("%Y-%m-%d %H:%M") rescue nil
+        td == object.updated_at.strftime("%Y-%m-%d %H:%M") rescue nil
+        td
+          a.button href="#@prefix/#{object.id}/edit" edit
+          a.button href="#@prefix/#{object.id}" data-method="delete" delete

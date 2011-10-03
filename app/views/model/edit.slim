@@ -1,0 +1,7 @@
+nav.secondary
+  a href="./.." list
+  a href="./../new" new
+  a.active href="edit" edit
+.content
+  form action="#{@object.id}" method="put"
+    == slim :"model/_form"
