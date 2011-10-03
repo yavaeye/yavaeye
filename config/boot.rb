@@ -14,7 +14,6 @@ require 'bcrypt'
 require 'active_support/core_ext'
 require 'mongoid'
 require 'mongoid_token'
-require 'rmmseg'
 
 set :root, File.expand_path('.')
 set :sessions, true
