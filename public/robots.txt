@@ -4,4 +4,6 @@ Disallow: /javascripts/
 Disallow: /stylesheets/
 Disallow: /user/
 Disallow: /admin/
+Disallow: /admin-login
+Disallow: /admin-logout
 
