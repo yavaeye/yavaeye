@@ -52,6 +52,7 @@ end
 
 get "/admin-logout" do
   session.delete 'admin'
+  flash[:notice] = 'Logged out'
   redirect "/admin-login"
 end
 
