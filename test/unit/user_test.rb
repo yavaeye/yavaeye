@@ -26,6 +26,8 @@ class UserTest < Test::Unit::TestCase
     User.first.unfollow(User.last._id)
     assert_equal 1, User.first.unfollowing_ids.size
     assert_equal 1, User.last.unfollower_ids.size
+    assert_equal 1, User.last.messages.size
+    assert_equal User.first.nick, User.last.messages.to_a.first.triggers.first
   end
 
   def test_follow
@@ -53,6 +55,8 @@ class UserTest < Test::Unit::TestCase
   def test_unsubscribe
     Board.all.each {|b| User.first.unsubscribe(b.slug) }
     assert_equal 2, User.first.unsubscribes.size
+    assert_equal 2, User.first.messages.size
+    assert_equal User.first.nick, User.first.messages.to_a.first.triggers.first
   end
 
   def test_subscribe

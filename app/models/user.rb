@@ -59,6 +59,7 @@ class User
       user.save
       unfollowing_ids << id
       save
+      Mention.new(type: "unfollow", triggers: [nick], event: user.id, text: "unfollow u").deliver
     end
   end
 
@@ -75,6 +76,7 @@ class User
     if board
       unsubscribes[board.slug] = board.name
       save
+      Mention.new(type: "unsubscribe", triggers: [nick], event: board.id, text: "unfollow your board").deliver
     end
   end
 

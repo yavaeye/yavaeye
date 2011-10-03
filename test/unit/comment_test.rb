@@ -24,5 +24,10 @@ class CommentTest < Test::Unit::TestCase
     assert_equal 2, User.first.messages.first.triggers.size
   end
 
+  def test_reply_by_himself
+    Comment.create!(content: "comment", user: User.first, post: Post.last)
+    assert_equal 0, User.first.messages.to_a.size
+  end
+
 end
 

@@ -33,23 +33,31 @@ class Mention < Message
 
   def deliver
     case type
-    when 'at' then
-    when 'reply'
+    when 'post'
       post = Post.where(_id: event).first
-      if post
-        post.user.messages << self
-        post.user.save
-      end
+      return unless post
+      post.user.messages << self
+      post.user.save
     when 'unfollow' then
+      user = User.where(_id: event).first
+      return unless user
+      user.messages << self
+      user.save
     when 'unsubscribe' then
+      board = Board.where(_id: event).first
+      return unless board
+      board.user.messages << self
+      board.user.save
     else
     end
   end
 end
 
 class Notification < Message
+  field :type
   field :event
-  def deliver type
+
+  def deliver
     case type
     when 'founder'
       text = %Q{}

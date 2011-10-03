@@ -12,13 +12,14 @@ class Comment
   validates_length_of :content, maximum: 10240
 
   after_create do
+    return if user.id == post.user.id
     mention = Mention.where(event: post.id).first
     if mention
       (mention.triggers << user.nick).uniq!
       mention.read = false
       mention.save
     else
-      Mention.new(type: "reply", triggers: [user.nick], event: post.id, text: "reply your post").deliver
+      Mention.new(type: "post", triggers: [user.nick], event: post.id, text: "reply your post").deliver
     end
   end
 end
