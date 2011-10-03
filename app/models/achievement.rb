@@ -3,8 +3,7 @@ class Achievement
   include Mongoid::Timestamps
   include Mongoid::Paranoia
 
-  field :name
-  field :winners_count, type: Integer, default: 0
+  field :badge
 
   belongs_to :user
 

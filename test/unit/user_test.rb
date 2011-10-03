@@ -5,9 +5,21 @@ class UserTest < Test::Unit::TestCase
     3.times.each do |i|
       User.create!(openid: "#{i}@gmail.com", nick: "#{i}_i")
     end
-    2.times.each do |i|
-      Board.create!(slug: "#{i}", name: "#{i}_i", founder: User.first.nick, description: "#{1}")
-    end
+    User.first.boards.create!(slug: "start", name: "stop", description: "nothing")
+    User.first.boards.create!(slug: "stop", name: "start", description: "nothing")
+  end
+
+  def test_deliver
+    User.first.deliver SentMessage.new(to: User.last.nick, text: "hello text")
+    assert_equal 1, User.first.messages.size
+    assert_equal 1, User.last.messages.size
+  end
+
+  def test_receive
+    User.first.deliver SentMessage.new(to: User.last.nick, text: "hello text")
+    User.last.receive User.last.messages.first
+    assert_equal 1, User.last.messages.size
+    assert_equal true, User.last.messages.first.read
   end
 
   def test_unfollow

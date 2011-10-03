@@ -11,6 +11,7 @@ class User
   field :unfollowing_ids, type: Array, default: []
 
   has_many :posts
+  has_many :boards
   has_many :comments
   has_many :messages
   has_many :achievements
@@ -75,6 +76,22 @@ class User
       unsubscribes[board.slug] = board.name
       save
     end
+  end
+
+  def deliver message
+    receiver_nick = message.to
+    receiver = User.where(nick: receiver_nick).first
+    if(User.where(nick: receiver_nick).first)
+      messages << message
+      save
+      receiver.messages << ReceivedMessage.new(from: nick, text: message.to)
+      receiver.save
+    end
+  end
+
+  def receive message
+    message.read = true
+    message.save
   end
 end
 

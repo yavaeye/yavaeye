@@ -8,11 +8,7 @@ class Post
   field :title
   field :link
   field :content
-  field :user_nick
-  field :board_slug
-  field :board_name
   field :segments, type: Array, default: []
-  field :comment_count, type: Integer, default: 0
 
   token :length => 5, :contains => :alphanumeric
 

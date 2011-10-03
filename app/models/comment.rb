@@ -3,7 +3,6 @@ class Comment
   include Mongoid::Timestamps
   include Mongoid::Paranoia
 
-  field :user_nick
   field :content
 
   belongs_to :user
@@ -11,5 +10,16 @@ class Comment
 
   validates_presence_of :content
   validates_length_of :content, maximum: 10240
+
+  after_create do
+    mention = Mention.where(event: post.id).first
+    if mention
+      (mention.triggers << user.nick).uniq!
+      mention.read = false
+      mention.save
+    else
+      Mention.new(type: "reply", triggers: [user.nick], event: post.id, text: "reply your post").deliver
+    end
+  end
 end
 

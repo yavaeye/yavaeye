@@ -5,18 +5,24 @@ class Board
 
   field :slug
   field :name
-  field :founder
   field :description
-  field :unsubscribe_count, type: Integer, default: 0
   field :active, type: Boolean, default: false
 
   has_many :posts
+  belongs_to :user
 
   validates_uniqueness_of :slug
-  validates_presence_of :slug, :name, :founder, :description
+  validates_presence_of :slug, :name, :description
   validates_length_of :slug, maximum: 16
   validates_length_of :name, maximum: 16
   validates_length_of :description, maximum: 1024
 
+  after_create do
+    #TODO notification
+  end
+
+  after_update do
+    #TODO notification
+  end
 end
 
