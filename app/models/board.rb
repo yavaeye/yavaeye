@@ -10,6 +10,8 @@ class Board
   field :unsubscribe_count, type: Integer, default: 0
   field :active, type: Boolean, default: false
 
+  has_many :posts
+
   validates_uniqueness_of :slug
   validates_presence_of :slug, :name, :founder, :description
   validates_length_of :slug, maximum: 16

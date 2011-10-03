@@ -3,10 +3,10 @@ class Comment
   include Mongoid::Timestamps
   include Mongoid::Paranoia
 
-  field :user_id
   field :user_nick
   field :content
 
+  belongs_to :user
   belongs_to :post
 
   validates_presence_of :content

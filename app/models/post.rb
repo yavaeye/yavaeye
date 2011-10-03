@@ -8,7 +8,6 @@ class Post
   field :title
   field :link
   field :content
-  field :user_id
   field :user_nick
   field :board_slug
   field :board_name
@@ -17,6 +16,8 @@ class Post
 
   token :length => 5, :contains => :alphanumeric
 
+  belongs_to :user
+  belongs_to :board
   has_many :comments
 
   validates_presence_of :title

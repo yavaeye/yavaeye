@@ -10,6 +10,8 @@ class User
   field :unfollower_ids, type: Array, default: []
   field :unfollowing_ids, type: Array, default: []
 
+  has_many :posts
+  has_many :comments
   has_many :messages
   has_many :achievements
 
