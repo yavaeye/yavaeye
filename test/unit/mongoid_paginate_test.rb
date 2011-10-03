@@ -18,23 +18,39 @@ class MongoidPaginateTest < Test::Unit::TestCase
     end
   end
 
-  def test_paginate_with_default_order
-    token = Person.last.token
-    @people = Person.paginate_by_token(token)
-    assert_equal 15, @people.to_a.size
-    assert_equal false, @people.to_a.any? { |person| person.token == token }
-  end
-
   def test_paginate
-    token = Person.last.token
-    @people = Person.paginate_by_token(token, order_by: :rank)
-    assert_equal 15, @people.to_a.size
+    people = Person.paginate(order_by: :rank)
+    assert_equal 15, people.to_a.size
   end
 
-  def test_paginate_with_options
+  def test_paginate_with_pagenum
+    people = Person.paginate(order_by: :rank, pagenum: 1)
+    assert_equal 15, people.to_a.size
+    people = Person.paginate(order_by: :rank, pagenum: 2)
+    assert_equal 5, people.to_a.size
+    people = Person.paginate(order_by: :rank, pagenum: -1)
+    assert_equal 15, people.to_a.size
+    people = Person.paginate(order_by: :rank, pagenum: 3)
+    assert_equal 0, people.to_a.size
+  end
+
+  def test_paginate_by_token
     token = Person.last.token
-    @people = Person.paginate_by_token(token, order_by: :rank, :rank.gt => 10)
-    assert_equal 9, @people.to_a.size
+    people = Person.paginate_by_token(token, order_by: :rank)
+    assert_equal 15, people.to_a.size
+  end
+
+  def test_paginate_by_token_with_options
+    token = Person.last.token
+    people = Person.paginate_by_token(token, order_by: :rank, :rank.gt => 10)
+    assert_equal 9, people.to_a.size
+  end
+
+  def test_paginate_by_token_with_default_order
+    token = Person.last.token
+    people = Person.paginate_by_token(token)
+    assert_equal 15, people.to_a.size
+    assert_equal false, people.to_a.any? { |person| person.token == token }
   end
 end
 
