@@ -20,7 +20,7 @@ class Asset < Struct.new(:compress, :coffee_dir, :sass_dir, :public_dir)
 
   def check
     raise "Missing coffee-script, please run: npm install coffee-script" if `which coffee`.strip.empty?
-    raise "Missing uglifyjs, please run: npm install uglifyjs" if `which uglifyjs`.strip.empty?
+    raise "Missing uglifyjs, please run: npm install uglify-js" if `which uglifyjs`.strip.empty?
     raise "Missing sass, please run: bundle install" if `which sass`.strip.empty?
   end
 
@@ -55,3 +55,4 @@ class Asset < Struct.new(:compress, :coffee_dir, :sass_dir, :public_dir)
     system %Q[sass --compass #{'--style compressed' if compress} < "#{in_file}" > "#{out_file}"]
   end
 end
+
