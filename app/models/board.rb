@@ -17,12 +17,10 @@ class Board
   validates_length_of :name, maximum: 16
   validates_length_of :description, maximum: 1024
 
-  after_create do
-    #TODO notification
-  end
-
-  after_update do
-    #TODO notification
+  before_update do
+    if active_changed? and active
+      Notification.new(type: "founder", event: _id, text: "board").deliver
+    end
   end
 end
 

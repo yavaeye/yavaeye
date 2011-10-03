@@ -63,7 +63,10 @@ class Notification < Message
 
   def deliver
     case type
-    when 'founder' then
+    when 'founder'
+      board = Board.find(event)
+      board.user.messages << self
+      board.user.save
     when 'achievement' then
     else
     end
