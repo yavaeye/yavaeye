@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require "fileutils"
 
+# coffee -> js and sass -> css compiler
 class Asset < Struct.new(:compress, :coffee_dir, :sass_dir, :public_dir)
   include FileUtils
 

@@ -14,12 +14,19 @@ require 'bcrypt'
 require 'active_support/core_ext'
 require 'mongoid'
 require 'mongoid_token'
+require_relative 'database'
+require "./lib/secret"
 
 set :root, File.expand_path('.')
-set :sessions, true
 set :views, settings.root + '/app/views'
-use Rack::Session::Cookie
-require_relative 'database'
+set :sessions, true
+use Rack::Session::Cookie,
+  key: 'rack.session',
+  domain: (ENV['RACK_ENV'] =~ /development|test/ ? nil : 'yavaeye.com'),
+  path: '/',
+  expire_after: 1800, # seconds
+  secret: Secret.session_secret,
+  httponly: true
 
 configure :development do
   require "./script/asset"
