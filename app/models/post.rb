@@ -19,10 +19,5 @@ class Post
   validates_presence_of :title
   validates_length_of :title, maximum: 128
   validates_length_of :content, maximum: 10240
-
-  before_save do
-    self.segments = Seg.segment title
-  end
-
 end
 
