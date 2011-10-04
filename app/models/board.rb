@@ -22,5 +22,9 @@ class Board
       Notification.new(type: "founder", event: _id, text: "board").deliver
     end
   end
+
+  def self.find_by_slug slug
+    where(slug: slug).first
+  end
 end
 
