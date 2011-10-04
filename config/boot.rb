@@ -36,7 +36,6 @@ configure :development do
 end
 
 configure :test do
-  require 'minitest/unit'
   require 'minitest/autorun'
   require "factory_girl"
 end

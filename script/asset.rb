@@ -26,24 +26,29 @@ class Asset < Struct.new(:compress, :coffee_dir, :sass_dir, :public_dir)
   end
 
   def compile_js
-    js_files = Dir.glob coffee_dir + '/**/*.js'
-    coffee_files = Dir.glob coffee_dir + '/**/*.coffee'
+    in_files = Dir.glob coffee_dir + '/**/*.{js,coffee}'
     out_file = "#{public_dir}/yavaeye.js"
-    return if uptodate?(out_file, js_files + coffee_files)
+    return if uptodate?(out_file, in_files)
     puts "compiling yavaeye.js"
 
-    js = ''
-    js_files.each do |f|
-      js << File.binread(f) << ";\n"
+    data = js_coffee_files_in_order.map do |f|
+      f.end_with?('.js') ? (File.binread f) : `coffee -p --bare "#{f}"`
     end
-    coffee_files.each do |f|
-      js << `coffee -p --bare "#{coffee_dir}/yavaeye.coffee"` << ";\n"
-    end
-    File.open(out_file, 'w') { |f| f << js }
+    File.open(out_file, 'w') { |f| f.<< data.join ";\n" }
 
     if compress
       js = `uglifyjs --no-copyright --no-dead-code < "#{out_file}"`
       File.open(out_file, 'w') { |f| f << js }
+    end
+  end
+
+  def js_coffee_files_in_order
+    yavaeye = coffee_dir + "/yavaeye.coffee"
+    files = File.open(yavaeye, &:readline)[/(?<=#require).+/]
+    if files
+      files.strip.split(/\s*,\s*/).map { |f| coffee_dir + f } << yavaeye
+    else
+      [yavaeye]
     end
   end
 
@@ -59,3 +64,6 @@ class Asset < Struct.new(:compress, :coffee_dir, :sass_dir, :public_dir)
   end
 end
 
+if __FILE__ == $PROGRAM_NAME # test
+  p Asset.new.js_coffee_files_in_order
+end
