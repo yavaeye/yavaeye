@@ -4,5 +4,5 @@ nav.tertiary
   a.active href="edit" edit
 
 .content
-  form action="#{@object.id}" method="put"
+  == form @object.id, method: "put" do
     == slim :"model/_form"

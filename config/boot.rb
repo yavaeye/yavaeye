@@ -14,11 +14,14 @@ require 'bcrypt'
 require 'active_support/core_ext'
 require 'mongoid'
 require 'mongoid_token'
+
 require_relative 'database'
 require "./lib/secret"
 
 set :root, File.expand_path('.')
 set :views, settings.root + '/app/views'
+set :method_override, true # allow _method=put, _method=delete params
+
 set :sessions, true
 use Rack::Session::Cookie,
   key: 'rack.session',
@@ -27,6 +30,9 @@ use Rack::Session::Cookie,
   expire_after: 1800, # seconds
   secret: Secret.session_secret,
   httponly: true
+
+# csrf
+use Rack::Protection::FormToken
 
 configure :development do
   require "./script/asset"

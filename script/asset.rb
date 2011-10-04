@@ -46,7 +46,7 @@ class Asset < Struct.new(:compress, :coffee_dir, :sass_dir, :public_dir)
     yavaeye = coffee_dir + "/yavaeye.coffee"
     files = File.open(yavaeye, &:readline)[/(?<=#require).+/]
     if files
-      files.strip.split(/\s*,\s*/).map { |f| coffee_dir + f } << yavaeye
+      files.strip.split(/\s*,\s*/).map { |f| "#{coffee_dir}/#{f}" } << yavaeye
     else
       [yavaeye]
     end
