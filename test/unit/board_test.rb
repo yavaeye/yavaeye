@@ -1,6 +1,6 @@
 require_relative '../test_helper'
 
-class BoardTest < Test::Unit::TestCase
+class BoardTest < TestCase
   def setup
     User.create!(openid: "yavaeye@gmail.com", nick: "0_i")
     User.first.boards.create!(slug: "start", name: "stop", description: "nothing")

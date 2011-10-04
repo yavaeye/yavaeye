@@ -3,7 +3,7 @@ include FileUtils
 
 %w[unit functional integration performance].each do |type|
   desc "run #{type} tests"
-  task "test:#{type}" do
+  task type do
     Dir.glob "./test/#{type}/*_test.rb" do |f|
       require f
     end
@@ -11,7 +11,7 @@ include FileUtils
 end
 
 desc "run all tests"
-task "test" do
+task :test do
   Dir.glob "./test/{unit,functional}/*_test.rb" do |f|
     require f
   end
@@ -21,4 +21,28 @@ desc "compile css and js"
 task :asset do
   require "./script/asset"
   Asset.new(true).compile
+end
+
+def stat_files fs
+  c = 0
+  fc = 0
+  total_size = 0.0
+  fs.each do |f|
+    fc += 1
+    data = File.binread f
+    c += data.count "\n"
+    total_size += data.bytesize
+  end
+  puts "files: #{fc}"
+  puts "lines: #{c}"
+  puts "chars per line: #{total_size / c}"
+end
+
+desc "project statistics"
+task 'stat' do
+  puts "All:"
+  stat_files Dir.glob '**/*.{rb,sass,slim,coffee}'
+
+  puts "\nRuby:"
+  stat_files Dir.glob('**/*.rb') - Dir.glob('test/**/*.rb')
 end

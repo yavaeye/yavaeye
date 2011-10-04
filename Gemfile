@@ -8,7 +8,7 @@ gem 'bcrypt-ruby'
 gem 'activesupport'
 gem 'bson_ext'
 gem 'mongoid'
-gem 'mongoid_token'
+gem 'mongoid_token', git: "git://github.com/thetron/mongoid_token.git"
 
 group :production do
   gem 'unicorn'

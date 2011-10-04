@@ -4,6 +4,13 @@ GIT
   specs:
     socksify (1.4.1)
 
+GIT
+  remote: git://github.com/thetron/mongoid_token.git
+  revision: 0196d85226c2a687fea667c112907c4250f100f8
+  specs:
+    mongoid_token (0.9.1)
+      activesupport (>= 3.0.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -43,8 +50,6 @@ GEM
       activemodel (~> 3.0)
       mongo (~> 1.3)
       tzinfo (~> 0.3.22)
-    mongoid_token (0.9.1)
-      activesupport (>= 3.0.0)
     multi_json (1.0.3)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -95,7 +100,7 @@ DEPENDENCIES
   compass
   factory_girl
   mongoid
-  mongoid_token
+  mongoid_token!
   rack-test
   sinatra (~> 1.3.0)
   sinatra-contrib (~> 1.3.0)

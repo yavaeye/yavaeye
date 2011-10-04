@@ -1,6 +1,6 @@
 require_relative '../test_helper'
 
-class UserTest < Test::Unit::TestCase
+class UserTest < TestCase
   def setup
     3.times.each do |i|
       User.create!(openid: "#{i}@gmail.com", nick: "#{i}_i")

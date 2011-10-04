@@ -10,7 +10,7 @@ class Person
   token :length => 5, :contains => :alphanumeric
 end
 
-class MongoidPaginateTest < Test::Unit::TestCase
+class MongoidPaginateTest < TestCase
 
   def setup
     1.upto(20).each do |i|

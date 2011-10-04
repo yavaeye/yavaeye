@@ -1,8 +1,4 @@
-require 'test/unit'
-require 'factory_girl'
-
 begin
-
   ENV["RACK_ENV"] = 'test'
   require_relative "../config/boot.rb"
 
@@ -12,7 +8,7 @@ begin
   end
 end
 
-class Test::Unit::TestCase
+class TestCase < MiniTest::Unit::TestCase
   def initialize *xs
     super
     # clean test db before every case
