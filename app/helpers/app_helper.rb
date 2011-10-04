@@ -1,5 +1,6 @@
 helpers do
   # default method is POST instead of html's GET
+  # fake PUT and DELETE with _method
   def form action, params={}
     params[:action] = action
     method = params.delete :method
@@ -7,6 +8,7 @@ helpers do
     method = (method || 'post').to_s.downcase
     method_magic =
       if method =~ /^(put|delete)$/
+        method = 'post'
         "<input type='hidden' name='_method' value='#{method}'></input>"
       end
     params = params.map{|(k, v)| "#{k}=#{v.to_s.inspect}" }.join ' '

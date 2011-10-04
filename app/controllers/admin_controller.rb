@@ -101,13 +101,13 @@ post "/admin/:model/?" do |model|
   end
 end
 
-get "/admin/:model/:id/edit" do
-  @object = @model.find(params[:id])
+get "/admin/:model/:id/edit" do |model, id|
+  @object = @model.find id
   slim :'model/edit', layout: :admin
 end
 
-put "/admin/:model/:id/?" do |model|
-  @object = @model.find(params[:id])
+put "/admin/:model/:id/?" do |model, id|
+  @object = @model.find id
   if @object.update_attributes(params[model.singularize])
     flash[:notice] = 'object was successfully updated.'
     redirect "/admin/#{model}/#{@object.id}/edit"
@@ -116,10 +116,9 @@ put "/admin/:model/:id/?" do |model|
   end
 end
 
-delete "/admin/:model/:id/?" do |model|
-  object = @model.find(params[:id])
-  # account has special proceed with current_account
-  if object != current_account && object.destroy
+delete "/admin/:model/:id/?" do |model, id|
+  object = @model.find id
+  if object.destroy
     flash[:notice] = 'object was successfully destroyed.'
   else
     flash[:error] = 'failed to delete object'

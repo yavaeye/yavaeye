@@ -39,4 +39,5 @@ html
     javascript:
       $(function(){
         $('nav a').addClass('round-corner');
+        setTimeout(function(){ $('body > .notice, body > .error').remove(); }, 3000);
       });
