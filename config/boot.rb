@@ -23,6 +23,9 @@ set :views, settings.root + '/app/views'
 set :method_override, true # allow _method=put, _method=delete params
 
 set :sessions, true
+
+respond_to :html, :xml, :json
+
 use Rack::Session::Cookie,
   key: 'rack.session',
   domain: (ENV['RACK_ENV'] =~ /development|test/ ? nil : 'yavaeye.com'),
