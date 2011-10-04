@@ -10,3 +10,11 @@ get '/user/profile' do
 
 end
 
+get '/user/indox' do
+
+end
+
+get '/user/outbox' do
+
+end
+
