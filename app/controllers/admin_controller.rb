@@ -13,18 +13,18 @@ before "/admin/*" do
   /\/admin\/(?<model_name>\w+)/ =~ request.path
   next if (!model_name or model_name == 'secret')
   @model = Module.const_get(model_name.camelize) rescue next
-  @fields =
-    if @model.respond_to?(:admin_fields)
-      @model.admin_fields
-    else
-      @model.fields.map do |(name, ty)|
-        next if %w[_type id _id created_at updated_at deleted_at].include?(name)
-        next if (ty.type == Hash or ty.type == Array)
-        ty = ty.type == Boolean ? 'checkbox' : 'text'
-        [name, ty, "#{model_name}[#{name}]", "#{model_name}_#{name}"]
-      end
+  
+  if @model.respond_to?(:admin_fields)
+    @fields = @model.admin_fields
+  else
+    @fields = []
+    @model.fields.each do |(name, ty)|
+      next if %w[_type id _id created_at updated_at deleted_at].include?(name)
+      next if (ty.type == Hash or ty.type == Array)
+      ty = ty.type == Boolean ? 'checkbox' : name == 'content' ? 'textarea' : 'text'
+      @fields << [name, ty]
     end
-  @fields.compact!
+  end
 end
 
 get "/admin-login" do

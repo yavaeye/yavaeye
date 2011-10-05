@@ -3,5 +3,4 @@ nav.tertiary
   a.active href="new" new
 
 .content
-  == form "." do
-    == slim :"model/_form"
+  == slim :"model/_form", locals: {action: '.', method: 'post'}

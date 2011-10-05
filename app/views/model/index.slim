@@ -21,4 +21,4 @@ nav.tertiary
         td == object.updated_at.strftime("%Y-%m-%d %H:%M") rescue nil
         td
           a.button href="#@prefix/#{object.id}/edit" edit
-          a.button href="#@prefix/#{object.id}" data-method="delete" delete
+          a.button href="#@prefix/#{object.id}" data-method="delete" data-confirm="sure?" delete

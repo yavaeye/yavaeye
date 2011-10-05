@@ -1,18 +1,29 @@
 helpers do
-  # default method is POST instead of html's GET
-  # fake PUT and DELETE with _method
-  def form action, params={}
-    params[:action] = action
-    method = params.delete :method
-    method ||= params.delete 'method'
-    method = (method || 'post').to_s.downcase
-    method_magic =
-      if method =~ /^(put|delete)$/
-        method = 'post'
-        "<input type='hidden' name='_method' value='#{method}'></input>"
-      end
-    params = params.map{|(k, v)| "#{k}=#{v.to_s.inspect}" }.join ' '
-    "<form #{params} method='#{method}'>#{csrf}#{method_magic}#{yield}</form>"
+  # call-seq:
+  #
+  #   == form @post, action: '/a/b', method: 'delete' do |f|
+  #     == f.text 'nick'
+  #
+  #   == form action: '/a/b', method: 'get' do
+  #     input type='text' name='n' value='xx'
+  #
+  # Default method is POST, also adds csrf token and simulate PUT and DELETE with _method.
+  def form obj, params=nil
+    if params.nil?
+      params = obj
+      body = yield
+    else
+      body = yield FormProxy.new obj
+    end
+    params = params.symbolize_keys
+    action = params.delete :action # no escape
+    method = (params.delete(:method) or 'post')
+    if method =~ /^(put|delete)$/
+      method_override = "<input type='hidden' name='_method' value='#{method}'></input>"
+      method = 'post'
+    end
+    params = params.to_attrs
+    "<form action='#{action}' method='#{method}' #{params}>#{csrf}#{method_override}#{body}</form>"
   end
 
   def csrf
