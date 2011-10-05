@@ -7,7 +7,7 @@ class Message
 
   belongs_to :user
 
-  validates_presence_of :text
+  validates_presence_of :user
   validates_length_of :text, maximum: 10240
 end
 

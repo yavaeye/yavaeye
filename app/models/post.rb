@@ -16,7 +16,7 @@ class Post
   belongs_to :board
   has_many :comments
 
-  validates_presence_of :title
+  validates_presence_of :title, :board, :user
   validates_length_of :title, maximum: 128
   validates_length_of :content, maximum: 10240
 

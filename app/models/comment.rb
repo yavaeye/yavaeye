@@ -8,7 +8,7 @@ class Comment
   belongs_to :user
   belongs_to :post
 
-  validates_presence_of :content
+  validates_presence_of :content, :user, :post
   validates_length_of :content, maximum: 10240
 
   after_create do

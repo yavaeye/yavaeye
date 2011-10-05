@@ -12,7 +12,7 @@ class Board
   belongs_to :user
 
   validates_uniqueness_of :slug
-  validates_presence_of :slug, :name, :description
+  validates_presence_of :slug, :name, :description, :user
   validates_length_of :slug, maximum: 16
   validates_length_of :name, maximum: 16
   validates_length_of :description, maximum: 1024
