@@ -8,6 +8,7 @@ class Post
   field :title
   field :link
   field :content
+  field :domain
   field :segments, type: Array, default: []
 
   token :length => 5, :contains => :alphanumeric
@@ -29,6 +30,17 @@ class Post
     end
   end
 
+  before_create do
+    if link.blank?
+      res = "self.#{board.slug}"
+    else
+      res = link[/(\.?[\p{Word}-]+\.?)+(\/|:\d+|$)/]
+      res.sub!(/^www\./i, '') if res
+      res.sub!(/\/$/, '') if res
+    end
+    self.domain = res
+  end
+
   after_create do
     user.karma += 3
     user.save
@@ -37,14 +49,6 @@ class Post
   after_destroy do
     user.karma -= 3
     user.save
-  end
-
-  def website
-    return unless link
-    res = link[/(\.?[\p{Word}-]+\.?)+(\/|:\d+|$)/]
-    res.sub!(/^www\./i, '') if res
-    res.sub!(/\/$/, '') if res
-    res
   end
 end
 

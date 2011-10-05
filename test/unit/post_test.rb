@@ -29,11 +29,13 @@ class PostTest < TestCase
     assert_equal 0, User.last.karma
   end
 
-  def test_websit_with_link
+  def test_domain_with_post
     post = User.last.posts.create(title: "post", link: "http://123.com", board: Board.first)
-    assert_equal "123.com", post.website
+    assert_equal "123.com", post.domain
     post = User.last.posts.create(title: "post", link: "ftp://comp.cn:8080", board: Board.first)
-    assert_equal "comp.cn:8080", post.website
+    assert_equal "comp.cn:8080", post.domain
+    post = User.last.posts.create(title: "post", content: "self post", board: Board.first)
+    assert_equal "self.start", post.domain
   end
 end
 
