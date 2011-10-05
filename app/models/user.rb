@@ -11,6 +11,8 @@ class User
   field :unfollower_ids, type: Array, default: []
   field :unfollowing_ids, type: Array, default: []
 
+  embeds_one :profile
+
   has_many :posts
   has_many :boards
   has_many :comments
@@ -26,11 +28,11 @@ class User
   class Profile
     include Mongoid::Document
 
-    field :twitter
-    field :facebook
-    field :googleplus
+    field :intro
 
-    embedded_in :user, inverse_of: :profile
+    embedded_in :user
+
+    validates_length_of :intro, maximum: 1024
   end
 
   def mentions
