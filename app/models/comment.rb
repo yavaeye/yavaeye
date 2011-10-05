@@ -12,8 +12,15 @@ class Comment
   validates_length_of :content, maximum: 10240
 
   after_create do
+    user.karma += 1
+    user.save
     return if user.id == post.user.id
     mention_new ["post","reply"]
+  end
+
+  after_destroy do
+    user.karma -= 1
+    user.save
   end
 
   private

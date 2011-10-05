@@ -19,5 +19,15 @@ class Post
   validates_presence_of :title
   validates_length_of :title, maximum: 128
   validates_length_of :content, maximum: 10240
+
+  after_create do
+    user.karma += 3
+    user.save
+  end
+
+  after_destroy do
+    user.karma -= 3
+    user.save
+  end
 end
 

@@ -12,5 +12,11 @@ class BoardTest < TestCase
     assert_equal true, b.active
     assert_equal 1, b.user.mentions.to_a.size
   end
+
+  def test_karma_with_board
+    assert_equal 10, User.first.karma
+    Board.first.destroy
+    assert_equal 0, User.first.karma
+  end
 end
 

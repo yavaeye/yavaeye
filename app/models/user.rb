@@ -6,6 +6,7 @@ class User
   field :openid
   field :nick
   field :email
+  field :karma, type: Integer, default: 0
   field :unsubscribes, type: Hash, default: {}
   field :unfollower_ids, type: Array, default: []
   field :unfollowing_ids, type: Array, default: []

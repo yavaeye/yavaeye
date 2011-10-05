@@ -23,6 +23,16 @@ class Board
     end
   end
 
+  after_create do
+    user.karma += 10
+    user.save
+  end
+
+  after_destroy do
+    user.karma -= 10
+    user.save
+  end
+
   def self.find_by_slug slug
     where(slug: slug).first
   end

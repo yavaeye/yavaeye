@@ -7,7 +7,14 @@ class CommentTest < TestCase
     end
     User.first.boards.create!(slug: "start", name: "stop", description: "nothing")
     User.first.boards.create!(slug: "stop", name: "start", description: "nothing")
-    User.first.posts.create!(title: "post", content: "nothing")
+    User.first.posts.create!(title: "post", content: "nothing", board: Board.first)
+  end
+
+  def test_karma_with_reply
+    Comment.create!(content: "comment", user: User.last, post: Post.last)
+    assert_equal 1, User.last.karma
+    Comment.first.destroy
+    assert_equal 0, User.last.karma
   end
 
   def test_reply_post
