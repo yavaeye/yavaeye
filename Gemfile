@@ -9,6 +9,7 @@ gem 'activesupport'
 gem 'bson_ext'
 gem 'mongoid'
 gem 'mongoid_token', git: "git://github.com/thetron/mongoid_token.git"
+gem 'ruby-openid'
 
 group :production do
   gem 'unicorn'

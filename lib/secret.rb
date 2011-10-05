@@ -1,13 +1,8 @@
-# only with config/secret.rb it can be complete
 module Secret
   def session_secret
-    doc['session_secret'] or 'x12#!Dsf9(&aO~)' * 16
-  end
-
-  def session_secret= s
-    h = doc
-    h['session_secret'] = s
-    update h
+    @session_secret ||= begin
+      rand(36 ** 256).to_s(36).rjust 256, '*'
+    end
   end
 
   def admin_password= p

@@ -1,4 +1,36 @@
 helpers do
+  def openid_consumer
+    @openid_consumer ||= OpenID::YavaConsumer.new session
+  end
+
+  def openid_remember option
+    response.set_cookie 'openid_remember',
+      path: '/',
+      value: option,
+      expires: Time.now.next_month
+      # can visit via js
+  end
+
+  def remember_me user
+    # NOTE cookies[] is string key only
+    if request.cookies['openid_remember'] == 'on'
+      response.set_cookie 'remember_me',
+        path: '/',
+        value: CipherUtil.encrypt(user.id.to_s),
+        expires: Time.now.next_month,
+        httponly: true
+    end
+  end
+
+  def forget_me
+    # XXX delete_cookie doesn't work
+    response.set_cookie 'remember_me',
+      path: '/',
+      value: "",
+      expire_after: 60,
+      httponly: true
+  end
+
   # call-seq:
   #
   #   == form @post, action: '/a/b', method: 'delete' do |f|
@@ -7,7 +39,7 @@ helpers do
   #   == form action: '/a/b', method: 'get' do
   #     input type='text' name='n' value='xx'
   #
-  # Default method is POST, also adds csrf token and simulate PUT and DELETE with _method.
+  # Default method is POST, also adds csrf token, simulates PUT and DELETE with _method.
   def form obj, params=nil
     if params.nil?
       params = obj
@@ -16,14 +48,14 @@ helpers do
       body = yield FormProxy.new obj
     end
     params = params.symbolize_keys
-    action = params.delete :action # no escape
     method = (params.delete(:method) or 'post')
+    params[:'accept-charset'] ||= 'UTF-8'
     if method =~ /^(put|delete)$/
       method_override = "<input type='hidden' name='_method' value='#{method}'></input>"
       method = 'post'
     end
     params = params.to_attrs
-    "<form action='#{action}' method='#{method}' #{params}>#{csrf}#{method_override}#{body}</form>"
+    "<form method='#{method}' #{params}>#{csrf}#{method_override}#{body}</form>"
   end
 
   def csrf

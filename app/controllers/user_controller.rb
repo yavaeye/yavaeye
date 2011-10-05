@@ -1,6 +1,10 @@
+get '/user-new' do
+  slim :'user/new'
+end
+
 get '/user/*' do
   pass unless current_user
-  redirect to '/login'
+  redirect to '/session/new'
 end
 
 get '/user/profile' do
@@ -34,4 +38,3 @@ end
 get '/user/boards' do
   respond_with :'user/boards', current_user.boards
 end
-

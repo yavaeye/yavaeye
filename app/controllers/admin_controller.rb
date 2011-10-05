@@ -13,7 +13,7 @@ before "/admin/*" do
   /\/admin\/(?<model_name>\w+)/ =~ request.path
   next if (!model_name or model_name == 'secret')
   @model = Module.const_get(model_name.camelize) rescue next
-  
+
   if @model.respond_to?(:admin_fields)
     @fields = @model.admin_fields
   else
@@ -37,7 +37,7 @@ post "/admin-login" do
       @error = "Password not match or too short"
       slim :'admin/secret', layout: :admin
     else
-      initialize_admin
+      Secret.admin_password = params[:p]
       session['admin'] = true
       flash[:notice] = "Admin data initialized"
       redirect "/admin"
@@ -69,7 +69,7 @@ post "/admin/secret" do
     @error = "Password not match or too short"
     slim :'admin/secret', layout: :admin
   else
-    initialize_admin
+    Secret.admin_password = params[:p]
     flash[:notice] = "Updated"
     redirect "/admin"
   end

@@ -14,6 +14,7 @@ require 'bcrypt'
 require 'active_support/core_ext'
 require 'mongoid'
 require 'mongoid_token'
+require "openid"
 
 require_relative 'database'
 require "./lib/secret"
@@ -39,6 +40,13 @@ use Rack::Protection::FormToken
 
 configure :development do
   require "./script/asset"
+  # proxy for openid
+  if port = ENV['openid_proxy_port']
+    puts "=> Using proxy for openid request"
+    require 'socksify/http'
+    proxy = Net::HTTP.SOCKSProxy '127.0.0.1', port.to_i
+    OpenID.fetcher.instance_variable_set :@proxy, proxy
+  end
   $asset = Asset.new
   before { $asset.compile }
   require "sinatra/reloader"

@@ -1,0 +1,28 @@
+== form action: '/session', id: 'openid-form' do
+  input#openid_identifier type="hidden" name="openid_identifier"
+
+  h3 人生苦短，何必注册
+
+  label data-title="cookie有效期一个月"
+    | 选择一个openid帐号登录: (
+    input#openid_remember type="checkbox" name="openid_remember"
+    | 给我记住！)
+
+  a.google href="https://www.google.com/accounts/o8/id" data-title="google"
+    | google
+  a.yahoo href="http://me.yahoo.com/" data-title="yahoo"
+    | yahoo
+
+javascript:
+  if (document.cookie.match(/openid_remember=on/))
+    $('#openid_remember').click();
+  $('#openid-form a').live('click', function(){
+    var form = $('#openid-form');
+    form.find('#openid_identifier').val(this.href);
+    form.submit();
+    return false
+  });
+
+css:
+  #openid-form label { padding:4px;display:block;background:#e3e3ff; }
+  #openid-form .google, #openid-form .yahoo { margin:4px; }
