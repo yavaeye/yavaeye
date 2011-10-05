@@ -1,36 +1,37 @@
-get '/user/login' do
-
-end
-
-get '/user/logout' do
-
+get '/user/*' do
+  pass unless current_user
+  redirect to '/login'
 end
 
 get '/user/profile' do
   respond_with :'user/profile', current_user
 end
 
-get '/user/mentions'
-  if current_user.blank?
-    status 404
-  else
-    respond_with :'user/mention', current_user.mentions
-  end
+get '/user/achievements' do
+  respond_with :'user/achievement', current_user
+end
+
+get '/user/mentions' do
+  respond_with :'user/mention', current_user.mentions
 end
 
 get '/user/inbox' do
-  if current_user.blank?
-    status 404
-  else
-    respond_with :'user/inbox', current_user.received_messages
-  end
+  respond_with :'user/inbox', current_user.received_messages
 end
 
 get '/user/outbox' do
-  if current_user.blank?
-    status 404
-  else
-    respond_with :'user/outbox', current_user.sent_messages
-  end
+  respond_with :'user/outbox', current_user.sent_messages
+end
+
+get '/user/posts' do
+  respond_with :'user/posts', current_user.posts
+end
+
+get '/user/comments' do
+  respond_with :'user/comments', current_user.comments
+end
+
+get '/user/boards' do
+  respond_with :'user/boards', current_user.boards
 end
 
