@@ -18,6 +18,7 @@ require "openid"
 
 require_relative 'database'
 require "./lib/secret"
+Secret.init
 
 set :root, File.expand_path('.')
 set :views, settings.root + '/app/views'

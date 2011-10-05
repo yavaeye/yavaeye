@@ -1,5 +1,27 @@
+# encoding: UTF-8
+
 get '/user-new' do
+  if session[:user_openid].blank? or session[:user_email].blank? or current_user
+    redirect '/'
+  end
+  @user = User.new
   slim :'user/new'
+end
+
+post '/user' do
+  if session[:user_openid].blank? or session[:user_email].blank? or params[:user].blank?
+    redirect '/'
+  end
+  @user = User.new
+  @user.openid = session.delete :user_openid
+  @user.email = session.delete :user_email
+  @user.nick = params[:user][:nick]
+  if @user.save
+    flash[:notice] = '用户创建成功'
+    redirect '/'
+  else
+    slim :'user/new'
+  end
 end
 
 get '/user/*' do

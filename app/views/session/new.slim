@@ -1,27 +1,27 @@
-== form action: '/session', id: 'openid-form' do
-  input#openid_identifier type="hidden" name="openid_identifier"
-
+#openid-form
   h3 人生苦短，何必注册
 
   label data-title="cookie有效期一个月"
     | 选择一个openid帐号登录: (
-    input#openid_remember type="checkbox" name="openid_remember"
+    input#openid-remember type="checkbox"
     | 给我记住！)
 
-  a.google href="https://www.google.com/accounts/o8/id" data-title="google"
+  a.google href="/session?identifier=google" data-title="google" data-method="post"
     | google
-  a.yahoo href="http://me.yahoo.com/" data-title="yahoo"
+  a.yahoo href="/session?identifier=yahoo" data-title="yahoo" data-method="post"
     | yahoo
 
 javascript:
-  if (document.cookie.match(/openid_remember=on/))
-    $('#openid_remember').click();
-  $('#openid-form a').live('click', function(){
-    var form = $('#openid-form');
-    form.find('#openid_identifier').val(this.href);
-    form.submit();
-    return false
-  });
+  $(function(){
+    if ($.cookies.get('openid_remember') === 'on')
+      $('#openid-remember').attr('checked', true);
+    $('#openid-remember').click(function(){
+      if (this.checked)
+        $.cookies.set('openid_remember', 'on', {expiresAt: new Date(new Date().getTime() + 24*3600*1000*30)});
+      else
+        $.cookies.del('openid_remember');
+    })
+  })
 
 css:
   #openid-form label { padding:4px;display:block;background:#e3e3ff; }

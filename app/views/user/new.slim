@@ -1,0 +1,8 @@
+== form @user, action: "/user", method: :post do |f|
+  label
+    | *你的显示名称 (设定后不可更改)
+    == f.text :nick
+    - if @user.errors[:nick]
+      span.error = @user.errors[:nick].join ','
+  p
+    button.bumit Go!

@@ -3,20 +3,12 @@ helpers do
     @openid_consumer ||= OpenID::YavaConsumer.new session
   end
 
-  def openid_remember option
-    response.set_cookie 'openid_remember',
-      path: '/',
-      value: option,
-      expires: Time.now.next_month
-      # can visit via js
-  end
-
   def remember_me user
     # NOTE cookies[] is string key only
     if request.cookies['openid_remember'] == 'on'
       response.set_cookie 'remember_me',
         path: '/',
-        value: CipherUtil.encrypt(user.id.to_s),
+        value: Secret.encrypt(user.id.to_s),
         expires: Time.now.next_month,
         httponly: true
     end

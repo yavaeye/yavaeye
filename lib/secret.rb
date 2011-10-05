@@ -1,8 +1,54 @@
+# to generate secret: run rake secret
 module Secret
-  def session_secret
-    @session_secret ||= begin
-      rand(36 ** 256).to_s(36).rjust 256, '*'
+  def init 
+    f = File.dirname(__FILE__) + '/../config/secret.rb'
+    f = File.expand_path f
+    if !(File.exist? f)
+      puts "First time running, generating #{f} ..."
+      File.open f, 'w' do |f|
+        f.puts [
+          "module Secret",
+          'KEY='.<<(rand_string(256).inspect),
+          'IV='.<<(rand_string(256).inspect),
+          'SALT='.<<(rand_string(8).inspect),
+          'SESSION_KEY='.<<(rand_string(256).inspect),
+          'end'
+        ]
+      end
     end
+    require f
+  end
+
+  def encrypt s
+    c = OpenSSL::Cipher.new 'aes-256-cbc'
+    c.encrypt
+    c.key = KEY
+    c.iv = IV
+    res = c.update s
+    res.<< c.update SALT
+    res << c.final
+    Base64.strict_encode64 res
+  end
+  
+  def decrypt s
+    return nil if s.blank?
+    s = Base64.strict_decode64 s rescue ''
+    return nil if s.size > 512 or s.size % 16 != 0
+    c = OpenSSL::Cipher.new 'aes-256-cbc'
+    c.decrypt
+    c.key = KEY
+    c.iv = IV
+    res = c.update s
+    res << c.final
+    if res.end_with?(SALT)
+      res[0...(- SALT.size)]
+    end
+  rescue OpenSSL::Cipher::CipherError
+    nil
+  end
+
+  def session_secret
+    SESSION_KEY
   end
 
   def admin_password= p
@@ -17,6 +63,12 @@ module Secret
 
   def validate_admin_password p
     BCrypt::Password.new(doc['admin_password']) == p
+  end
+
+private
+  
+  def rand_string l 
+    rand(36 ** l).to_s(36).ljust l, '*'
   end
 
   def doc
