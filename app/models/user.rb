@@ -7,7 +7,7 @@ class User
   field :nick
   field :email
   field :karma, type: Integer, default: 0
-  field :unsubscribes, type: Hash, default: {}
+  field :unsubscribes, type: Array, default: []
   field :unfollower_ids, type: Array, default: []
   field :unfollowing_ids, type: Array, default: []
 
@@ -78,18 +78,18 @@ class User
     end
   end
 
-  def subscribe slug
-    board = Board.where(slug: slug).first
+  def subscribe name
+    board = Board.find_by_name name
     if board
-      unsubscribes.delete board.slug
+      unsubscribes.delete board.name
       save
     end
   end
 
-  def unsubscribe slug
-    board = Board.where(slug: slug).first
+  def unsubscribe name
+    board = Board.find_by_name name
     if board
-      unsubscribes[board.slug] = board.name
+      unsubscribes << board.name
       save
       Mention.new(type: "unsubscribe", triggers: [nick], event: board.id, text: "unfollow your board").deliver
     end

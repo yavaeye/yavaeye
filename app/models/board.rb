@@ -3,7 +3,6 @@ class Board
   include Mongoid::Timestamps
   include Mongoid::Paranoia
 
-  field :slug
   field :name
   field :description
   field :active, type: Boolean, default: false
@@ -11,9 +10,9 @@ class Board
   has_many :posts
   belongs_to :user
 
-  validates_uniqueness_of :slug
-  validates_presence_of :slug, :name, :description, :user
-  validates_length_of :slug, :name, maximum: 16
+  validates_uniqueness_of :name
+  validates_presence_of :name, :description, :user
+  validates_length_of :name, maximum: 16
   validates_length_of :description, maximum: 1024
 
   before_update do
@@ -32,8 +31,8 @@ class Board
     user.save
   end
 
-  def self.find_by_slug slug
-    where(slug: slug).first
+  def self.find_by_name name
+    where(name: name).first
   end
 end
 

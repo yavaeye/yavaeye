@@ -5,8 +5,8 @@ class UserTest < TestCase
     3.times.each do |i|
       User.create!(openid: "#{i}@gmail.com", nick: "#{i}_i")
     end
-    User.first.boards.create!(slug: "start", name: "stop", description: "nothing")
-    User.first.boards.create!(slug: "stop", name: "start", description: "nothing")
+    User.first.boards.create!(name: "stop", description: "nothing")
+    User.first.boards.create!(name: "start", description: "nothing")
   end
 
   def test_deliver
@@ -53,15 +53,15 @@ class UserTest < TestCase
   end
 
   def test_unsubscribe
-    Board.all.each {|b| User.first.unsubscribe(b.slug) }
+    Board.all.each {|b| User.first.unsubscribe(b.name) }
     assert_equal 2, User.first.unsubscribes.size
     assert_equal 2, User.first.mentions.size
     assert_equal User.first.nick, User.first.mentions.to_a.first.triggers.first
   end
 
   def test_subscribe
-    Board.all.each {|b| User.first.unsubscribe(b.slug) }
-    User.first.subscribe Board.first.slug
+    Board.all.each {|b| User.first.unsubscribe(b.name) }
+    User.first.subscribe Board.first.name
     assert_equal 1, User.first.unsubscribes.size
   end
 end

@@ -19,7 +19,7 @@ html
         - @models.each do |model|
           a href="/admin/#{model.name.underscore}" class="#{'active' if @model == model}"
             = model.name
-            |  (
+             |  (
             = model.count
             ' )
     == yield
@@ -42,3 +42,4 @@ html
         $('nav a').addClass('round-corner');
         setTimeout(function(){ $('body > .notice, body > .error').remove(); }, 3000);
       });
+

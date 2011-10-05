@@ -5,8 +5,8 @@ class CommentTest < TestCase
     3.times.each do |i|
       User.create!(openid: "#{i}@gmail.com", nick: "#{i}_i")
     end
-    User.first.boards.create!(slug: "start", name: "stop", description: "nothing")
-    User.first.boards.create!(slug: "stop", name: "start", description: "nothing")
+    User.first.boards.create!(name: "stop", description: "nothing")
+    User.first.boards.create!(name: "start", description: "nothing")
     User.first.posts.create!(title: "post", content: "nothing", board: Board.first)
   end
 

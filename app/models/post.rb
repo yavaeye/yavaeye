@@ -32,7 +32,7 @@ class Post
 
   before_create do
     if link.blank?
-      res = "self.#{board.slug}"
+      res = "self.#{board.name}"
     else
       res = link[/(\.?[\p{Word}-]+\.?)+(\/|:\d+|$)/]
       res.sub!(/^www\./i, '') if res

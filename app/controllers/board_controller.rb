@@ -1,5 +1,5 @@
-get '/boards/:slug' do |slug|
-  board = Board.find_by_slug slug
+get '/boards/:name' do |name|
+  board = Board.find_by_name name
   if params[:token].blank?
     posts = Post.paginate board_id: board._id
   else
@@ -26,13 +26,13 @@ post '/boards' do
   end
 end
 
-get '/boards/:slug/edit' do
-  board = Board.find_by_slug slug
+get '/boards/:name/edit' do
+  board = Board.find_by_name name
   respond_with :'board/edit', board
 end
 
-put '/boards/:slug' do
-  board = Board.find_by_slug slug
+put '/boards/:name' do
+  board = Board.find_by_name name
   if board
     status 404
   else
@@ -44,8 +44,8 @@ put '/boards/:slug' do
   end
 end
 
-delete '/boards/:slug' do
-  board = Board.find_by_slug slug
+delete '/boards/:name' do
+  board = Board.find_by_name name
   if board
     status 404
   else
