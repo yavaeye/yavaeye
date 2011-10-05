@@ -20,6 +20,15 @@ class Post
   validates_length_of :title, maximum: 128
   validates_length_of :content, maximum: 10240
 
+  validate do
+    unless link.blank? ^ content.blank?
+      errors.add :base, 'link or content with some problems'
+    end
+    if link and (link =~ URI::regexp).nil?
+      errors.add :link, 'link is invalid'
+    end
+  end
+
   after_create do
     user.karma += 3
     user.save
@@ -28,6 +37,14 @@ class Post
   after_destroy do
     user.karma -= 3
     user.save
+  end
+
+  def website
+    return unless link
+    res = link[/(\.?[\p{Word}-]+\.?)+(\/|:\d+|$)/]
+    res.sub!(/^www\./i, '') if res
+    res.sub!(/\/$/, '') if res
+    res
   end
 end
 
