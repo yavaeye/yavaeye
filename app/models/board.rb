@@ -19,7 +19,7 @@ class Board
 
   before_update do
     if active_changed? and active
-      Notification.new(type: "founder", event: _id, text: "board").deliver
+      Mention.new(type: "founder", event: _id, text: "board").deliver
     end
   end
 

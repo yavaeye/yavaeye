@@ -11,23 +11,23 @@ class UserTest < TestCase
 
   def test_deliver
     User.first.deliver SentMessage.new(to: User.last.nick, text: "hello text")
-    assert_equal 1, User.first.messages.size
-    assert_equal 1, User.last.messages.size
+    assert_equal 1, User.first.sent_messages.size
+    assert_equal 1, User.last.received_messages.size
   end
 
   def test_receive
     User.first.deliver SentMessage.new(to: User.last.nick, text: "hello text")
-    User.last.receive User.last.messages.first
-    assert_equal 1, User.last.messages.size
-    assert_equal true, User.last.messages.first.read
+    User.last.receive User.last.received_messages.first
+    assert_equal 1, User.last.received_messages.size
+    assert_equal true, User.last.received_messages.first.read
   end
 
   def test_unfollow
     User.first.unfollow(User.last._id)
     assert_equal 1, User.first.unfollowing_ids.size
     assert_equal 1, User.last.unfollower_ids.size
-    assert_equal 1, User.last.messages.size
-    assert_equal User.first.nick, User.last.messages.to_a.first.triggers.first
+    assert_equal 1, User.last.mentions.size
+    assert_equal User.first.nick, User.last.mentions.to_a.first.triggers.first
   end
 
   def test_follow
@@ -55,8 +55,8 @@ class UserTest < TestCase
   def test_unsubscribe
     Board.all.each {|b| User.first.unsubscribe(b.slug) }
     assert_equal 2, User.first.unsubscribes.size
-    assert_equal 2, User.first.messages.size
-    assert_equal User.first.nick, User.first.messages.to_a.first.triggers.first
+    assert_equal 2, User.first.mentions.size
+    assert_equal User.first.nick, User.first.mentions.to_a.first.triggers.first
   end
 
   def test_subscribe

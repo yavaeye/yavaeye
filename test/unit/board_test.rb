@@ -10,8 +10,7 @@ class BoardTest < TestCase
     b = Board.first
     b.update_attributes!(active: true)
     assert_equal true, b.active
-    assert_equal 1, b.user.messages.to_a.size
-    assert_equal "founder", b.user.messages.to_a.first.type
+    assert_equal 1, b.user.mentions.to_a.size
   end
 end
 

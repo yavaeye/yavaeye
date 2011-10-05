@@ -32,6 +32,18 @@ class User
     embedded_in :user, inverse_of: :profile
   end
 
+  def mentions
+    messages.where(_type: "Mention")
+  end
+
+  def received_messages
+    messages.where(_type: "ReceivedMessage")
+  end
+
+  def sent_messages
+    messages.where(_type: "SentMessage")
+  end
+
   def unfollowings
     User.where(:_id.in => unfollowing_ids)
   end

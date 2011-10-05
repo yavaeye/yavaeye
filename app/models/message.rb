@@ -52,17 +52,6 @@ class Mention < Message
       board = Board.find(event)
       board.user.messages << self
       board.user.save
-    else
-    end
-  end
-end
-
-class Notification < Message
-  field :type
-  field :event
-
-  def deliver
-    case type
     when 'founder'
       board = Board.find(event)
       board.user.messages << self
