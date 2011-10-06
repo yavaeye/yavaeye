@@ -1,6 +1,7 @@
 nav.tertiary
-  a href="." list
-  a.active href="new" new
+  - model_path = File.dirname request.path
+  a href=model_path list
+  a.active href=request.path new
 
 .content
-  == slim :"model/_form", locals: {action: '.', method: 'post'}
+  == slim :"model/_form", locals: {action: model_path, method: 'post'}

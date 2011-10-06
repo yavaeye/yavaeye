@@ -13,7 +13,7 @@ nav.tertiary
       th updated_at
       th
     - @objects.each do |object|
-      tr class="#{'deleted' if object.deleted_at}"
+      tr class="#{'deleted' if (object.deleted_at rescue nil)}"
         td = object.id
         - @fields.each do |(name)|
           td = object.send name
@@ -21,7 +21,7 @@ nav.tertiary
         td == object.updated_at.strftime("%Y-%m-%d %H:%M") rescue nil
         td
           a.button href="#@prefix/#{object.id}/edit" edit
-          - if object.deleted_at
+          - if (object.deleted_at rescue nil)
             a.button href="#@prefix/#{object.id}/restore" data-method="post" restore
           - else
             a.button href="#@prefix/#{object.id}" data-method="delete" data-confirm="sure?" delete
