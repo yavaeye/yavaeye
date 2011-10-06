@@ -1,10 +1,20 @@
-get '/posts' do
-  if params[:token].blank?
-    posts = Post.paginate
-  else
-    posts = Post.paginate_by_token params[:token]
-  end
-  respond_with :index, posts.to_a
+# encoding: UTF-8
+
+get '/' do
+  @posts =
+    if params[:token].blank?
+      Post.paginate
+    else
+      Post.paginate_by_token params[:token]
+    end
+  slim :'post/index'
+end
+
+get '/posts/new' do
+  @post = Post.new
+  board = Board.find_by_name params[:board]
+  @post.board = board if board and board.active
+  slim :'post/new'
 end
 
 get '/posts/:token' do |token|
@@ -12,17 +22,14 @@ get '/posts/:token' do |token|
   respond_with :'post/show', post
 end
 
-get '/posts/new' do
-  respond_with :'post/new', Post.new
-end
-
 post '/posts' do
-  board = Board.where(_id: params[:board_id]).first
-  post = Post.create(params[:post], user: current_user, board: board)
-  if post.persisted?
-    status 200
+  @post = Post.new params[:post]
+  @post.user = current_user
+  if @post.save
+    flash[:notice] = '发表成功'
+    redirect '/'
   else
-    status 500
+    slim :'post/new'
   end
 end
 

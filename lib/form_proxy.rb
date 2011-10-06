@@ -53,6 +53,19 @@ class FormProxy
     r << '</select>'
   end
 
+  def submit text, opts={}
+    opts = opts.symbolize_keys
+    opts[:class] ||= 'button'
+    opts[:value] ||= text
+    %(<input type="submit" #{opts.to_attrs}></input>)
+  end
+
+  def error field 
+    content = obj.errors[field.to_sym].join ','
+    content = ::Temple::Utils.escape_html content
+    %(<span class="error">#{content}</span>)
+  end
+
   private
 
   def normalize field, opts

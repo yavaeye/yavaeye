@@ -1,0 +1,15 @@
+== form @post, action: action, method: method do |f|
+  - if !@post.board
+    label
+      | 版面
+      == f.select :board_id, Board.all.map{|b| [b.name, b.id] }
+      == f.error :board
+  label
+    | 标题
+    == f.text :title
+    == f.error :title
+  label
+    | 内容
+    == f.textarea :content
+    == f.error :content
+  == f.submit "保存"

@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class Post
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -20,13 +22,11 @@ class Post
   validates_presence_of :title, :board, :user
   validates_length_of :title, maximum: 128
   validates_length_of :content, maximum: 10240
+  validates_format_of :link, with: /\A#{URI::regexp}\Z/, if: ->{ link.present? }
 
   validate do
     unless link.blank? ^ content.blank?
       errors.add :base, 'link or content with some problems'
-    end
-    if link and (link =~ URI::regexp).nil?
-      errors.add :link, 'link is invalid'
     end
   end
 
@@ -49,6 +49,14 @@ class Post
   after_destroy do
     user.karma -= 3
     user.save
+  end
+
+  def url 
+    if link.present?
+      link
+    else
+      "/post/#{token}"
+    end
   end
 end
 

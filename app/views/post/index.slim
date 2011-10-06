@@ -1,0 +1,8 @@
+- @posts.each do |post|
+  a href=post.url = post.title
+  .toolbar
+    ' #{ post.created_at }
+    ' 由
+    a href="/post/user/#{post.user.nick}" = post.user.nick
+    ' 发表于 #{{ post.board.name }}
+    a href="/post/#{post.token}" 吐槽

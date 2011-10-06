@@ -9,6 +9,8 @@ html
     == meta_csrf
 
   body
+    - if flash[:notice]
+      .notice == flash[:notice]
     == yield
 
     javascript:
