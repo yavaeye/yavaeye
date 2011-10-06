@@ -1,5 +1,5 @@
 Factory.define :user do |u|
-  u.openid "yavaeye@gmail.com"
+  u.openid 'http://me.yahoo.com/mm62xOv9'
   u.nick "yavaeye"
   u.email "yavaeye@gmail.com"
 end

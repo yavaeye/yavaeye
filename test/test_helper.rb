@@ -1,7 +1,7 @@
 begin
   ENV["RACK_ENV"] = 'test'
   require_relative "../config/boot.rb"
-  # set :sessions, false
+  set :sessions, false
 
   require "ruby-debug"
   require "factory_girl"
@@ -11,6 +11,9 @@ begin
   Dir.glob "#{dir}/factory/**/*_factory.rb" do |f|
     require f
   end
+
+  # make sure admin initialized in test database
+  Secret.admin_password = 'admin'
 end
 
 class TestCase < MiniTest::Unit::TestCase
@@ -39,5 +42,4 @@ class FunctionalTestCase < TestCase
     end
     RUBY
   end
-
 end

@@ -34,7 +34,7 @@ use Rack::Session::Cookie,
   httponly: true
 
 # csrf
-use Rack::Protection::FormToken
+use Rack::Protection::AuthenticityToken
 
 configure :development do
   require "./script/asset"
