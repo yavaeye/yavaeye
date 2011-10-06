@@ -7,7 +7,7 @@ get '/' do
     else
       Post.paginate_by_token params[:token]
     end
-  slim :'post/index'
+  respond_with :'post/index', @posts
 end
 
 get '/posts/new' do
@@ -18,18 +18,20 @@ get '/posts/new' do
 end
 
 get '/posts/:token' do |token|
-  post = Post.find_by_token token
-  respond_with :'post/show', post
+  @post = Post.find_by_token token
+  respond_with :'post/show', @post
 end
 
 post '/posts' do
   @post = Post.new params[:post]
   @post.user = current_user
   if @post.save
-    flash[:notice] = '发表成功'
-    redirect '/'
+    respond_to do |f|
+      f.html { flash[:notice] = '发表成功'; redirect '/' }
+      f.json { '{}' }
+    end
   else
-    slim :'post/new'
+    respond_with :'post/new', errors: @post.errors
   end
 end
 

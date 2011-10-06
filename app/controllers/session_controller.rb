@@ -37,7 +37,6 @@ get '/session/complete' do
     else
       session[:user_openid] = openid
       session[:user_email] = email
-      @user ||= User.new
       redirect '/user-new'
     end
   end
