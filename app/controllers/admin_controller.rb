@@ -82,7 +82,7 @@ get "/admin/:model/?" do
   @fields = @model.fields.select do |(name)|
     ! %w[_type _id created_at updated_at deleted_at].include? name
   end
-  @objects = @model.desc(:created_at).skip(current_page * per_page).limit(per_page)
+  @objects = @model.unscoped.desc(:created_at).skip(current_page * per_page).limit(per_page)
   slim :'model/index', layout: :admin
 end
 
@@ -94,7 +94,7 @@ end
 post "/admin/:model/?" do |model|
   @object = @model.new(params[model.singularize])
   if @object.save
-    flash[:notice] = 'object was successfully created.'
+    flash[:notice] = 'created.'
     redirect "/admin/#{model}/#{@object.id}/edit"
   else
     slim :'model/new', layout: :admin
@@ -102,26 +102,29 @@ post "/admin/:model/?" do |model|
 end
 
 get "/admin/:model/:id/edit" do |model, id|
-  @object = @model.find id
+  @object = @model.unscoped.find id
   slim :'model/edit', layout: :admin
 end
 
 put "/admin/:model/:id/?" do |model, id|
-  @object = @model.find id
+  @object = @model.unscoped.find id
   if @object.update_attributes(params[model.singularize])
-    flash[:notice] = 'object was successfully updated.'
+    flash[:notice] = 'updated.'
     redirect "/admin/#{model}/#{@object.id}/edit"
   else
     slim :'model/edit', layout: :admin
   end
 end
 
+post "/admin/:model/:id/restore" do |model, id|
+  object = @model.unscoped.find id
+  # NOTE cookie size may exceed 4k
+  flash[:notice] = (object.restore ? 'restored' : 'failed to restore') rescue [$!, $!.backtrace.first].join("\n")
+  redirect "/admin/#{model}"
+end
+
 delete "/admin/:model/:id/?" do |model, id|
-  object = @model.find id
-  if object.destroy
-    flash[:notice] = 'object was successfully destroyed.'
-  else
-    flash[:error] = 'failed to delete object'
-  end
+  object = @model.unscoped.find id
+  flash[:notice] = (object.destroy ? 'destroyed' : 'failed to destroy') rescue [$!, $!.backtrace.first].join("\n")
   redirect "/admin/#{model}"
 end

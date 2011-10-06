@@ -8,8 +8,7 @@ html
     == meta_csrf
 
   body
-    .notice = flash[:notice]
-    .error = flash[:error] || @error
+    pre.notice = flash[:notice]
     - if session[:admin]
       nav.primary
         a href="/admin" class="#{'active' if request.path == '/admin'}" Dashboard
@@ -36,10 +35,10 @@ html
       input { display:block; }
       input[type=text], input[type=password], textarea { width:90%; }
       .content { margin-top:8px; }
+      tr.deleted td { color:#999; }
 
     javascript:
       $(function(){
         $('nav a').addClass('round-corner');
-        setTimeout(function(){ $('body > .notice, body > .error').remove(); }, 3000);
       });
 
