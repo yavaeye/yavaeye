@@ -37,5 +37,23 @@ class PostTest < TestCase
     post = User.last.posts.create(title: "post", content: "self post", board: Board.first)
     assert_equal "self.start", post.domain
   end
+
+  def test_dislikers_on_post
+    post = User.last.posts.create(title: "post", link: "http://123.com", board: Board.first)
+    User.first.dislike post._id
+    assert_equal User.first.nick, Post.first.dislikers.to_a.first.nick
+  end
+
+  def test_markers_on_post
+    post = User.last.posts.create(title: "post", link: "http://123.com", board: Board.first)
+    User.first.mark post._id
+    assert_equal User.first.nick, Post.first.markers.to_a.first.nick
+  end
+
+  def test_score_on_post
+    User.last.posts.create(title: "post", link: "http://123.com", created_at: Time.now-100 ,board: Board.first)
+    User.last.posts.create(title: "post", link: "http://123.com", board: Board.first)
+    assert_equal true, Post.last.score > Post.first.score
+  end
 end
 

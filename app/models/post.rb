@@ -42,14 +42,27 @@ class Post
       res.sub!(/\/$/, '') if res
     end
     self.domain = res
+    marks << user._id
   end
 
   after_create do
     user.inc(:karma, 3)
   end
 
+  before_save do
+    self.score =  Hot.value( marks.size - dislikes.size, created_at)
+  end
+
   after_destroy do
     user.inc(:karma, -3)
+  end
+
+  def dislikers
+    User.where(:_id.in => dislikes).limit(10)
+  end
+
+  def markers
+    User.where(:_id.in => marks).limit(10)
   end
 
   def url

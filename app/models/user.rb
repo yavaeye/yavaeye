@@ -6,7 +6,7 @@ class User
   field :openid
   field :nick
   field :email
-  field :karma, type: Integer, default: 0
+  field :karma, type: Float, default: 0.0
   field :unsubscribes, type: Array, default: []
   field :unfollower_ids, type: Array, default: []
   field :unfollowing_ids, type: Array, default: []
@@ -87,16 +87,20 @@ class User
 
   def mark post_id
     post = Post.where(_id: post_id).first
-    if post
-      post.add_to_set(:marks, _id)
+    return unless post
+    unless post.marks.include? post_id
+      post.user.inc(:karma, 0.5)
     end
+    post.add_to_set(:marks, _id)
   end
 
   def dislike post_id
     post = Post.where(_id: post_id).first
-    if post
-      post.add_to_set(:dislikes, _id)
+    return unless post
+    unless post.dislikes.include? post_id
+      post.user.inc(:karma, -0.5)
     end
+    post.add_to_set(:dislikes, _id)
   end
 
   def subscribes

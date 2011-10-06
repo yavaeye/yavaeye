@@ -86,12 +86,15 @@ class UserTest < TestCase
     post = Post.create(title: "post", content: "this is a post", user: User.last, board: Board.first)
     User.first.dislike post._id
     assert_equal User.first._id, Post.first.dislikes.to_a.first
+    assert_equal 2.5, User.last.karma
   end
 
   def test_mark
     post = Post.create(title: "post", content: "this is a post", user: User.last, board: Board.first)
     User.first.mark post._id
-    assert_equal User.first._id, Post.first.marks.to_a.first
+    assert_equal 2, Post.first.marks.to_a.size
+    assert_equal User.first.id, Post.first.marks.to_a.last
+    assert_equal 3.5, User.last.karma
   end
 end
 
