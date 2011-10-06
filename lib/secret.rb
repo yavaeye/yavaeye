@@ -1,6 +1,6 @@
 # to generate secret: run rake secret
 module Secret
-  def init 
+  def init
     f = File.dirname(__FILE__) + '/../config/secret.rb'
     f = File.expand_path f
     if !(File.exist? f)
@@ -30,7 +30,7 @@ module Secret
     res << c.final
     Base64.strict_encode64 res
   end
-  
+
   def decrypt s
     return nil if s.blank?
     s = Base64.strict_decode64 s rescue ''
@@ -67,8 +67,8 @@ module Secret
   end
 
 private
-  
-  def rand_string l 
+
+  def rand_string l
     rand(36 ** l).to_s(36).ljust l, '*'
   end
 
@@ -87,3 +87,4 @@ private
 
   extend self
 end
+

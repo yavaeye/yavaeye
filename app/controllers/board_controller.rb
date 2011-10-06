@@ -5,16 +5,16 @@ get '/boards/:name' do |name|
   else
     posts = Post.paginate_by_token params[:token], board_id: board._id
   end
-  respond_with :index, posts.to_a
+  respond_with :index, posts: posts.to_a
 end
 
 get '/boards' do
   boards = Board.all
-  respond_with :index, boards.to_a
+  respond_with :'board/index', boards: boards.to_a
 end
 
 get '/boards/new' do
-  respond_with :'board/new', Board.new
+  respond_with :'board/new', board: Board.new
 end
 
 post '/boards' do

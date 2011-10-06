@@ -4,8 +4,7 @@ get '/user-new' do
   if session[:user_openid].blank? or session[:user_email].blank? or current_user
     redirect '/'
   end
-  @user = User.new
-  slim :'user/new'
+  respond_with :'user/new', user: User.new
 end
 
 post '/user' do
@@ -31,33 +30,34 @@ get '/user/*' do
 end
 
 get '/user/profile' do
-  respond_with :'user/profile', current_user
+  respond_with :'user/profile', user: current_user
 end
 
 get '/user/achievements' do
-  respond_with :'user/achievement', current_user
+  respond_with :'user/achievement', achievements: current_user.achievements
 end
 
 get '/user/mentions' do
-  respond_with :'user/mention', current_user.mentions
+  respond_with :'user/mention', mentions: current_user.mentions
 end
 
 get '/user/inbox' do
-  respond_with :'user/inbox', current_user.received_messages
+  respond_with :'user/inbox', received_messages: current_user.received_messages
 end
 
 get '/user/outbox' do
-  respond_with :'user/outbox', current_user.sent_messages
-end
-
-get '/user/posts' do
-  respond_with :'user/posts', current_user.posts
-end
-
-get '/user/comments' do
-  respond_with :'user/comments', current_user.comments
+  respond_with :'user/outbox', sent_messages: current_user.sent_messages
 end
 
 get '/user/boards' do
-  respond_with :'user/boards', current_user.boards
+  respond_with :'user/boards', boards: current_user.boards
 end
+
+get '/user/posts' do
+  respond_with :'user/posts', posts: current_user.posts
+end
+
+get '/user/comments' do
+  respond_with :'user/comments', comments: current_user.comments
+end
+

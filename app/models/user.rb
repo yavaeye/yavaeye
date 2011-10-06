@@ -35,6 +35,14 @@ class User
     validates_length_of :intro, maximum: 1024
   end
 
+  def last_posts
+    posts.order_by(:created_at.desc).limit(5)
+  end
+
+  def last_comments
+    comments.order_by(:created_at.desc).limit(5)
+  end
+
   def mentions
     messages.where(_type: "Mention")
   end
@@ -93,6 +101,10 @@ class User
       save
       Mention.new(type: "unsubscribe", triggers: [nick], event: board.id, text: "unfollow your board").deliver
     end
+  end
+
+  def subscribes
+    boards = Board.not_in(name: unsubscribes)
   end
 
   def deliver message

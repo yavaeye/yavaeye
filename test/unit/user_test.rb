@@ -9,6 +9,21 @@ class UserTest < TestCase
     User.first.boards.create!(name: "start", description: "nothing")
   end
 
+  def test_last_posts
+    6.times.each do |i|
+      post = Post.create(title: "post#{i}", content: "#{i}", user: User.first, board: Board.first)
+    end
+    assert_equal 5, User.first.last_posts.to_a.size
+  end
+
+  def test_last_comments
+    post = Post.create(title: "post", content: "this is a post", user: User.first, board: Board.first)
+    6.times.each do |i|
+      comment = Comment.create(title: "post#{i}", content: "#{i}", user: User.first, post: Post.first)
+    end
+    assert_equal 5, User.first.last_comments.to_a.size
+  end
+
   def test_deliver
     User.first.deliver SentMessage.new(to: User.last.nick, text: "hello text")
     assert_equal 1, User.first.sent_messages.size
@@ -63,6 +78,8 @@ class UserTest < TestCase
     Board.all.each {|b| User.first.unsubscribe(b.name) }
     User.first.subscribe Board.first.name
     assert_equal 1, User.first.unsubscribes.size
+    User.first.subscribe Board.last.name
+    assert_equal 2, User.first.subscribes.size
   end
 end
 
