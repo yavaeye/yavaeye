@@ -36,12 +36,6 @@ use Rack::Session::Cookie,
 # csrf
 use Rack::Protection::FormToken
 
-configure do
-  mime_type :html, 'text/*'
-  mime_type :html, '*'
-  mime_type :html, '*/*'
-end
-
 configure :development do
   require "./script/asset"
   # proxy for openid
