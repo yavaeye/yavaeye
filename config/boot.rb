@@ -19,14 +19,11 @@ require "openid"
 require_relative 'database'
 require "./lib/secret"
 Secret.init
-
 set :root, File.expand_path('.')
 set :views, settings.root + '/app/views'
 set :method_override, true # allow _method=put, _method=delete params
 
 set :sessions, true
-
-respond_to :html, :xml, :json
 
 use Rack::Session::Cookie,
   key: 'rack.session',
@@ -53,12 +50,6 @@ configure :development do
   require "sinatra/reloader"
 end
 
-configure :test do
-  require 'minitest/autorun'
-  require "factory_girl"
-end
-
 Dir.glob "./{lib,app/models,app/helpers,app/controllers}/*.rb" do |f|
   require f
 end
-

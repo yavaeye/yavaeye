@@ -21,5 +21,5 @@ group :development, :test do
   gem 'rack-test'
   gem 'factory_girl'
   gem 'capistrano'
+  gem 'ruby-debug19'
 end
-
