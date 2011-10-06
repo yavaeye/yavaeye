@@ -18,17 +18,16 @@ class ModelControllerTest < FunctionalTestCase
   def test_edit
     access_protected :get, "/admin/user/#{@user.id}/edit"
   end
-  
+
   def test_csrf_create
     count = User.count
     post '/admin/user', {user: @user_params}, @opts
     assert_equal count, User.count
   end
-  
-  def test_create 
+
+  def test_create
     count = User.count
     post '/admin/user', {'authenticity_token' => 'random-string', user: @user_params}, @opts
-    p body
     assert_equal count + 1, User.count
   end
 
@@ -41,3 +40,4 @@ class ModelControllerTest < FunctionalTestCase
     assert_equal 302, status
   end
 end
+
