@@ -43,6 +43,66 @@ class User
     comments.order_by(:created_at.desc).limit(5)
   end
 
+  def unfollowings
+    User.where(:_id.in => unfollowing_ids)
+  end
+
+  def unfollowers
+    User.where(:_id.in => unfollower_ids)
+  end
+
+  def follow user_id
+    return if user_id == _id
+    user = User.where(_id: user_id).first
+    if user
+      user.pull(:unfollower_ids, _id)
+      pull(:unfollowing_ids, user_id)
+    end
+  end
+
+  def unfollow user_id
+    return if user_id == _id
+    user = User.where(_id: user_id).first
+    if user
+      user.add_to_set(:unfollower_ids, _id)
+      add_to_set(:unfollowing_ids, user_id)
+      Mention.new(type: "unfollow", triggers: [nick], event: user.id, text: "unfollow u").deliver
+    end
+  end
+
+  def subscribe board_name
+    board = Board.find_by_name board_name
+    if board
+      pull(:unsubscribes, board.name)
+    end
+  end
+
+  def unsubscribe board_name
+    board = Board.find_by_name board_name
+    if board
+      add_to_set(:unsubscribes, board.name)
+      Mention.new(type: "unsubscribe", triggers: [nick], event: board.id, text: "unfollow your board").deliver
+    end
+  end
+
+  def mark post_id
+    post = Post.where(_id: post_id).first
+    if post
+      post.add_to_set(:marks, _id)
+    end
+  end
+
+  def dislike post_id
+    post = Post.where(_id: post_id).first
+    if post
+      post.add_to_set(:dislikes, _id)
+    end
+  end
+
+  def subscribes
+    boards = Board.not_in(name: unsubscribes)
+  end
+
   def mentions
     messages.where(_type: "Mention")
   end
@@ -53,58 +113,6 @@ class User
 
   def sent_messages
     messages.where(_type: "SentMessage")
-  end
-
-  def unfollowings
-    User.where(:_id.in => unfollowing_ids)
-  end
-
-  def unfollowers
-    User.where(:_id.in => unfollower_ids)
-  end
-
-  def follow id
-    return if id == _id
-    user = User.where(_id: id).first
-    if user
-      user.unfollower_ids.delete _id
-      user.save
-      unfollowing_ids.delete id
-      save
-    end
-  end
-
-  def unfollow id
-    return if id == _id
-    user = User.where(_id: id).first
-    if user
-      user.unfollower_ids << _id
-      user.save
-      unfollowing_ids << id
-      save
-      Mention.new(type: "unfollow", triggers: [nick], event: user.id, text: "unfollow u").deliver
-    end
-  end
-
-  def subscribe name
-    board = Board.find_by_name name
-    if board
-      unsubscribes.delete board.name
-      save
-    end
-  end
-
-  def unsubscribe name
-    board = Board.find_by_name name
-    if board
-      unsubscribes << board.name
-      save
-      Mention.new(type: "unsubscribe", triggers: [nick], event: board.id, text: "unfollow your board").deliver
-    end
-  end
-
-  def subscribes
-    boards = Board.not_in(name: unsubscribes)
   end
 
   def deliver message
@@ -119,8 +127,7 @@ class User
   end
 
   def receive message
-    message.read = true
-    message.save
+    message.update_attributes(read: true)
   end
 end
 

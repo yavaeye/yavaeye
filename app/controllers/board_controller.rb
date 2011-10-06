@@ -1,13 +1,3 @@
-get '/boards/:name' do |name|
-  board = Board.find_by_name name
-  if params[:token].blank?
-    posts = Post.paginate board_id: board._id
-  else
-    posts = Post.paginate_by_token params[:token], board_id: board._id
-  end
-  respond_with :index, posts: posts.to_a
-end
-
 get '/boards' do
   boards = Board.all
   respond_with :'board/index', boards: boards.to_a
@@ -15,6 +5,16 @@ end
 
 get '/boards/new' do
   respond_with :'board/new', board: Board.new
+end
+
+get '/boards/:name' do |name|
+  board = Board.find_by_name name
+  if params[:token].blank?
+    posts = Post.paginate(board_id: board._id)
+  else
+    posts = Post.paginate_by_token params[:token], board_id: board._id
+  end
+  respond_with :index, posts: posts.to_a
 end
 
 post '/boards' do

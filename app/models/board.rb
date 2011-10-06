@@ -19,15 +19,13 @@ class Board
 
   before_update do
     if active_changed? and active
-      user.karma += 10
-      user.save
+      user.inc(:karma, 10)
       Mention.new(type: "founder", event: _id, text: "board").deliver
     end
   end
 
   after_destroy do
-    user.karma -= 10
-    user.save
+    user.inc(:karma, -10)
   end
 
   def self.find_by_name name

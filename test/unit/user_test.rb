@@ -81,5 +81,17 @@ class UserTest < TestCase
     User.first.subscribe Board.last.name
     assert_equal 2, User.first.subscribes.size
   end
+
+  def test_dislike
+    post = Post.create(title: "post", content: "this is a post", user: User.last, board: Board.first)
+    User.first.dislike post._id
+    assert_equal User.first._id, Post.first.dislikes.to_a.first
+  end
+
+  def test_mark
+    post = Post.create(title: "post", content: "this is a post", user: User.last, board: Board.first)
+    User.first.mark post._id
+    assert_equal User.first._id, Post.first.marks.to_a.first
+  end
 end
 

@@ -11,6 +11,9 @@ class Post
   field :link
   field :content
   field :domain
+  field :score, type: Float, default: 0.0
+  field :marks, type: Array, default: []
+  field :dislikes, type: Array, default: []
   field :segments, type: Array, default: []
 
   token :length => 5, :contains => :alphanumeric
@@ -42,16 +45,14 @@ class Post
   end
 
   after_create do
-    user.karma += 3
-    user.save
+    user.inc(:karma, 3)
   end
 
   after_destroy do
-    user.karma -= 3
-    user.save
+    user.inc(:karma, -3)
   end
 
-  def url 
+  def url
     if link.present?
       link
     else

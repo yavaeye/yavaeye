@@ -12,15 +12,13 @@ class Comment
   validates_length_of :content, maximum: 10240
 
   after_create do
-    user.karma += 1
-    user.save
+    user.inc(:karma, 1)
     return if user.id == post.user.id
     mention_new ["post","reply"]
   end
 
   after_destroy do
-    user.karma -= 1
-    user.save
+    user.inc(:karma, -1)
   end
 
   private
@@ -28,9 +26,8 @@ class Comment
     types.each do |type|
       mention = Mention.where(event: post.id, type: type).first
       if mention
-        (mention.triggers << user.nick).uniq!
-        mention.read = false
-        mention.save
+        mention.add_to_set(:triggers, user.nick)
+        mention.update_attributes(read: false)
       else
         Mention.new(type: type, triggers: [user.nick], event: post.id, text: "post").deliver
       end
