@@ -53,7 +53,7 @@ class Mention < Message
       board.user.messages << self
       board.user.save
     when 'founder'
-      board = Board.find(event)
+      board = Board.unscoped.find(event)
       board.user.messages << self
       board.user.save
     when 'achievement' then

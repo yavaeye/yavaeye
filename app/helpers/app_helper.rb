@@ -58,3 +58,4 @@ helpers do
     "<meta name='csrf-param' content='authenticity_token'/><meta name='csrf-token' content='#{session[:csrf]}'/>"
   end
 end
+

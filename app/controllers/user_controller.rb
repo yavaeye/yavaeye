@@ -4,7 +4,8 @@ get '/user-new' do
   if session[:user_openid].blank? or session[:user_email].blank? or current_user
     redirect '/'
   end
-  respond_with :'user/new', user: User.new
+  @user = User.new
+  slim :'user/new'
 end
 
 post '/user' do
@@ -24,9 +25,8 @@ post '/user' do
   end
 end
 
-get '/user/*' do
-  pass unless current_user
-  redirect to '/session/new'
+before '/user/*' do
+  redirect '/session/new' if current_user.blank?
 end
 
 get '/user/profile' do
@@ -50,7 +50,7 @@ get '/user/outbox' do
 end
 
 get '/user/boards' do
-  respond_with :'user/boards', boards: current_user.boards
+  respond_with :'user/boards', subscribes: current_user.subscribes, unsubscribes: current_user.unsubscribes
 end
 
 get '/user/posts' do

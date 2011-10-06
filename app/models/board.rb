@@ -7,6 +7,8 @@ class Board
   field :description
   field :active, type: Boolean, default: false
 
+  default_scope where(active: true)
+
   has_many :posts
   belongs_to :user
 
@@ -17,13 +19,10 @@ class Board
 
   before_update do
     if active_changed? and active
+      user.karma += 10
+      user.save
       Mention.new(type: "founder", event: _id, text: "board").deliver
     end
-  end
-
-  after_create do
-    user.karma += 10
-    user.save
   end
 
   after_destroy do

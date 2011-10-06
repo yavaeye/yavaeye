@@ -5,7 +5,7 @@ class PostTest < TestCase
     2.times.each do |i|
       User.create!(openid: "#{i}@gmail.com", nick: "#{i}_i")
     end
-    User.first.boards.create!(name: "start", description: "nothing")
+    User.first.boards.create!(name: "start", active: true, description: "nothing")
   end
 
   def test_post_with_link
