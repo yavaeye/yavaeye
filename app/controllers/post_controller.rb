@@ -7,7 +7,7 @@ get '/' do
     else
       Post.paginate_by_token params[:token]
     end
-  respond_with :'post/index', @posts
+  respond_with :'post/index', @posts.to_a
 end
 
 get '/posts/new' do
