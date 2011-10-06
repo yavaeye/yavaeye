@@ -28,7 +28,7 @@ post '/posts' do
   if @post.save
     respond_to do |f|
       f.html { flash[:notice] = '发表成功'; redirect '/' }
-      f.json { '{}' }
+      f.json { @post.to_json }
     end
   else
     respond_with :'post/new', errors: @post.errors
@@ -36,20 +36,22 @@ post '/posts' do
 end
 
 get '/posts/:token/edit' do |token|
-  post = Post.find_by_token token
-  respond_with :'post/edit', post
+  @post = Post.find_by_token token
+  respond_with :'post/edit', @post
 end
 
 put '/posts/:token' do |token|
-  post = Post.find_by_token(token)
-  if post.blank?
-    status 404
-  else
-    if post.update_attributes(params[:post])
-      status 200
+  if @post = Post.find_by_token(token)
+    if @post.update_attributes(params[:post])
+      respond_to do |f|
+        f.html { flash[:notice] = '更新成功'; redirect "/posts/#{@post.token}" }
+        f.json { @post.to_json }
+      end
     else
-      status 500
+      respond_with :'post/edit', @post
     end
+  else
+    status 404
   end
 end
 

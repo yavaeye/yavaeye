@@ -17,6 +17,7 @@ post '/user' do
   @user.email = session.delete :user_email
   @user.nick = params[:user][:nick]
   if @user.save
+    session[:user_id] = @user.id.to_s
     flash[:notice] = '用户创建成功'
     redirect '/'
   else

@@ -17,12 +17,12 @@ class FormProxyTest < TestCase
 
   def test_checkbox
     out = @f.checkbox :nick
-    assert_equal '<input type="checkbox" checked="checked" id="user_nick" name="user[nick]"></input>', out
+    assert_equal "<input type=\"checkbox\" checked=\"checked\" id=\"user_nick\" name=\"user[nick]\" value=\"1\"></input><input type=\"hidden\" name=\"user[nick]\" value=\"0\"></input>", out
   end
 
   def test_radio
     out = @f.radio :nick
-    assert_equal '<input type="radio" checked="checked" id="user_nick" name="user[nick]"></input>', out
+    assert_equal "<input type=\"radio\" checked=\"checked\" id=\"user_nick\" name=\"user[nick]\" value=\"1\"></input><input type=\"hidden\" name=\"user[nick]\" value=\"0\"></input>", out
   end
 
   def test_password

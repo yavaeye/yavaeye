@@ -24,13 +24,15 @@ class FormProxy
   def checkbox field, opts={}
     opts = normalize field, opts
     opts[:checked] = opts.delete(:value).present?
-    %(<input type="checkbox" #{opts.to_attrs}></input>)
+    opts[:value] = '1'
+    %(<input type="checkbox" #{opts.to_attrs}></input><input type="hidden" name="#{opts[:name]}" value="0"></input>)
   end
 
   def radio field, opts={}
     opts = normalize field, opts
     opts[:checked] = opts.delete(:value).present?
-    %(<input type="radio" #{opts.to_attrs}></input>)
+    opts[:value] = '1'
+    %(<input type="radio" #{opts.to_attrs}></input><input type="hidden" name="#{opts[:name]}" value="0"></input>)
   end
 
   def textarea field, opts={}
