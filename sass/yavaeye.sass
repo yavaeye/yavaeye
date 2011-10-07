@@ -4,8 +4,24 @@
 
 @import typo
 
+#body
+  width: 100%
+
+#posts
+  margin-left: 181px
+  border-left: 1px solid #999
+
+aside.posts
+  padding: 0 10px
+  background: #ffe
+  float: left
+  width: 160px
+  position: relative
+
+aside .user
+  padding-top: 10px
+
 #posts .post
-  clear: both
   padding:
     left: 10px
     right: 10px
@@ -30,3 +46,11 @@
   margin:
     top: -23px
   float: right
+
+#posts .load-more a
+  display: block
+  background: #eef
+  text-align: center
+  padding: 5px
+  &:hover
+    background: #f4f4ff

@@ -1,0 +1,8 @@
+.user
+  - if current_user
+    == current_user.nick
+    br
+    == current_user.karma
+
+  - else
+    a href="/session/new" 登录

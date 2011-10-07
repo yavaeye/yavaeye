@@ -11,7 +11,8 @@ html
   body
     - if flash[:notice]
       .notice == flash[:notice]
-    == yield
+    #body
+      == yield
 
     javascript:
       var _gaq = _gaq || [];
