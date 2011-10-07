@@ -1,5 +1,11 @@
 begin
   ENV["RACK_ENV"] = 'test'
+  if $coverage
+    # https://github.com/colszowka/simplecov
+    require 'simplecov'
+    SimpleCov.start 'rails'
+  end
+
   require_relative "../config/boot.rb"
   set :sessions, false
 

@@ -17,6 +17,14 @@ task :test do
   end
 end
 
+desc "test coverage"
+task :coverage do
+  $coverage = true
+  Dir.glob "./test/{unit,functional}/*_test.rb" do |f|
+    require f
+  end
+end
+
 desc "compile css and js"
 task :asset do
   require "./script/asset"
@@ -35,7 +43,12 @@ def stat_files fs
   end
   puts "files: #{fc}"
   puts "lines: #{c}"
-  puts "chars per line: #{total_size / c}"
+  puts "chars per line: %.2f" % (total_size / c)
+end
+
+def require_env 
+  ENV['RACK_ENV'] = 'rake'
+  require "./config/boot"
 end
 
 desc "project statistics"
@@ -45,19 +58,27 @@ task :stat do
 
   puts "\nRuby:"
   stat_files Dir.glob('**/*.rb') - Dir.glob('test/**/*.rb')
+  
+  puts "\nObjectSpace: (rough)"
+  GC.start
+  require_env
+  require "objspace"
+  h = {}
+  ObjectSpace.count_objects_size(h)
+  h.each do |k, v|
+    print k, ': ', (v / 1024), "k\n"
+  end
 end
 
 desc "check project for common errors"
 task :audit do
-  ENV['RACK_ENV'] = 'audit'
-  require "./config/boot"
+  require_env
   require "./script/audit_helpers"
 end
 
 desc "show all routes"
 task :routes do
-  ENV['RACK_ENV'] = 'audit'
-  require "./config/boot"
+  require_env
   blue = -> s { "\e[36m#{s}\e[0m" }
   grey = -> s { "\e[37m#{s}\e[0m" }
   Sinatra::Application.routes.each do |verb, routes|

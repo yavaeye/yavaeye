@@ -22,4 +22,5 @@ group :development, :test do
   gem 'factory_girl'
   gem 'capistrano'
   gem 'ruby-debug19'
+  gem 'simplecov'
 end

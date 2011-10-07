@@ -1,3 +1,5 @@
+# show helpers with the same name
+
 DefinedHelpers = {}
 def DefinedHelpers.color s 
   "\e[36m#{s}\e[0m"

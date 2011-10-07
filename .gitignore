@@ -4,3 +4,4 @@ db/
 public/yavaeye.js
 public/yavaeye.css
 config/secret.rb
+coverage/

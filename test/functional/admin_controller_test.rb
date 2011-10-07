@@ -1,6 +1,6 @@
 require_relative "../test_helper"
 
-class ModelControllerTest < FunctionalTestCase
+class AdminControllerTest < FunctionalTestCase
   def setup
     @user = Factory(:user)
     @opts = {'rack.session' => {'admin' => true, 'csrf' => 'random-string'}}
