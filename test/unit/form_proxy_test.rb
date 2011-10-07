@@ -1,3 +1,5 @@
+#encoding: utf-8
+
 require_relative "../test_helper"
 
 class FormProxyTest < TestCase
@@ -42,16 +44,17 @@ class FormProxyTest < TestCase
     assert_equal '<select id="user_nick" name="user[nick]" value="hello"><option value="1">one</option><option value="hello" selected="selected">two</option></select>', out
   end
 
-  def test_submit 
+  def test_submit
     out = @f.submit 'hello'
     assert_equal "<input type=\"submit\" class=\"button\" value=\"hello\"></input>", out
   end
 
-  def test_error 
+  def test_error
     user = User.new
     user.save
     f = FormProxy.new user
     out = f.error :openid
-    assert_equal "<span class=\"error\">can't be blank</span>", out
+    assert_equal "<span class=\"error\">不能为空</span>", out
   end
 end
+
