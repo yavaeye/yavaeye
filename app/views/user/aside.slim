@@ -8,13 +8,13 @@
 
   - else
     #openid-form
-      label data-title="cookie有效期一个月"
+      label title="cookie有效期一个月"
         ' OpenID 登录 -
         input#openid-remember type="checkbox"
         | 记住
-      a.google href="/session?identifier=google" data-title="google" data-method="post"
+      a.google href="/session?identifier=google" data-title="Google" data-method="post"
         | google
-      a.yahoo href="/session?identifier=yahoo" data-title="yahoo" data-method="post"
+      a.yahoo href="/session?identifier=yahoo" data-title="Yahoo" data-method="post"
         | yahoo
   
   br.cb

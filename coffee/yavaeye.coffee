@@ -1,7 +1,13 @@
-#require jquery-1.6.4.js, jquery-ujs.js, jquery-cookies-2.2.0.js
+#require jquery-1.6.4.js, jquery-ujs.js, jquery-cookies-2.2.0.js, yava.coffee
 
 $ ->
-  h1 = $('#posts').height() || 0
-  h2 = $(window).height()
-  $('aside').height(if h1 > h2 then h1 else h2)
-  setTimeout (-> $('body > div.notice').fadeOut()), 3000
+  # aside height
+  unless /^\/admin\//.test window.location.pathname
+    Yava.layout()
+    $(window).resize Yava.layout
+  
+  # hide notice
+  Yava.setNotice $('.notice').html()
+  
+  # tooltip
+  $('[data-title]').live('mouseover', Yava.showTip).live 'mouseleave', Yava.hideTip
