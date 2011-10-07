@@ -6,5 +6,7 @@ database_name = case ENV['RACK_ENV'].to_sym
   when :production  then 'production'
   when :test        then 'test'
 end
-Mongoid.database = Mongo::Connection.new(host, port).db(database_name)
 
+if database_name
+  Mongoid.database = Mongo::Connection.new(host, port).db(database_name)
+end

@@ -39,10 +39,30 @@ def stat_files fs
 end
 
 desc "project statistics"
-task 'stat' do
+task :stat do
   puts "All:"
   stat_files Dir.glob '**/*.{rb,sass,slim,coffee}'
 
   puts "\nRuby:"
   stat_files Dir.glob('**/*.rb') - Dir.glob('test/**/*.rb')
+end
+
+desc "check project for common errors"
+task :audit do
+  ENV['RACK_ENV'] = 'audit'
+  require "./config/boot"
+  require "./script/audit_helpers"
+end
+
+desc "show all routes"
+task :routes do
+  ENV['RACK_ENV'] = 'audit'
+  require "./config/boot"
+  blue = -> s { "\e[36m#{s}\e[0m" }
+  grey = -> s { "\e[37m#{s}\e[0m" }
+  Sinatra::Application.routes.each do |verb, routes|
+    puts blue[verb]
+    puts routes.map{|(pattern, captures)| "#{pattern.source.ljust 45} #{grey[captures.join ', ']}"}
+    puts
+  end
 end

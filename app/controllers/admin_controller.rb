@@ -3,9 +3,7 @@ before "/admin" do
 end
 
 before "/admin*" do
-  @models = Module.constants.map{|c| Module.const_get c }.select do |c|
-    (c.is_a? Class) and (c.include? Mongoid::Document)
-  end
+  @models = Module.mongoid_document_classes
 end
 
 before "/admin/*" do
