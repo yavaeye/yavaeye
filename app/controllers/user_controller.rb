@@ -26,7 +26,7 @@ post '/user' do
 end
 
 before '/user/*' do
-  redirect '/session/new' if current_user.blank?
+  redirect '/' if current_user.blank?
 end
 
 get '/user/profile' do

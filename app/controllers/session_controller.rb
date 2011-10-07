@@ -1,9 +1,5 @@
 # encoding: UTF-8
 
-get '/session/new' do
-  slim :'session/new'
-end
-
 post '/session/?' do
   identifier =
     case params[:identifier]

@@ -6,7 +6,7 @@ helpers do
   end
 
   def authenticate!
-    redirect '/session/new' unless current_user
+    redirect '/' unless current_user
   end
 end
 

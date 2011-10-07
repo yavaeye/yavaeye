@@ -1,3 +1,5 @@
+// typography
+
 @import "compass/typography"
 @import "compass/utilities"
 
@@ -85,5 +87,21 @@ button, .button
 .error
   color: red
 
-.notice
-  color: #990
+// admin
+body > pre.notice
+  color: #a90
+
+// normal
+body > div.notice
+  position: fixed
+  margin-top: 2px
+  padding: 3px
+  width: 100%
+  background: rgba(#ff6, 0.3)
+  color: #000
+  z-index: 100
+  text-align: center
+  font-weight: bold
+
+.cb
+  clear: both

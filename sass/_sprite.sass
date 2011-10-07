@@ -1,0 +1,27 @@
+// define all kinds of sprites here
+
+@mixin openid
+  background-color: transparent
+  display: block
+  float: left
+  width: 46px
+  height: 46px
+  background-image: url('/img/openid.png')
+  background-repeat: no-repeat
+
+@mixin openid-facebook
+  +openid
+  background-position: 0 0
+
+@mixin openid-google
+  +openid
+  background-position: 0 -46px
+
+@mixin openid-twitter
+  +openid
+  background-position: 0 -92px
+
+@mixin openid-yahoo
+  +openid
+  background-position: 0 -138px
+

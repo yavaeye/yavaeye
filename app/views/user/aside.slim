@@ -3,6 +3,28 @@
     == current_user.nick
     br
     == current_user.karma
+    br
+    a href="/session" data-method="delete" 注销
 
   - else
-    a href="/session/new" 登录
+    #openid-form
+      label data-title="cookie有效期一个月"
+        ' OpenID 登录 -
+        input#openid-remember type="checkbox"
+        | 记住
+      a.google href="/session?identifier=google" data-title="google" data-method="post"
+        | google
+      a.yahoo href="/session?identifier=yahoo" data-title="yahoo" data-method="post"
+        | yahoo
+  
+  br.cb
+
+javascript:
+  if ($.cookies.get('openid_remember') === 'on')
+    $('#openid-remember').attr('checked', true);
+  $('#openid-remember').click(function(){
+    if (this.checked)
+      $.cookies.set('openid_remember', 'on', {expiresAt: new Date(new Date().getTime() + 24*3600*1000*30)});
+    else
+      $.cookies.del('openid_remember');
+  })

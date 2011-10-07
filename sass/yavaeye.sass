@@ -2,21 +2,49 @@
 +global-reset
 +reset-html5
 
+@import sprite
 @import typo
 
 #body
   width: 100%
 
+// login form
+
+#openid-form label
+  display: block
+  padding:
+    top: 8px
+    bottom: 8px
+
+#openid-form a[data-method]
+  text-indent: -50000px
+  margin-right: 5px
+
+#openid-form .google
+  +openid-google
+
+#openid-form .yahoo
+  +openid-yahoo
+
+#openid-form .twitter
+  +openid-twitter
+
+#openid-form .facebook
+  +openid-facebook
+
+// index posts
+
 #posts
   margin-left: 181px
-  border-left: 1px solid #999
 
 aside.posts
   padding: 0 10px
-  background: #ffe
+  background: #efefef
   float: left
   width: 160px
   position: relative
+  border-right: 1px solid #999
+  border-left: 1px solid #999
 
 aside .user
   padding-top: 10px

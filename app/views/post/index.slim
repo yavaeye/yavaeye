@@ -11,7 +11,7 @@ aside.posts
         = distance_of_time post.created_at
         ' 前由
         a href=="/post/user/#{post.user.nick}" = post.user.nick
-        '  发表于
+        '  发射给
         a href=="/board/#{post.board.name}" = post.board.name
         '  小姐.
         a href=="/post/#{post.token}" 吐槽(#{{post.comments.count}})
