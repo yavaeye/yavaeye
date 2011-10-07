@@ -1,8 +1,14 @@
-- @posts.each do |post|
-  a href=post.url = post.title
-  .toolbar
-    ' #{ post.created_at }
-    ' 由
-    a href="/post/user/#{post.user.nick}" = post.user.nick
-    ' 发表于 #{{ post.board.name }}
-    a href="/post/#{post.token}" 吐槽
+#posts
+  - @posts.each do |post|
+    .post
+      a href=post.url
+        = post.title
+        span --> #{post.domain}
+      .toolbar
+        = distance_of_time post.created_at
+        ' 前由
+        a href=="/post/user/#{post.user.nick}" = post.user.nick
+        '  发表于
+        a href=="/board/#{post.board.name}" = post.board.name
+        '  小姐.
+        a href=="/post/#{post.token}" 吐槽(#{{post.comments.count}})

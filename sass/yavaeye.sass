@@ -3,3 +3,30 @@
 +reset-html5
 
 @import typo
+
+#posts .post
+  clear: both
+  padding:
+    left: 10px
+    right: 10px
+    top: 8px
+  border-bottom: 1px solid #999
+  &:hover
+    background: #efefef
+
+#posts .post > a
+  font-size: 18px
+  display: block
+  padding-bottom: 25px
+  &:hover
+    text-decoration: none
+  span
+    @extend .gray
+    font-size: 0.85em
+    margin-left: 5px
+
+#posts .toolbar
+  @extend .gray
+  margin:
+    top: -23px
+  float: right

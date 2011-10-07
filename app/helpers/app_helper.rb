@@ -57,5 +57,7 @@ helpers do
   def meta_csrf
     "<meta name='csrf-param' content='authenticity_token'/><meta name='csrf-token' content='#{session[:csrf]}'/>"
   end
+
+  include DistanceOfTime
 end
 

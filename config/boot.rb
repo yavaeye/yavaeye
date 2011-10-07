@@ -46,9 +46,18 @@ configure :development do
     OpenID.fetcher.instance_variable_set :@proxy, proxy
   end
   $asset = Asset.new
-  before { $asset.compile }
+  before { I18n.locale = :'zh-CN'; $asset.compile }
   require "sinatra/reloader"
 end
+
+puts "=> Loading I18n"
+I18n.locale = :'zh-CN'
+I18n.load_path = I18n.load_path.map do |f|
+  f.sub!(/en\.yml$/, 'zh-CN.yml')
+  f if File.exist? f
+end.compact
+I18n.load_path << settings.root + '/config/zh-CN.yml'
+I18n.reload!
 
 Dir.glob "./{lib,app/models,app/helpers,app/controllers}/*.rb" do |f|
   require f

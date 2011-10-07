@@ -1,0 +1,77 @@
+zh-CN:
+  date:
+    formats:
+      # Use the strftime parameters for formats.
+      # When no format has been given, it uses default.
+      # You can provide other formats here if you like!
+      default: "%Y-%m-%d"
+      short: "%m月%d日"
+      long: "%Y-%m-%d"
+
+    day_names: [星期日, 星期一, 星期二, 星期三, 星期四, 星期五, 星期六]
+    abbr_day_names: [日, 一, 二, 三, 四, 五, 六]
+
+    # Don't forget the nil at the beginning; there's no such thing as a 0th month
+    month_names:
+      - ~
+      - 一月
+      - 二月
+      - 三月
+      - 四月
+      - 五月
+      - 六月
+      - 七月
+      - 八月
+      - 九月
+      - 十月
+      - 十一月
+      - 十二月
+    abbr_month_names:
+      - ~
+      - 1月
+      - 2月
+      - 3月
+      - 4月
+      - 5月
+      - 6月
+      - 7月
+      - 8月
+      - 9月
+      - 10月
+      - 11月
+      - 12月
+    # Used in date_select and datetime_select.
+    order:
+      - :year
+      - :month
+      - :day
+
+  time:
+    formats:
+      default: "%Y年%b%d日 %A %H:%M:%S %Z"
+      short: "%b%d日 %H:%M"
+      long: "%Y年%b%d日 %H:%M"
+    am: "上午"
+    pm: "下午"
+
+  datetime:
+    distance_in_words:
+      half_a_minute: "半分钟"
+      less_than_x_seconds: "不到 %{count} 秒"
+      x_seconds: "%{count} 秒"
+      less_than_x_minutes: "不到 %{count} 分钟"
+      x_minutes: "%{count} 分钟"
+      about_x_hours: "大约 %{count} 小时"
+      x_days: "%{count} 天"
+      about_x_months: "大约 %{count} 个月"
+      x_months: "%{count} 个月"
+      about_x_years: "大约 %{count} 年"
+      over_x_years: "%{count} 年多"
+      almost_x_years: "接近 %{count} 年"
+
+# Used in array.to_sentence.
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: "和"
+      last_word_connector: ", 以及 "
