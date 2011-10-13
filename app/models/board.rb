@@ -31,5 +31,16 @@ class Board
   def self.find_by_name name
     where(name: name).first
   end
+
+  def self.for user
+    if user
+      good = user.unsubscribes.take 10
+      bad = not_in(name: user.unsubscribes).order_by(:created_at.desc).limit(10).map &:name
+    else
+      good = order_by(:created_at.desc).limit(10).map &:name
+      bad = not_in(name: good).order_by(:created_at.desc).limit(10).map &:name
+    end
+    [good, bad]
+  end
 end
 

@@ -104,7 +104,7 @@ class User
   end
 
   def subscribes
-    boards = Board.not_in(name: unsubscribes)
+    Board.not_in(name: unsubscribes).only(:name).map &:name
   end
 
   def mentions

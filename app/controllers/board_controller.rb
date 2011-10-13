@@ -3,11 +3,11 @@ get '/boards' do
   respond_with :'board/index', boards: boards.to_a
 end
 
-get '/boards/new' do
+get '/board/new' do
   respond_with :'board/new', board: Board.new
 end
 
-get '/boards/:name' do |name|
+get '/board/:name' do |name|
   board = Board.find_by_name name
   if params[:token].blank?
     posts = Post.paginate(board_id: board._id)
@@ -17,7 +17,7 @@ get '/boards/:name' do |name|
   respond_with :index, posts: posts.to_a
 end
 
-post '/boards' do
+post '/board' do
   board = Board.create(params[:board], user: current_user)
   if board.persisted?
     status 200
@@ -26,12 +26,12 @@ post '/boards' do
   end
 end
 
-get '/boards/:name/edit' do
+get '/board/:name/edit' do
   board = Board.find_by_name name
   respond_with :'board/edit', board
 end
 
-put '/boards/:name' do
+put '/board/:name' do
   board = Board.find_by_name name
   if board
     status 404
@@ -44,7 +44,7 @@ put '/boards/:name' do
   end
 end
 
-delete '/boards/:name' do
+delete '/board/:name' do
   board = Board.find_by_name name
   if board
     status 404

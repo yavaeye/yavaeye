@@ -8,6 +8,7 @@ get '/' do
       Post.paginate_by_token params[:token]
     end
   @posts = @posts.to_a
+  @good_boards, @bad_boards = Board.for current_user
   respond_with :'post/index', @posts
 end
 
