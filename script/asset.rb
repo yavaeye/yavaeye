@@ -43,13 +43,13 @@ class Asset < Struct.new(:compress, :coffee_dir, :sass_dir, :public_dir)
   end
 
   def js_coffee_files_in_order
-    yavaeye = coffee_dir + "/yavaeye.coffee"
-    files = File.open(yavaeye, &:readline)[/(?<=#require).+/]
-    if files
-      files.strip.split(/\s*,\s*/).map { |f| "#{coffee_dir}/#{f}" } << yavaeye
-    else
-      [yavaeye]
+    yavaeye = "#{coffee_dir}/yavaeye.coffee"
+    files = File.readlines(yavaeye).grep(/^#=\s?require\s/)
+    files.map! do |f|
+      f.sub!(/^#=\s?require\s/, '').strip!
+      "#{coffee_dir}/#{f}"
     end
+    files << yavaeye
   end
 
   def compile_css

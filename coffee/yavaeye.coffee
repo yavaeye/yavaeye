@@ -1,4 +1,7 @@
-#require jquery-1.6.4.js, jquery-ujs.js, jquery-cookies-2.2.0.js, yava.coffee
+#= require jquery-1.6.4.js
+#= require jquery-ujs.js
+#= require jquery-cookies-2.2.0.js
+#= require yava.coffee
 
 $ ->
   # aside height
