@@ -1,0 +1,15 @@
+.board-subscribe
+  - if session[:user_id]
+    - if @boards.empty?
+      | 都被你喜欢完了
+    - else
+      - @boards.each do |board|
+        == board.name
+
+.board-unsubscribes
+  - if session[:user_id]
+    - if current_user.unsubscribes.empty?
+      | 取消订阅一两个?
+    - else
+      - current_user.unsubscribes.each do |name|
+        == name
