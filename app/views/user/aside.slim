@@ -9,7 +9,7 @@
     | 我的提醒:
     - unless current_user.mentions.empty?
       - current_user.mentions.each do |mention|
-        = mention.text
+        == mention.text
     br
     | 收件箱:
     - unless current_user.received_messages.empty?

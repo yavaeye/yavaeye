@@ -66,7 +66,7 @@ class User
     if user
       user.add_to_set(:unfollower_ids, _id)
       add_to_set(:unfollowing_ids, user_id)
-      Mention.new(type: "unfollow", triggers: [nick], event: user.id, text: "unfollow u").deliver
+      Mention.new(type: "unfollow", triggers: [nick], event: user.id).deliver
     end
   end
 
@@ -81,7 +81,7 @@ class User
     board = Board.find_by_name board_name
     if board
       add_to_set(:unsubscribes, board.name)
-      Mention.new(type: "unsubscribe", triggers: [nick], event: board.id, text: "unfollow your board").deliver
+      Mention.new(type: "unsubscribe", triggers: [nick], event: board.id).deliver
     end
   end
 

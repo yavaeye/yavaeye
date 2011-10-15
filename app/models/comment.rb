@@ -29,7 +29,7 @@ class Comment
         mention.add_to_set(:triggers, user.nick)
         mention.update_attributes(read: false)
       else
-        Mention.new(type: type, triggers: [user.nick], event: post.id, text: "post").deliver
+        Mention.new(type: type, triggers: [user.nick], event: post.id).deliver
       end
     end
   end

@@ -20,7 +20,7 @@ class Board
   before_update do
     if active_changed? and active
       user.inc(:karma, 10)
-      Mention.new(type: "founder", event: _id, text: "board").deliver
+      Mention.new(type: "founder", event: _id).deliver
     end
   end
 

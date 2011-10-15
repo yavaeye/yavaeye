@@ -29,7 +29,7 @@ class Post
 
   validate do
     unless link.blank? ^ content.blank?
-      errors.add :base, 'link or content with some problems'
+      errors.add :base, 'link or content has some problems'
     end
   end
 
