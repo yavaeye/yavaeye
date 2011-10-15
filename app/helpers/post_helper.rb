@@ -1,6 +1,6 @@
 helpers do
   def find_post 
-    @post = Post.find_by_token params[:token]
-    halt 404 if !@post
+    @post = Post.where(token: params[:token], user_id: session[:user_id]).first
+    halt 404 unless @post
   end
 end

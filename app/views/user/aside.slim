@@ -5,6 +5,21 @@
     == current_user.karma
     br
     a href="/session" data-method="delete" 注销
+    br
+    | 我的提醒:
+    - unless current_user.mentions.empty?
+      - current_user.mentions.each do |mention|
+        = mention.text
+    br
+    | 收件箱:
+    - unless current_user.received_messages.empty?
+      - current_user.received_messages.each do |message|
+        = message.text
+    br
+    | 发件箱:
+    - unless current_user.sent_messages.empty?
+      - current_user.sent_messages.each do |message|
+        = message.text
 
   - else
     #openid-form

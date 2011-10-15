@@ -5,18 +5,22 @@ get '/boards' do
 end
 
 get '/board/new' do
+  authenticate!
   @board = Board.new
   respond_with :'board/new', @board
 end
 
 get '/board/:name' do
-  find_board
+  params[:order_by] ||= :rank
+  @board = Board.find_by_name params[:name]
   if params[:token].blank?
-    @posts = Post.paginate(board_id: @board._id)
+    @posts = Post.paginate(board_id: @board._id, order_by: params[:order_by])
   else
-    @posts = Post.paginate_by_token params[:token], board_id: @board._id
+    @posts = Post.paginate_by_token params[:token], board_id: @board._id, order_by: params[:order_by]
   end
-  respond_with 'post/index', @posts
+  @posts = @posts.to_a
+  @good_boards, @bad_boards = Board.for current_user
+  respond_with :'post/index', @posts
 end
 
 post '/board' do
@@ -30,16 +34,18 @@ post '/board' do
       f.json { @board.to_json }
     end
   else
-    respond_with :'post/new', @board
+    respond_with :'post/index', @board
   end
 end
 
 get '/board/:name/edit' do
+  authenticate!
   find_board
   respond_with :'board/edit', @board
 end
 
 put '/board/:name' do
+  authenticate!
   find_board
   if @board.update_attributes(params[:board])
     respond_to do |f|
@@ -52,6 +58,7 @@ put '/board/:name' do
 end
 
 delete '/board/:name' do
+  authenticate!
   find_board
   flash[:notice] = @board.destroy ? '删掉了' : '删不掉'
   redirect back

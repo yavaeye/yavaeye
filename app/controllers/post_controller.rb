@@ -1,11 +1,12 @@
 # encoding: UTF-8
 
 get '/' do
+  params[:order_by] ||= :rank
   @posts =
     if params[:token].blank?
-      Post.paginate
+      Post.paginate order_by: params[:order_by]
     else
-      Post.paginate_by_token params[:token]
+      Post.paginate_by_token params[:token], order_by: params[:order_by]
     end
   @posts = @posts.to_a
   @good_boards, @bad_boards = Board.for current_user
@@ -21,7 +22,7 @@ get '/post/new' do
 end
 
 get '/post/:token' do
-  find_post
+  @post = Post.find_by_token params[:token]
   respond_with :'post/show', @post
 end
 
