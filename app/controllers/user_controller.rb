@@ -30,7 +30,7 @@ before '/user/*' do
 end
 
 get '/user/profile' do
-  respond_with :'user/profile', user: current_user
+  respond_with :'user/index'
 end
 
 get '/user/achievements' do

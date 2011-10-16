@@ -1,0 +1,21 @@
+.user-boards
+  - unless current_user.boards.blank?
+    | 我拥有的小姐:
+    - current_user.boards.each do |board|
+      a href="/board/#{board.name}" = board.name
+
+.last-posts
+  | 我最近的文章:
+  - unless current_user.posts.blank?
+    - current_user.posts.take(5).each do |post|
+      a href="/post/#{post.token}" = post.title
+  - else
+    | 赶紧发贴赚karma啊!
+
+.last-comments
+  | 我最近的回复:
+  - unless current_user.comments.blank?
+    - current_user.comments.take(5).each do |comment|
+      a href="/post/#{comment.post.token}" = comment.post.title
+  - else
+    | 你的槽点有那么高么?
