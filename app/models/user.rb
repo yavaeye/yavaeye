@@ -71,14 +71,14 @@ class User
   end
 
   def subscribe board_name
-    board = Board.find_by_name board_name
+    board = Board.where(name: board_name).first
     if board
       pull(:unsubscribes, board.name)
     end
   end
 
   def unsubscribe board_name
-    board = Board.find_by_name board_name
+    board = Board.where(name: board_name).first
     if board
       add_to_set(:unsubscribes, board.name)
       Mention.new(type: "unsubscribe", triggers: [nick], event: board.id).deliver

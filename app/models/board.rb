@@ -28,10 +28,6 @@ class Board
     user.inc(:karma, -10)
   end
 
-  def self.find_by_name name
-    where(name: name).first
-  end
-
   def self.for user
     if user
       good = user.unsubscribes.take 10

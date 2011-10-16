@@ -16,7 +16,7 @@ end
 get '/post/new' do
   authenticate!
   @post = Post.new
-  board = Board.find_by_name params[:board]
+  board = Board.where(name: params[:board]).first 
   @post.board = board if board and board.active
   slim :'post/new'
 end
