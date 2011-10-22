@@ -20,6 +20,7 @@ begin
 
   # make sure admin initialized in test database
   Secret.admin_password = 'admin'
+  require "nokogiri"
 end
 
 class TestCase < MiniTest::Unit::TestCase
@@ -47,5 +48,20 @@ class FunctionalTestCase < TestCase
       super(path, params, options)
     end
     RUBY
+  end
+
+  # select css in response
+  def css selector
+    s = body
+    if s.empty?
+      raise 'Response has no body'
+    else
+      @body_dom ||= Nokogiri.HTML(s)
+      @body_dom.css selector
+    end
+  end
+
+  def assert_select selector
+    assert css(selector).present?, "selector not found: #{selector.inspect}"
   end
 end

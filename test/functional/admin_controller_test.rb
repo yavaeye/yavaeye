@@ -43,6 +43,25 @@ class AdminControllerTest < FunctionalTestCase
     assert_equal [@user.id.to_s], user.unfollowing_ids
   end
 
+  def test_index_nav
+    get '/admin/user', {}, @opts
+    assert_select 'a[href="/admin/user/new"]'
+    assert_select 'a[href="/admin/user"]'
+  end
+
+  def test_new_nav 
+    get '/admin/user/new', {}, @opts
+    assert_select 'a[href="/admin/user/new"]'
+    assert_select 'a[href="/admin/user"]'
+  end
+
+  def test_edit_nav 
+    get "/admin/user/#{@user.id}/edit", {}, @opts
+    assert_select 'a[href="/admin/user/new"]'
+    assert_select 'a[href="/admin/user"]'
+    assert_select %|a[href="/admin/user/#{@user.id}/edit"]|
+  end
+
   private
 
   def access_protected verb, url
