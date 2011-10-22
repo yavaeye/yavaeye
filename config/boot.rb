@@ -50,6 +50,10 @@ configure :development do
   require "sinatra/reloader"
 end
 
+configure :development, :test do
+  require 'pry'
+end
+
 puts "=> Loading I18n"
 I18n.locale = :'zh-CN'
 I18n.load_path = I18n.load_path.map do |f|
