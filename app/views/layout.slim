@@ -9,8 +9,7 @@ html
     == meta_csrf
 
   body
-    - if flash[:notice]
-      .notice == flash[:notice]
+    .notice = flash[:notice]
     #body
       == yield
 
