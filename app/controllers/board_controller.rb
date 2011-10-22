@@ -13,6 +13,7 @@ end
 get '/board/:name' do
   params[:order_by] ||= :rank
   @board = Board.where(name: params[:name]).first
+  redirect '/' unless @board
   if params[:token].blank?
     @posts = Post.paginate(board_id: @board._id, order_by: params[:order_by])
   else
