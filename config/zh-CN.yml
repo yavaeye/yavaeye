@@ -69,9 +69,16 @@ zh-CN:
       over_x_years: "%{count} 年多"
       almost_x_years: "接近 %{count} 年"
 
-# Used in array.to_sentence.
+  # Used in array.to_sentence.
   support:
     array:
       words_connector: ", "
       two_words_connector: "和"
       last_word_connector: ", 以及 "
+
+  # missing errors of mongoid
+  mongoid:
+    errors:
+      messages:
+        too_short: 太短
+        invalid: 不对头

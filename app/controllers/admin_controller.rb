@@ -18,9 +18,9 @@ before "/admin/*" do
     @fields = []
     @model.fields.each do |(name, ty)|
       next if %w[_type id _id created_at updated_at deleted_at].include?(name)
-      next if (ty.type == Hash or ty.type == Array)
-      ty = ty.type == Boolean ? 'checkbox' : name == 'content' ? 'textarea' : 'text'
-      @fields << [name, ty]
+      desc = (ty.type == Hash ? ' (hash)' : ty.type == Array ? ' (array)' : nil)
+      field_type = ty.type == Boolean ? 'checkbox' : name == 'content' ? 'textarea' : 'text'
+      @fields << [name, field_type, desc]
     end
   end
 end
@@ -90,8 +90,10 @@ get "/admin/:model/new" do
 end
 
 post "/admin/:model/?" do |model|
-  @object = @model.new(params[model.singularize])
-  if @object.save
+  @object = @model.new
+  @object.assign_jsonify_attrs params[model.singularize]
+  # tricky: @object.errors.empty? will remove errors
+  if @object.errors.to_hash.empty? and @object.save
     flash[:notice] = 'created.'
     redirect "/admin/#{model}/#{@object.id}/edit"
   else
@@ -106,7 +108,8 @@ end
 
 put "/admin/:model/:id/?" do |model, id|
   @object = @model.unscoped.find id
-  if @object.update_attributes(params[model.singularize])
+  @object.assign_jsonify_attrs params[model.singularize]
+  if @object.errors.to_hash.empty? and @object.save
     flash[:notice] = 'updated.'
     redirect "/admin/#{model}/#{@object.id}/edit"
   else

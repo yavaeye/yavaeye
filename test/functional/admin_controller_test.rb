@@ -4,11 +4,9 @@ class AdminControllerTest < FunctionalTestCase
   def setup
     @user = Factory(:user)
     @opts = {'rack.session' => {'admin' => true, 'csrf' => 'random-string'}}
-    @user_params = {
-      openid: "http://google.com/o8/id/exBmi19p",
-      nick: "yavaeye2",
-      email: "yavaeye2@gmail.com"
-    }
+    @user_params = Factory.build(:user).attributes.keep_if do |k, v|
+      %w[openid nick email].include? k
+    end
   end
 
   def test_index
@@ -27,8 +25,22 @@ class AdminControllerTest < FunctionalTestCase
 
   def test_create
     count = User.count
-    post '/admin/user', {'authenticity_token' => 'random-string', user: @user_params}, @opts
+    post '/admin/user', with_csrf(user: @user_params), @opts
     assert_equal count + 1, User.count
+  end
+
+  def test_create_with_invalid_json
+    count = User.count
+    @user_params['unfollowing_ids'] = "{}"
+    post "/admin/user", with_csrf(user: @user_params), @opts
+    assert_equal count, User.count
+  end
+
+  def test_update_with_json
+    user = Factory(:user)
+    put "/admin/user/#{user.id}", with_csrf(user: {'unfollowing_ids' => [@user.id].to_json}), @opts
+    user.reload
+    assert_equal [@user.id.to_s], user.unfollowing_ids
   end
 
   private
@@ -38,6 +50,11 @@ class AdminControllerTest < FunctionalTestCase
     assert_equal 200, status
     send verb, url
     assert_equal 302, status
+  end
+
+  def with_csrf params
+    params['authenticity_token'] = 'random-string'
+    params
   end
 end
 
