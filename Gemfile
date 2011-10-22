@@ -23,4 +23,5 @@ group :development, :test do
   gem 'capistrano'
   gem 'ruby-debug19'
   gem 'simplecov'
+  gem 'pry'
 end
