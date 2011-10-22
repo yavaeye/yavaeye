@@ -51,11 +51,15 @@ helpers do
   end
 
   def csrf
-    "<input type='hidden' name='authenticity_token' value='#{session[:csrf]}'></input>"
+    "<input type='hidden' name='authenticity_token' value='#{csrf_token}'></input>"
   end
 
   def meta_csrf
-    "<meta name='csrf-param' content='authenticity_token'/><meta name='csrf-token' content='#{session[:csrf]}'/>"
+    "<meta name='csrf-param' content='authenticity_token'/><meta name='csrf-token' content='#{csrf_token}'/>"
+  end
+
+  def csrf_token
+    session[:csrf] ||= "%032x" % rand(2**128 - 1)
   end
 
   include DistanceOfTime
