@@ -1,3 +1,6 @@
 == @post.title
 
 == @post.content
+
+- @post.comments.each do |comment|
+  == comment
