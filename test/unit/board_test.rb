@@ -17,6 +17,8 @@ class BoardTest < TestCase
     assert_equal 0, User.first.karma
     Board.unscoped.first.update_attributes!(active: true)
     assert_equal 10, User.first.karma
+    Board.unscoped.first.update_attributes!(name: "end")
+    assert_equal 10, User.first.karma
     Board.unscoped.first.destroy
     assert_equal 0, User.first.karma
   end

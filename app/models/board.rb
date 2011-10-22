@@ -17,7 +17,7 @@ class Board
   validates_length_of :name, maximum: 16
   validates_length_of :description, maximum: 1024
 
-  before_update do
+  after_update do
     if active_changed? and active
       user.inc(:karma, 10)
       Mention.new(type: "founder", event: _id).deliver
