@@ -11,8 +11,13 @@ class Hash
       if BOOLEAN_ATTRIBUTES.include?(key)
         r << %(#{key}="#{key}") if value
       elsif !value.nil?
-        value = value.is_a?(Array) ? value.join(" ") : value.to_s
-        r << "#{key}=#{value.inspect}"
+        value =
+          case value
+          when String; value.inspect
+          when Array, Hash; value.inspect.inspect
+          else value.to_s.inspect
+          end
+        r << "#{key}=#{value}"
       end
     end
     r.sort!

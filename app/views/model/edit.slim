@@ -1,5 +1,5 @@
 nav.tertiary
-  - obj_path = File.dirname request.path
+  - obj_path = "/admin/#{@object.class.name.underscore}/#{@object.id}"
   - model_path = File.dirname obj_path
   a href=model_path list
   a href="#{model_path}/new" new

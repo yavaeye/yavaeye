@@ -12,18 +12,3 @@
     input.button type="submit" value="save"
     '
     button onclick="window.location='/admin/#{params[:model]}';return false" cancel
-
-/ assign default values for arrays and hashes
-javascript:
-  $(function(){
-    $('label .gray').each(function(){
-      var meta = $(this).text()
-      var input = $(this).siblings('input')
-      if (input.val()) return
-      if(/array/i.test(meta)) {
-        input.val('[]')
-      } else if(/hash/i.test(meta)) {
-        input.val('{}')
-      }
-    })
-  })

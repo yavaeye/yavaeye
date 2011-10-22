@@ -14,11 +14,12 @@ nav.tertiary
       th
     - @objects.each do |object|
       tr class="#{'deleted' if (object.deleted_at rescue nil)}"
-        td = object.id
+        td
+          a href="#@prefix/#{object.id}/edit" = object.id
         - @fields.each do |(name)|
-          td = object.send name
-        td == object.created_at.strftime("%Y-%m-%d %H:%M") rescue nil
-        td == object.updated_at.strftime("%Y-%m-%d %H:%M") rescue nil
+          td = name == 'content' ? '...' : object.send(name)
+        td == object.created_at.strftime("%y-%m-%d %H:%M") rescue nil
+        td == object.updated_at.strftime("%y-%m-%d %H:%M") rescue nil
         td
           a.button href="#@prefix/#{object.id}/edit" edit
           - if (object.deleted_at rescue nil)

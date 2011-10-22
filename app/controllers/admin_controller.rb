@@ -111,7 +111,7 @@ put "/admin/:model/:id/?" do |model, id|
   @object.assign_jsonify_attrs params[model.singularize]
   if @object.errors.to_hash.empty? and @object.save
     flash[:notice] = 'updated.'
-    redirect "/admin/#{model}/#{@object.id}/edit"
+    redirect "/admin/#{model}/#{id}/edit"
   else
     slim :'model/edit', layout: :admin
   end
