@@ -1,6 +1,9 @@
 == @post.title
-
-== @post.content
+.post-content
+  - unless @post.link.blank?
+    a href="#{@post.link}" #{@post.link}
+  - else
+    == @post.content
 
 - if session[:user_id]
   == form Comment.new, action: '/comment', method: 'post' do |f|
