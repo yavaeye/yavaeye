@@ -20,11 +20,10 @@ GEM
       i18n (~> 0.6)
     activesupport (3.1.1)
       multi_json (~> 1.0)
-    archive-tar-minitar (0.5.2)
     backports (2.3.0)
     bcrypt-ruby (3.0.1)
-    bson (1.4.1)
-    bson_ext (1.4.1)
+    bson (1.4.0)
+    bson_ext (1.4.0)
     builder (3.0.0)
     capistrano (2.9.0)
       highline
@@ -34,7 +33,6 @@ GEM
       net-ssh-gateway (>= 1.1.0)
     chunky_png (1.2.5)
     coderay (0.9.8)
-    columnize (0.3.4)
     compass (0.11.5)
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
@@ -43,18 +41,16 @@ GEM
     factory_girl (2.2.0)
       activesupport
     fssm (0.2.7)
-    highline (1.6.2)
+    highline (1.6.5)
     i18n (0.6.0)
     kgio (2.6.0)
-    linecache19 (0.5.12)
-      ruby_core_source (>= 0.1.4)
-    method_source (0.6.5)
-      ruby_parser (>= 2.0.5)
-    mongo (1.4.1)
-      bson (= 1.4.1)
-    mongoid (2.3.2)
+    method_source (0.6.7)
+      ruby_parser (>= 2.3.1)
+    mongo (1.4.0)
+      bson (= 1.4.0)
+    mongoid (2.3.3)
       activemodel (~> 3.1)
-      mongo (~> 1.4)
+      mongo (~> 1.3)
       tzinfo (~> 0.3.22)
     multi_json (1.0.3)
     net-scp (1.0.4)
@@ -65,32 +61,22 @@ GEM
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
     nokogiri (1.5.0)
-    pry (0.9.3)
-      coderay (>= 0.9.8)
-      method_source (>= 0.6.0)
-      ruby_parser (>= 2.0.5)
-      slop (~> 1.9.0)
+    pry (0.9.7.4)
+      coderay (~> 0.9.8)
+      method_source (~> 0.6.7)
+      ruby_parser (>= 2.3.1)
+      slop (~> 2.1.0)
     rack (1.3.5)
     rack-protection (1.1.4)
       rack
     rack-test (0.6.1)
       rack (>= 1.0)
     raindrops (0.8.0)
-    ruby-debug-base19 (0.11.25)
-      columnize (>= 0.3.1)
-      linecache19 (>= 0.5.11)
-      ruby_core_source (>= 0.1.4)
-    ruby-debug19 (0.11.6)
-      columnize (>= 0.3.1)
-      linecache19 (>= 0.5.11)
-      ruby-debug-base19 (>= 0.11.19)
     ruby-openid (2.1.8)
-    ruby_core_source (0.1.5)
-      archive-tar-minitar (>= 0.5.2)
-    ruby_parser (2.0.6)
+    ruby_parser (2.3.1)
       sexp_processor (~> 3.0)
     sass (3.1.10)
-    sexp_processor (3.0.5)
+    sexp_processor (3.0.7)
     simplecov (0.5.4)
       multi_json (~> 1.0.3)
       simplecov-html (~> 0.5.3)
@@ -108,13 +94,13 @@ GEM
       tilt (~> 1.3)
     sinatra-flash (0.3.0)
       sinatra (>= 1.0.0)
-    slim (1.0.3)
+    slim (1.0.4)
       temple (~> 0.3.4)
       tilt (~> 1.3.2)
-    slop (1.9.1)
+    slop (2.1.0)
     temple (0.3.4)
     tilt (1.3.3)
-    tzinfo (0.3.30)
+    tzinfo (0.3.31)
     unicorn (4.1.1)
       kgio (~> 2.4)
       rack
@@ -126,16 +112,15 @@ PLATFORMS
 DEPENDENCIES
   activesupport
   bcrypt-ruby
-  bson_ext
+  bson_ext (~> 1.4.0)
   capistrano
   compass
   factory_girl
-  mongoid
+  mongoid (~> 2.3.3)
   mongoid_token!
   nokogiri
   pry
   rack-test
-  ruby-debug19
   ruby-openid
   simplecov
   sinatra (~> 1.3.0)

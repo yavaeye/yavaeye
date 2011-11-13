@@ -1,16 +1,15 @@
 begin
   ENV["RACK_ENV"] = 'test'
+  
+  require_relative "../config/boot.rb"
+  
   if $coverage
     # https://github.com/colszowka/simplecov
-    require 'simplecov'
     SimpleCov.start 'rails'
   end
 
-  require_relative "../config/boot.rb"
   set :sessions, false
-
-  require "ruby-debug"
-  require "factory_girl"
+  
   require 'minitest/autorun'
 
   dir = File.expand_path File.dirname(__FILE__)
@@ -20,7 +19,6 @@ begin
 
   # make sure admin initialized in test database
   Secret.admin_password = 'admin'
-  require "nokogiri"
 end
 
 class TestCase < MiniTest::Unit::TestCase

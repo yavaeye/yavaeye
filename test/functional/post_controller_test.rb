@@ -31,6 +31,10 @@ class PostControllerTest < FunctionalTestCase
     get '/post/new'
     assert_equal 302, status
   end
+  
+  def test_post
+    
+  end
 
   def test_show
     make_post

@@ -3,18 +3,8 @@ require "fileutils"
 FileUtils.cd File.dirname File.dirname __FILE__
 
 require "bundler"
-ENV['RACK_ENV'] ||= 'development'
-Bundler.setup ENV['RACK_ENV'].to_sym
-Bundler.require
-require 'sinatra'
-require 'sinatra/flash'
-require 'sinatra/contrib'
-require 'slim'
-require 'bcrypt'
-require 'active_support/core_ext'
-require 'mongoid'
-require 'mongoid_token'
-require "openid"
+ENV["RACK_ENV"] ||= "development"
+Bundler.require(:default, ENV["RACK_ENV"].to_sym)
 
 require_relative 'database'
 require "./lib/secret"
@@ -41,17 +31,11 @@ configure :development do
   # proxy for openid
   if port = ENV['openid_proxy_port']
     puts "=> Using proxy for openid request"
-    require 'socksify/http'
     proxy = Net::HTTP.SOCKSProxy '127.0.0.1', port.to_i
     OpenID.fetcher.instance_variable_set :@proxy, proxy
   end
   $asset = Asset.new
   before { I18n.locale = :'zh-CN'; $asset.compile }
-  require "sinatra/reloader"
-end
-
-configure :development, :test do
-  require 'pry'
 end
 
 puts "=> Loading I18n"
