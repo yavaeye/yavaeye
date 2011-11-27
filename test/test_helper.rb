@@ -1,15 +1,15 @@
 begin
   ENV["RACK_ENV"] = 'test'
-  
+
   require_relative "../config/boot.rb"
-  
+
   if $coverage
     # https://github.com/colszowka/simplecov
     SimpleCov.start 'rails'
   end
 
   set :sessions, false
-  
+
   require 'minitest/autorun'
 
   dir = File.expand_path File.dirname(__FILE__)

@@ -43,4 +43,3 @@ delete '/comment/:id' do |id|
   flash[:notice] = @comment.destroy ? '删掉了' : '删不掉'
   redirect "/post/#{@comment.post.token}"
 end
-

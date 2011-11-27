@@ -29,7 +29,7 @@ end
 
 class Mention < Message
   include Deliver
-  
+
   field :type
   field :event
   field :triggers, type: Array, default: []
