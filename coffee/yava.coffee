@@ -14,7 +14,7 @@ window.Yava =
     elem.find('.submit').removeAttr('disabled')
 
   setNotice: (text) ->
-    $('.notice').replaceWith("<div class='notice'>" + text + "</div>")
+    $('div.notice').replaceWith("<div class='notice'>" + text + "</div>")
     setTimeout (-> $('.notice').fadeOut 1500), 2500
 
   layout: ->

@@ -1,7 +1,12 @@
 == slim :'board/_nav'
 
+.top-road.road
+  .notice = flash[:notice]
+
 aside.posts
   == slim :'user/aside'
+
+h1 yavaeye
 
 #posts
   - @posts.each do |post|

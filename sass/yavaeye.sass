@@ -12,43 +12,92 @@
 
 // login form
 
-#openid-form label
-  display: block
-  padding:
-    top: 8px
-    bottom: 8px
+#openid-form
+  a[data-method]
+    text-indent: -50000px
+    margin-right: 5px
+  label
+    display: block
+    padding:
+      top: 8px
+      bottom: 8px
+  .google
+    +openid-google
+  .yahoo
+    +openid-yahoo
+  .twitter
+    +openid-twitter
+  .facebook
+    +openid-facebook
 
-#openid-form a[data-method]
-  text-indent: -50000px
-  margin-right: 5px
+nav.boards
+  a
+    padding: 1px 4px
+    margin: 1px
+    display: inline-block
+  .good, .bad
+    background: #fff
+    height: 24px
+  .good
+    position: absolute
+    left: 0
+    top: 0
+    width: 60%
+  .bad
+    position: relative
+    width: 100%
+    margin-left: 60%
+    a
+      color: #fff
+      background: #000
+      float: left
 
-#openid-form .google
-  +openid-google
-
-#openid-form .yahoo
-  +openid-yahoo
-
-#openid-form .twitter
-  +openid-twitter
-
-#openid-form .facebook
-  +openid-facebook
-
-// board list
-
-nav.boards a
-  padding: 1px 4px
-  margin: 1px
-  display: inline-block
-
-nav.bad a
-  color: #fff
-  background: #000
-
-// index posts
+.top-road
+  margin-top: -3px
+  position: relative
+  z-index: -5
+  border:
+    top: 4px solid #ccc // $soft-border
+    bottom: $soft-border
+  clear: both
+  +box-shadow(#eee 0 0 2px 2px inset)
+  +pie
 
 #posts
   margin-left: 181px
+  .post
+    padding:
+      left: 10px
+      right: 10px
+      top: 8px
+    border-bottom: $soft-border
+    &:hover
+      background: #efefef
+
+  .post > a
+    font-size: 18px
+    display: block
+    padding-bottom: 25px
+    &:hover
+      text-decoration: none
+    span
+      @extend .gray
+      font-size: 0.85em
+      margin-left: 5px
+
+  .toolbar
+    @extend .gray
+    margin:
+      top: -23px
+    float: right
+
+  .load-more a
+    display: block
+    background: #eef
+    text-align: center
+    padding: 5px
+    &:hover
+      background: #f4f4ff
 
 aside.posts
   padding: 0 10px
@@ -56,42 +105,8 @@ aside.posts
   float: left
   width: 160px
   position: relative
-  border-right: 1px solid #999
-  border-left: 1px solid #999
+  border-right: $soft-border
+  border-left: $soft-border
 
 aside .user
   padding-top: 10px
-
-#posts .post
-  padding:
-    left: 10px
-    right: 10px
-    top: 8px
-  border-bottom: 1px solid #999
-  &:hover
-    background: #efefef
-
-#posts .post > a
-  font-size: 18px
-  display: block
-  padding-bottom: 25px
-  &:hover
-    text-decoration: none
-  span
-    @extend .gray
-    font-size: 0.85em
-    margin-left: 5px
-
-#posts .toolbar
-  @extend .gray
-  margin:
-    top: -23px
-  float: right
-
-#posts .load-more a
-  display: block
-  background: #eef
-  text-align: center
-  padding: 5px
-  &:hover
-    background: #f4f4ff
