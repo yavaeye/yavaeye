@@ -8,6 +8,7 @@ Bundler.require(:default, ENV["RACK_ENV"].to_sym)
 
 require_relative 'database'
 require "./lib/secret"
+require "./lib/yava_protection"
 Secret.init
 set :root, File.expand_path('.')
 set :views, settings.root + '/app/views'
@@ -24,7 +25,7 @@ use Rack::Session::Cookie,
   httponly: true
 
 # csrf
-use Rack::Protection::AuthenticityToken
+use Rack::YavaProtection
 
 configure :development do
   require "./script/asset"
