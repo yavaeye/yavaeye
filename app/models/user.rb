@@ -4,6 +4,7 @@ class User
   include Mongoid::Paranoia
 
   field :openid
+  field :github_token
   field :nick
   field :email
   field :karma, type: Float, default: 0.0
@@ -19,8 +20,8 @@ class User
   has_many :messages
   has_many :achievements
 
-  validates_presence_of :openid
-  validates_uniqueness_of :openid, :nick
+  validates_presence_of :email
+  validates_uniqueness_of :openid, :github_token, :nick
   validates_length_of :nick, minimum: 2, maximum: 32
   validates_length_of :email, maximum: 128
   validates_format_of :nick, with: /^[\p{Word}-]+$/u

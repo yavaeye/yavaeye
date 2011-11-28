@@ -8,5 +8,12 @@ helpers do
   def authenticate!
     redirect '/' unless current_user
   end
+
+  def github_client
+    @client = OAuth2::Client.new(GITHUB["id"], GITHUB["secret"],
+                                 :site => "https://github.com",
+                                 :authorize_url => "/login/oauth/authorize",
+                                 :token_url => "/login/oauth/access_token")
+  end
 end
 

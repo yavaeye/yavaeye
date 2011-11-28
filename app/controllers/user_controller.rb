@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 get '/user-new' do
-  if session[:user_openid].blank? or session[:user_email].blank? or current_user
+  if session[:user_email].blank? or current_user
     redirect '/'
   end
   @user = User.new
@@ -9,11 +9,12 @@ get '/user-new' do
 end
 
 post '/user' do
-  if session[:user_openid].blank? or session[:user_email].blank? or params[:user].blank?
+  if session[:user_email].blank? or params[:user].blank?
     redirect '/'
   end
   @user = User.new
   @user.openid = session.delete :user_openid
+  @user.github_token = session.delete :user_github_token
   @user.email = session.delete :user_email
   @user.nick = params[:user][:nick]
   if @user.save

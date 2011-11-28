@@ -48,6 +48,9 @@ end.compact
 I18n.load_path << settings.root + '/config/zh-CN.yml'
 I18n.reload!
 
+#oauth-token
+GITHUB = YAML::load(File.read(settings.root + '/config/oauth.yml'))['github']
+
 Dir.glob "./{lib,app/models,app/helpers,app/controllers}/*.rb" do |f|
   require f
 end
