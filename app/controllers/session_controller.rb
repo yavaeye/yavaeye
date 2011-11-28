@@ -51,13 +51,14 @@ get '/oauth/authorize' do
     token = github_client.auth_code.get_token(code)
     request = token.get("https://api.github.com/user", params: {access_token: token})
     body = JSON.parse(request.body)
-    if @user = User.where(email: body["email"]).first
+    if @user = User.where(github_token: token.token).first
       session[:user_id] = @user.id.to_s
       remember_me @user
       flash[:notice] = "登录成功"
       redirect '/'
     else
-      session[:user_github_token] = token
+      session[:user_github_token] = token.token
+      session[:user_nick] = body["name"]
       session[:user_email] = body["email"]
       redirect '/user-new'
     end
