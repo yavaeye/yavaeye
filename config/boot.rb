@@ -20,7 +20,6 @@ use Rack::Session::Cookie,
   key: 'rack.session',
   domain: (ENV['RACK_ENV'] =~ /development|test/ ? nil : 'yavaeye.com'),
   path: '/',
-  expire_after: 1800, # seconds
   secret: Secret.session_secret,
   httponly: true
 
