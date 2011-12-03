@@ -11,9 +11,10 @@ end
 post '/comment' do
   authenticate!
   @post = Post.where(_id: params[:post_id]).first
-  @comment = Comment.new(params[:comment],user: current_user, post: @post)
-  @comment.save
-  if @comment.persisted?
+  @comment = Comment.new(params[:comment])
+  @comment.post = @post
+  @comment.user = current_user
+  if @comment.save
     respond_to do |f|
       f.html { flash[:notice] = '吐槽成功'; redirect "/post/#{@comment.post.token}" }
       f.json { @comment.to_json }
