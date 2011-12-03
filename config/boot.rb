@@ -53,3 +53,9 @@ GITHUB = YAML::load(File.read(settings.root + '/config/oauth.yml'))['github']
 Dir.glob "./{lib,app/models,app/helpers,app/controllers}/*.rb" do |f|
   require f
 end
+
+module Yava
+  extend self
+  attr_accessor :boot_time
+end
+Yava.boot_timestamp = Time.now.to_i
