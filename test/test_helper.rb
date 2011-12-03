@@ -12,10 +12,7 @@ begin
 
   require 'minitest/autorun'
 
-  dir = File.expand_path File.dirname(__FILE__)
-  Dir.glob "#{dir}/factory/**/*_factory.rb" do |f|
-    require f
-  end
+  require_relative "factory/factories.rb"
 
   # make sure admin initialized in test database
   Secret.admin_password = 'admin'
