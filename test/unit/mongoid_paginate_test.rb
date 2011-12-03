@@ -35,15 +35,19 @@ class MongoidPaginateTest < TestCase
   end
 
   def test_paginate_by_token
-    token = Person.last.token
-    people = Person.paginate_by_token(token, order_by: :rank)
+    people = Person.paginate_by_token(order_by: :rank)
     assert_equal 15, people.to_a.size
+    token = Person.first.token
+    people = Person.paginate_by_token(token, order_by: :rank)
+    assert_equal 0, people.to_a.size
   end
 
   def test_paginate_by_token_with_options
     token = Person.last.token
     people = Person.paginate_by_token(token, order_by: :rank, :rank.gt => 10)
     assert_equal 9, people.to_a.size
+    people = Person.paginate_by_token(token, order_by: :rank, :rank.gte => 10)
+    assert_equal 10, people.to_a.size
   end
 
   def test_paginate_by_token_with_default_order

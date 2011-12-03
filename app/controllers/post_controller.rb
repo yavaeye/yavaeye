@@ -1,13 +1,9 @@
 # encoding: UTF-8
 
 get '/' do
+  token = params.delete(:token)
   params[:order_by] ||= :rank
-  @posts =
-    if params[:token].blank?
-      Post.paginate order_by: params[:order_by]
-    else
-      Post.paginate_by_token params[:token], order_by: params[:order_by]
-    end
+  @posts = Post.paginate_by_token(token, params)
   @posts = @posts.to_a
   @good_boards, @bad_boards = Board.for current_user
   respond_with :'post/index', @posts

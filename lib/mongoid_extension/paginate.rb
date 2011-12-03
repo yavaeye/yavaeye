@@ -11,7 +11,9 @@ module Mongoid
         perpage = options.delete(:perpage) || 15
         column = options.delete(:order_by) || :created_at
 
-        criteria.where(options).order_by(column.desc).skip((pagenum-1) * perpage).limit(perpage)
+        where(options).order_by(column.desc)
+          .skip((pagenum-1) * perpage)
+          .limit(perpage)
       end
 
       # work with mongoid_token
@@ -20,9 +22,15 @@ module Mongoid
         perpage = options.delete(:perpage) || 15
         column = options.delete(:order_by) || :created_at
 
-        anchor = self.where(token: args.first).first
-        criteria = self.where(column.lte => anchor[column])
-        criteria.where(options).and(:token.ne => args.first).order_by(column.desc).limit(perpage)
+        if token = args.first
+          if anchor = where(token: token).first
+            where(options).and(column.lte => anchor[column])
+              .and(:token.ne => token)
+              .order_by(column.desc).limit(perpage)
+          end
+        else
+          where(options).order_by(column.desc).limit(perpage)
+        end
       end
     end
   end
