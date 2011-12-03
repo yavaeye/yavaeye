@@ -1,7 +1,7 @@
 .user
   - if current_user
+    img src="#{gravatar_url current_user.gravatar_id}" alt="头像"
     == current_user.nick
-    img href="#{gravatar_url current_user.email}"
     br
     == current_user.karma
     br

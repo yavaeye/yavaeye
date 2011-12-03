@@ -6,7 +6,7 @@ helpers do
   end
 
   def gravatar_url gravatar_id
-    "https://secure.gravatar.com/avatar/{gravatar_id}?s=32"
+    "https://secure.gravatar.com/avatar/#{gravatar_id}?s=32"
   end
 
   def authenticate!
