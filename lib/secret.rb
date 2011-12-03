@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-# to generate secret: run rake secret
+# to generate secret: rake secret
 # NOTE this is not a complete module, it needs config/secret.rb
 module Secret
   def init
