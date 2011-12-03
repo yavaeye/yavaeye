@@ -56,5 +56,9 @@ class FormProxyTest < TestCase
     out = f.error :openid
     assert out.start_with? "<span class=\"error\">"
   end
-end
 
+  def test_unicode
+    out = @f.text :nick, :value => "尼克"
+    assert_equal "<input type=\"text\" id=\"user_nick\" name=\"user[nick]\" value=\"尼克\"></input>", out
+  end
+end
