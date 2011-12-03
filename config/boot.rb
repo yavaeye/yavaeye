@@ -15,13 +15,15 @@ set :views, settings.root + '/app/views'
 set :method_override, true # allow _method=put, _method=delete params
 
 set :sessions, true
-
 use Rack::Session::Cookie,
   key: 'rack.session',
   domain: (ENV['RACK_ENV'] =~ /development|test/ ? nil : 'yavaeye.com'),
   path: '/',
   secret: Secret.session_secret,
   httponly: true
+
+# oauth app token
+set :github, YAML::load_file(settings.root + '/config/oauth.yml')['github']
 
 # csrf
 use Rack::YavaProtection
@@ -40,8 +42,5 @@ end
 
 puts "=> Loading I18n"
 YavaUtils.load_i18n settings.root
-
-#oauth-token
-GITHUB = YAML::load_file(settings.root + '/config/oauth.yml')['github']
 
 Dir.glob("./{app/models,app/helpers,app/controllers}/*.rb") { |f| require f }

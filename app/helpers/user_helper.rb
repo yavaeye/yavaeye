@@ -10,7 +10,7 @@ helpers do
   end
 
   def github_client
-    @client = OAuth2::Client.new(GITHUB["id"], GITHUB["secret"],
+    @github_client ||= OAuth2::Client.new(settings.github["id"], settings.github["secret"],
                                  :site => "https://github.com",
                                  :authorize_url => "/login/oauth/authorize",
                                  :token_url => "/login/oauth/access_token")
