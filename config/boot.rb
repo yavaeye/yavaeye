@@ -7,9 +7,9 @@ ENV["RACK_ENV"] ||= "development"
 Bundler.require(:default, ENV["RACK_ENV"].to_sym)
 
 require_relative 'database'
-require "./lib/secret"
-require "./lib/yava_protection"
+Dir.glob("./lib/**/*.rb") { |f| require f }
 Secret.init
+
 set :root, File.expand_path('.')
 set :views, settings.root + '/app/views'
 set :method_override, true # allow _method=put, _method=delete params
@@ -39,23 +39,9 @@ configure :development do
 end
 
 puts "=> Loading I18n"
-I18n.locale = :'zh-CN'
-I18n.load_path = I18n.load_path.map do |f|
-  f.sub!(/en\.yml$/, 'zh-CN.yml')
-  f if File.exist? f
-end.compact
-I18n.load_path << settings.root + '/config/zh-CN.yml'
-I18n.reload!
+YavaUtils.load_i18n settings.root
 
 #oauth-token
-GITHUB = YAML::load(File.read(settings.root + '/config/oauth.yml'))['github']
+GITHUB = YAML::load_file(settings.root + '/config/oauth.yml')['github']
 
-Dir.glob "./{lib,app/models,app/helpers,app/controllers}/*.rb" do |f|
-  require f
-end
-
-module Yava
-  extend self
-  attr_accessor :boot_timestamp
-end
-Yava.boot_timestamp = Time.now.to_i
+Dir.glob("./{app/models,app/helpers,app/controllers}/*.rb") { |f| require f }

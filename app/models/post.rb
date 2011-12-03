@@ -50,7 +50,7 @@ class Post
   end
 
   before_save do
-    self.score =  Hot.value( marks.size - dislikes.size, created_at)
+    self.score =  YavaUtils.hot_value( marks.size - dislikes.size, created_at)
   end
 
   after_destroy do

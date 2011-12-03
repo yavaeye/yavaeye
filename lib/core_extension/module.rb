@@ -1,4 +1,4 @@
-# classes includes Mongoid::Document
+# return array of classes that are Mongoid::Document
 def Module.mongoid_document_classes
   @mongoid_document_classes ||= begin
     # ruby -e 'p Module.constants'

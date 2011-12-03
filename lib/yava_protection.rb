@@ -1,5 +1,9 @@
+# encoding: UTF-8
+
 module Rack
+  # the "all-in-one" protection middleware
   YavaProtection = Struct.new(:app)
+
   class YavaProtection
     SAFE_VERBS = %w[GET HEAD OPTIONS TRACE]
 

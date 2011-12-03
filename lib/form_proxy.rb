@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 # for form helper
 FormProxy = Struct.new :klass, :obj
 class FormProxy
