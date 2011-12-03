@@ -10,15 +10,12 @@ get '/board/new' do
   respond_with :'board/new', @board
 end
 
-get '/board/:name' do
-  params[:order_by] ||= :rank
-  @board = Board.where(name: params[:name]).first
-  redirect '/' unless @board
-  if params[:token].blank?
-    @posts = Post.paginate(board_id: @board._id, order_by: params[:order_by])
-  else
-    @posts = Post.paginate_by_token params[:token], board_id: @board._id, order_by: params[:order_by]
-  end
+get '/board/:name' do |name|
+  @board = Board.where(name: params.delete('name')).first
+  redirect '/' if @board.blank?
+  params['order_by'] ||= :score
+  params['board_id'] = @board._id
+  @posts = Post.paginate_by_token(params)
   @posts = @posts.to_a
   @good_boards, @bad_boards = Board.for current_user
   respond_with :'post/index', @posts

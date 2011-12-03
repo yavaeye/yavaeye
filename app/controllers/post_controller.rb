@@ -1,9 +1,8 @@
 # encoding: UTF-8
 
 get '/' do
-  token = params.delete(:token)
-  params[:order_by] ||= :rank
-  @posts = Post.paginate_by_token(token, params)
+  params['order_by'] ||= 'score'
+  @posts = Post.paginate_by_token(params)
   @posts = @posts.to_a
   @good_boards, @bad_boards = Board.for current_user
   respond_with :'post/index', @posts
