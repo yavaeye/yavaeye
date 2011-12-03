@@ -56,6 +56,6 @@ end
 
 module Yava
   extend self
-  attr_accessor :boot_time
+  attr_accessor :boot_timestamp
 end
 Yava.boot_timestamp = Time.now.to_i
