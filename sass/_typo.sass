@@ -24,8 +24,11 @@ th
   font-weight: bold
 
 a
-  +link-colors($blue, lighten($blue, 15), $blue, $blue)
+  +single-transition
+  +link-colors($blue, lighten($blue, 20), $blue, $blue)
   +hover-link
+  &:hover
+    text-decoration: none
 
 h1, h2
   font-size: 26px
