@@ -58,7 +58,12 @@ class FunctionalTestCase < TestCase
     end
   end
 
-  def assert_select selector
-    assert css(selector).present?, "selector not found: #{selector.inspect}"
+  # similar to rails test helper assert_select
+  def assert_select selector, have=true
+    if have
+      assert css(selector).present?, "selector not found: #{selector.inspect}"
+    else
+      assert css(selector).blank?, "selector should not be found: #{selector.inspect}"
+    end
   end
 end

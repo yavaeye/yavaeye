@@ -58,7 +58,7 @@ class FormProxyTest < TestCase
   end
 
   def test_unicode
-    out = @f.text :nick, :value => "尼克"
+    out = CGI.unescape_html(@f.text :nick, :value => "尼克")
     assert_equal "<input type=\"text\" id=\"user_nick\" name=\"user[nick]\" value=\"尼克\"></input>", out
   end
 end
