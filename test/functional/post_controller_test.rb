@@ -4,11 +4,10 @@ require_relative "../test_helper"
 
 class PostControllerTest < FunctionalTestCase
   def setup
-    @user = Factory(:user)
-    @logged_in_session = {'rack.session' => {'user_id' => @user.id.to_s, 'csrf' => 'random-string'}}
+    login
 
     @other_user = Factory.build(:user)
-    @other_logged_in_session = {'rack.session' => {'user_id' => @other_user.id.to_s, 'csrf' => 'random-string'}}
+    @other_logged_in_session = {'rack.session' => {'user_id' => @other_user.id.to_s}}
 
     @board = Factory(:board)
   end
@@ -20,11 +19,12 @@ class PostControllerTest < FunctionalTestCase
   end
 
   def test_new
-    get '/post/new', {}, @logged_in_session
+    get '/post/new'
     assert_equal 200, status
   end
 
   def test_new_forbidden
+    session.clear
     get '/post/new'
     assert_equal 302, status
   end
@@ -47,7 +47,7 @@ class PostControllerTest < FunctionalTestCase
 
   def test_edit
     make_post
-    get "/post/#{@post.token}/edit", {}, @logged_in_session
+    get "/post/#{@post.token}/edit"
     assert_equal 200, status
   end
 

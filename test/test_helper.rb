@@ -20,6 +20,16 @@ begin
   Secret.admin_password = 'admin'
 end
 
+# disable protection when testing
+module Rack
+  class YavaProtection
+    alias _call call
+    def call env
+      app.call env
+    end
+  end
+end
+
 class TestCase < MiniTest::Unit::TestCase
   def initialize *xs
     super
@@ -47,16 +57,12 @@ class FunctionalTestCase < TestCase
     RUBY
   end
 
-  def with_csrf params={}
-    params.merge 'authenticity_token' => 'random-string'
-  end
-
   def login
     @user = Factory(:user)
     # NOTE DO NOT even try to use with_indifferent_access, will surely fail
     @env ||= {}
     @env['rack.session'] ||= {} # trap: session is not the same hash
-    @env['rack.session'].merge! 'user_id' => @user.id.to_s, 'csrf' => 'random-string'
+    @env['rack.session'].merge! 'user_id' => @user.id.to_s
   end
 
   def session

@@ -17,46 +17,40 @@ class AdminControllerTest < FunctionalTestCase
     access_protected :get, "/admin/user/#{@user.id}/edit"
   end
 
-  def test_csrf_create
-    count = User.count
-    post '/admin/user', {user: @user_params}
-    assert_equal count, User.count
-  end
-
   def test_create
     count = User.count
-    post '/admin/user', with_csrf(user: @user_params), @env
+    post '/admin/user', {user: @user_params}, @env
     assert_equal count + 1, User.count
   end
 
   def test_create_with_invalid_json
     count = User.count
     @user_params['unfollowing_ids'] = "{}"
-    post "/admin/user", with_csrf(user: @user_params)
+    post "/admin/user", {user: @user_params}
     assert_equal count, User.count
   end
 
   def test_update_with_json
     user = Factory(:user)
-    put "/admin/user/#{user.id}", with_csrf(user: {'unfollowing_ids' => [@user.id].to_json})
+    put "/admin/user/#{user.id}", {user: {'unfollowing_ids' => [@user.id].to_json}}
     user.reload
     assert_equal [@user.id.to_s], user.unfollowing_ids
   end
 
   def test_index_nav
-    get '/admin/user', {}
+    get '/admin/user'
     assert_select 'a[href="/admin/user/new"]'
     assert_select 'a[href="/admin/user"]'
   end
 
   def test_new_nav 
-    get '/admin/user/new', {}
+    get '/admin/user/new'
     assert_select 'a[href="/admin/user/new"]'
     assert_select 'a[href="/admin/user"]'
   end
 
   def test_edit_nav 
-    get "/admin/user/#{@user.id}/edit", {}
+    get "/admin/user/#{@user.id}/edit"
     assert_select 'a[href="/admin/user/new"]'
     assert_select 'a[href="/admin/user"]'
     assert_select %|a[href="/admin/user/#{@user.id}/edit"]|
