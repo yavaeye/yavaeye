@@ -1,9 +1,8 @@
 == form @post, action: action, method: method do |f|
-  - if !@post.board
-    label
-      | 版面
-      == f.select :board_id, Board.all.map{|b| [b.name, b.id] }
-      == f.error :board
+  label
+    | 版面
+    == f.select :board_id, Board.all.map{|b| [b.name, b.id] },{value: @post.board}
+    == f.error :board
   label
     | 标题
     == f.text :title

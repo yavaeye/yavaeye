@@ -16,7 +16,7 @@ end
 get '/post/new' do
   authenticate!
   @post = Post.new
-  board = Board.where(name: params[:board]).first 
+  board = Board.where(name: params[:board]).first
   @post.board = board if board and board.active
   slim :'post/new'
 end
@@ -37,7 +37,7 @@ post '/post' do
       f.json { @post.to_json }
     end
   else
-    respond_with :'post/new', errors: @post.errors
+    respond_with :'/post/new', @post
   end
 end
 

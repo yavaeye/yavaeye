@@ -21,7 +21,7 @@ class User
   has_many :achievements
 
   validates_presence_of :email
-  validates_uniqueness_of :openid, :github_token, :nick
+  validates_uniqueness_of :email, :nick
   validates_length_of :nick, minimum: 2, maximum: 32
   validates_length_of :email, maximum: 128
   validates_format_of :nick, with: /^[\p{Word}-]+$/u

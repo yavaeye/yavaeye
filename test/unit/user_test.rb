@@ -3,7 +3,7 @@ require_relative '../test_helper'
 class UserTest < TestCase
   def setup
     3.times.each do |i|
-      User.create!(openid: "#{i}@gmail.com", nick: "#{i}_i")
+      User.create!(email: "#{i}@gmail.com", nick: "#{i}_i")
     end
     User.first.boards.create!(name: "stop", active: true, description: "nothing")
     User.first.boards.create!(name: "start", active: true, description: "nothing")

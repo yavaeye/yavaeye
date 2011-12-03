@@ -31,9 +31,9 @@ class PostControllerTest < FunctionalTestCase
     get '/post/new'
     assert_equal 302, status
   end
-  
+
   def test_post
-    
+
   end
 
   def test_show
@@ -47,8 +47,8 @@ class PostControllerTest < FunctionalTestCase
     get "/post/#{@post.token}/edit", {}, @other_logged_in_session
     assert_equal 302, status
   end
-  
-  def test_edit 
+
+  def test_edit
     make_post
     get "/post/#{@post.token}/edit", {}, @logged_in_session
     assert_equal 200, status
@@ -59,8 +59,8 @@ class PostControllerTest < FunctionalTestCase
   def build_post
     @post = Post.new title: '逼塔城街长选举通知', content: '命你为街长', user: @user, board: @board
   end
-  
-  def make_post 
+
+  def make_post
     build_post
     @post.save!
   end
