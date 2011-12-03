@@ -70,6 +70,7 @@ class FunctionalTestCase < TestCase
     @env['rack.session'].merge! 'user_id' => @user.id.to_s
   end
 
+  # NOTE should always use string keys in testing (symbol keys in application is ok)
   def session
     @env ||= {}
     @env['rack.session'] ||= {}
