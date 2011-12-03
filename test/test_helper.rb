@@ -38,13 +38,30 @@ class FunctionalTestCase < TestCase
 
   %w[get post put delete].each do |verb|
     class_eval <<-RUBY
-    def #{verb} path, params={}, options={}
-      options = options.stringify_keys
-      options['HTTP_X_REQUESTED_WITH'] = "XMLHttpRequest" if options.delete 'xhr'
-      options['HTTP_ACCEPT'] = options.delete('accept') || "text/html"
-      super(path, params, options)
-    end
+      def #{verb} path, params={}, options=@env
+        options = (options || {}).stringify_keys
+        options['HTTP_X_REQUESTED_WITH'] = "XMLHttpRequest" if options.delete 'xhr'
+        options['HTTP_ACCEPT'] = options.delete('accept') || "text/html"
+        super(path, params, options)
+      end
     RUBY
+  end
+
+  def with_csrf params={}
+    params.merge 'authenticity_token' => 'random-string'
+  end
+
+  def login
+    @user = Factory(:user)
+    # NOTE DO NOT even try to use with_indifferent_access, will surely fail
+    @env ||= {}
+    @env['rack.session'] ||= {} # trap: session is not the same hash
+    @env['rack.session'].merge! 'user_id' => @user.id.to_s, 'csrf' => 'random-string'
+  end
+
+  def session
+    @env ||= {}
+    @env['rack.session'] ||= {}
   end
 
   # select css in response
