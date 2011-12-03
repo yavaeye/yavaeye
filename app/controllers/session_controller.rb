@@ -5,7 +5,7 @@ post '/session/?' do
     case params[:identifier]
     when 'google'
       identifier = 'https://www.google.com/accounts/o8/id'
-      if url = openid_consumer.redirect_url(url, request.host_with_port, "/session/complete")
+      if url = openid_consumer.redirect_url(identifier, request.host_with_port, "/openid/authorize")
         redirect url
       else
         flash[:notice] = "与 OpenID 提供者 '#{identifier}' 联络失败"
@@ -15,6 +15,7 @@ post '/session/?' do
       identifier = 'https://github.com/'
       redirect github_client.auth_code.authorize_url
     else
+      flash[:notice] = "缺少登录提供商"
       redirect '/'
     end
 end
