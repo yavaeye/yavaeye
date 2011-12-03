@@ -20,14 +20,19 @@ begin
   Secret.admin_password = 'admin'
 end
 
-# disable protection when testing
-module Rack
-  class YavaProtection
-    alias _call call
-    def call env
-      app.call env
-    end
+# when testing, protection middleware is disabled by default
+class Rack::YavaProtection
+  alias _call call
+
+  def self.disable
+    def call env; app.call env; end
   end
+
+  def self.enable
+    alias call _call
+  end
+
+  disable
 end
 
 class TestCase < MiniTest::Unit::TestCase
