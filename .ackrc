@@ -1,0 +1,4 @@
+--text
+--nojs
+--nocss
+--ignore-dir=coverage
