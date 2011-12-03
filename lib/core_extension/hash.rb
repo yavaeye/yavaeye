@@ -13,7 +13,7 @@ class Hash
       u(\h{4}) | x(\h{2})
     )
   /x
-  REPLACER = '\1&#\2\3;'
+  REPLACER = '\1&#x\2\3;'
 
   def to_attrs
     r = []
