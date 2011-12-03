@@ -5,7 +5,7 @@ class AdminControllerTest < FunctionalTestCase
     @user = Factory(:user)
     @opts = {'rack.session' => {'admin' => true, 'csrf' => 'random-string'}}
     @user_params = Factory.build(:user).attributes.keep_if do |k, v|
-      %w[openid nick email].include? k
+      %w[nick credentials gravatar_id].include? k
     end
   end
 
@@ -49,13 +49,13 @@ class AdminControllerTest < FunctionalTestCase
     assert_select 'a[href="/admin/user"]'
   end
 
-  def test_new_nav 
+  def test_new_nav
     get '/admin/user/new', {}, @opts
     assert_select 'a[href="/admin/user/new"]'
     assert_select 'a[href="/admin/user"]'
   end
 
-  def test_edit_nav 
+  def test_edit_nav
     get "/admin/user/#{@user.id}/edit", {}, @opts
     assert_select 'a[href="/admin/user/new"]'
     assert_select 'a[href="/admin/user"]'

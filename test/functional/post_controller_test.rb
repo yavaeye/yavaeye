@@ -7,10 +7,7 @@ class PostControllerTest < FunctionalTestCase
     @user = Factory(:user)
     @logged_in_session = {'rack.session' => {'user_id' => @user.id.to_s, 'csrf' => 'random-string'}}
 
-    @other_user = User.new \
-      nick: @user.nick + '-other',
-      openid: @user.openid + '-other',
-      email: @user.email + '-other'
+    @other_user = Factory.build(:user)
     @other_logged_in_session = {'rack.session' => {'user_id' => @other_user.id.to_s, 'csrf' => 'random-string'}}
 
     @board = Factory(:board)

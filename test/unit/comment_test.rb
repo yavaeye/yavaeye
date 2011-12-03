@@ -3,7 +3,7 @@ require_relative '../test_helper'
 class CommentTest < TestCase
   def setup
     3.times.each do |i|
-      User.create!(email: "#{i}@gmail.com", nick: "#{i}_i")
+      Factory(:user)
     end
     User.first.boards.create!(name: "stop", active: true, description: "nothing")
     User.first.boards.create!(name: "start", active: true, description: "nothing")

@@ -2,7 +2,7 @@ require_relative '../test_helper'
 
 class BoardTest < TestCase
   def setup
-    User.create!(email: "yavaeye@gmail.com", nick: "0_i")
+    Factory(:user)
     User.first.boards.create!(name: "start", description: "nothing")
   end
 

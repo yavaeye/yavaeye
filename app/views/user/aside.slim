@@ -1,6 +1,7 @@
 .user
   - if current_user
     == current_user.nick
+    img href="#{gravatar_url current_user.email}"
     br
     == current_user.karma
     br

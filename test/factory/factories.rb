@@ -1,9 +1,9 @@
 # encoding: UTF-8
 
 Factory.define :user do |u|
-  u.sequence(:openid){ |i| "http://me.yahoo.com/mm62xOv9#{i}" }
-  u.sequence(:nick){ |i| "yavaeye#{i}" }
-  u.sequence(:email){ |i| "yavaeye#{i}@gmail.com" }
+  u.sequence(:nick) {|n| "yava#{n}"}
+  u.gravatar_id "7777fb"
+  u.credentials github: "xyz"
 end
 
 Factory.define :board do |b|

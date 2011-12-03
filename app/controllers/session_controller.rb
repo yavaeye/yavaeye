@@ -30,15 +30,16 @@ get '/openid/authorize' do
     flash[:notice] = '邮件地址错误...'
     redirect '/session/login'
   else
-    if @user = User.where(email: email).first
+    if @user = User.where('credentials.google_openid' => openid).first
       session[:user_id] = @user.id.to_s
       remember_me @user
       flash[:notice] = "登录成功"
       redirect '/'
     else
-      session[:user_openid] = openid
-      session[:user_email] = email
-      redirect '/user-new'
+      session[:user_google_openid] = openid
+      session[:user_gravatar_id] = Digest::MD5.hexdigest email
+      @user = User.new
+      slim :'/user/new'
     end
   end
 end
@@ -52,16 +53,17 @@ get '/oauth/authorize' do
     token = github_client.auth_code.get_token(code)
     request = token.get("https://api.github.com/user", params: {access_token: token})
     body = JSON.parse(request.body)
-    if @user = User.where(github_token: token.token).first
+    pp body
+    if @user = User.where('credentials.github_oauth_token' => token.token).first
       session[:user_id] = @user.id.to_s
       remember_me @user
       flash[:notice] = "登录成功"
       redirect '/'
     else
-      session[:user_github_token] = token.token
-      session[:user_nick] = body["name"]
-      session[:user_email] = body["email"]
-      redirect '/user-new'
+      session[:user_github_oauth_token] = token.token
+      session[:user_gravatar_id] = body["gravatar_id"]
+      @user = User.new
+      slim :'/user/new'
     end
   end
 end

@@ -3,10 +3,9 @@ class User
   include Mongoid::Timestamps
   include Mongoid::Paranoia
 
-  field :openid
-  field :github_token
   field :nick
-  field :email
+  field :gravatar_id
+  field :credentials, type: Hash, default: {}
   field :karma, type: Float, default: 0.0
   field :unsubscribes, type: Array, default: []
   field :unfollower_ids, type: Array, default: []
@@ -14,16 +13,15 @@ class User
 
   embeds_one :profile
 
-  has_many :posts
-  has_many :boards
-  has_many :comments
-  has_many :messages
-  has_many :achievements
+  has_many :posts, :dependent => :destroy
+  has_many :boards, :dependent => :destroy
+  has_many :comments, :dependent => :destroy
+  has_many :messages, :dependent => :destroy
+  has_many :achievements, :dependent => :destroy
 
-  validates_presence_of :email
-  validates_uniqueness_of :email, :nick
+  validates_uniqueness_of :nick
+  validates_presence_of :nick, :gravatar_id, :credentials
   validates_length_of :nick, minimum: 2, maximum: 32
-  validates_length_of :email, maximum: 128
   validates_format_of :nick, with: /^[\p{Word}-]+$/u
 
   class Profile
