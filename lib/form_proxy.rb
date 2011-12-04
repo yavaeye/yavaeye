@@ -61,6 +61,7 @@ class FormProxy
     opts = opts.symbolize_keys
     opts[:class] ||= 'button'
     opts[:value] ||= text
+    opts[:'data-disable-with'] ||= "ʅ(‾◡◝)ʃ ,｡○°"
     %(<input type="submit" #{opts.to_attrs}></input>)
   end
 

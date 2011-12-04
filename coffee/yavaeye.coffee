@@ -29,6 +29,11 @@ $('form').live 'ajax:success', (e, data)->
     console.log 'unsupported response:'
     console.log data
 
+# $('form').live 'ajax:before', ()-> true|false
+
+$('form').live 'ajax:error', ()->
+  Yava.setNotice '很不幸的, 阿加西败了'
+
 $('form').live 'ajax:aborted:required', (e, elems)->
   elems.each (elem)->
     Yava.tagFieldError elem, '不能为空'

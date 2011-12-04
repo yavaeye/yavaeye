@@ -1,4 +1,4 @@
-#encoding: utf-8
+# encoding: UTF-8
 
 require_relative "../test_helper"
 
@@ -19,12 +19,12 @@ class FormProxyTest < TestCase
 
   def test_checkbox
     out = @f.checkbox :nick
-    assert_equal "<input type=\"hidden\" name=\"user[nick]\" value=\"0\"></input><input type=\"checkbox\" checked=\"checked\" id=\"user_nick\" name=\"user[nick]\" value=\"1\"></input>", out
+    assert_equal '<input type="hidden" name="user[nick]" value="0"></input><input type="checkbox" checked="checked" id="user_nick" name="user[nick]" value="1"></input>', out
   end
 
   def test_radio
     out = @f.radio :nick
-    assert_equal "<input type=\"hidden\" name=\"user[nick]\" value=\"0\"></input><input type=\"radio\" checked=\"checked\" id=\"user_nick\" name=\"user[nick]\" value=\"1\"></input>", out
+    assert_equal '<input type="hidden" name="user[nick]" value="0"></input><input type="radio" checked="checked" id="user_nick" name="user[nick]" value="1"></input>', out
   end
 
   def test_password
@@ -45,8 +45,8 @@ class FormProxyTest < TestCase
   end
 
   def test_submit
-    out = @f.submit 'hello'
-    assert_equal "<input type=\"submit\" class=\"button\" value=\"hello\"></input>", out
+    out = CGI.unescape_html @f.submit 'hello'
+    assert_equal '<input type="submit" class="button" data-disable-with="ʅ(‾◡◝)ʃ ,｡○°" value="hello"></input>', out
   end
 
   def test_error
@@ -54,11 +54,11 @@ class FormProxyTest < TestCase
     user.save
     f = FormProxy.new user
     out = f.error :openid
-    assert out.start_with? "<span class=\"error\">"
+    assert out.start_with? '<span class="error">'
   end
 
   def test_unicode
     out = CGI.unescape_html(@f.text :nick, :value => "尼克")
-    assert_equal "<input type=\"text\" id=\"user_nick\" name=\"user[nick]\" value=\"尼克\"></input>", out
+    assert_equal '<input type="text" id="user_nick" name="user[nick]" value="尼克"></input>', out
   end
 end
