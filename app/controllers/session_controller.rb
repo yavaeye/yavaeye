@@ -1,23 +1,21 @@
 # encoding: UTF-8
 
 post '/session/?' do
-  identifier =
-    case params[:identifier]
-    when 'google'
-      identifier = 'https://www.google.com/accounts/o8/id'
-      if url = openid_consumer.redirect_url(identifier, request.host_with_port, "/openid/authorize")
-        redirect url
-      else
-        flash[:notice] = "与 OpenID 提供者 '#{identifier}' 联络失败"
-        redirect '/'
-      end
-    when 'github'
-      identifier = 'https://github.com/'
-      redirect github_client.auth_code.authorize_url
+  case params[:identifier]
+  when 'google'
+    identifier = 'https://www.google.com/accounts/o8/id'
+    if url = openid_consumer.redirect_url(identifier, request.host_with_port, "/openid/authorize")
+      redirect url
     else
-      flash[:notice] = "缺少登录提供商"
+      flash[:notice] = "与 OpenID 提供者 '#{identifier}' 联络失败"
       redirect '/'
     end
+  when 'github'
+    redirect github_client.auth_code.authorize_url
+  else
+    flash[:notice] = "缺少登录提供商"
+    redirect '/'
+  end
 end
 
 # openid provider redirects here
@@ -53,7 +51,6 @@ get '/oauth/authorize' do
     token = github_client.auth_code.get_token(code)
     request = token.get("https://api.github.com/user", params: {access_token: token})
     body = JSON.parse(request.body)
-    pp body
     if @user = User.where('credentials.github_oauth_token' => token.token).first
       session[:user_id] = @user.id.to_s
       remember_me @user

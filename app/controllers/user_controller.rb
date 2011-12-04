@@ -1,28 +1,24 @@
 # encoding: UTF-8
 
 post '/user' do
-  @user = User.new
-  @user.gravatar_id = session.delete :user_gravatar_id
-  if (token = session.delete :user_github_oauth_token)
-    @user.credentials[:github_oauth_token] = token
-  end
-  if (openid = session.delete :user_google_openid)
-    @user.credentials[:google_openid] = openid
-  end
-  @user.nick = params[:user][:nick]
+  @user = User.new\
+    gravatar_id: session[:user_gravatar_id],
+    nick: params[:user][:nick],
+    credentials: {
+      github_oauth_token: session[:user_github_oauth_token],
+      google_openid: session[:user_google_openid]
+    }
   if @user.save
+    session.delete_if { |k, v| k.to_s.start_with? 'user' }
     session[:user_id] = @user.id.to_s
     flash[:notice] = '用户创建成功'
-    redirect '/'
+    "window.location='/'"
   else
-    slim :'user/new'
+    "Yava.tagFormError('#user-new', 'user', #{@user.errors.to_json})"
   end
-end
-
-before '/user/*' do
-  redirect '/' if current_user.blank?
 end
 
 get '/user/:nick' do
+  redirect '/' if current_user.blank?
   respond_with :'/user/index'
 end
