@@ -14,3 +14,6 @@ $ ->
 
   # tooltip
   $('[data-title]').live('mouseover', Yava.showTip).live 'mouseleave', Yava.hideTip
+
+$('form').live 'ajax:success', (e, data)->
+  eval data
