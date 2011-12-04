@@ -31,8 +31,14 @@ $('form').live 'ajax:success', (e, data)->
 
 # $('form').live 'ajax:before', ()-> true|false
 
-$('form').live 'ajax:error', ()->
-  Yava.setNotice '很不幸的, 阿加西败了'
+$('form').live 'ajax:error', (req)->
+  unless notice = req.responseText
+    notice = switch req.status
+      when 500 then '恭喜你,服务器出错了'
+      when 404 then '东西没找到...'
+      when 403 then '你无权这么做'
+      else '与服务器联系失败'
+  Yava.setNotice notice
 
 $('form').live 'ajax:aborted:required', (e, elems)->
   elems.each (elem)->
