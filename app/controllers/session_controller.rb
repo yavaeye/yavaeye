@@ -66,7 +66,7 @@ get '/oauth/authorize' do
 end
 
 delete '/session/?' do
-  session.delete :user_id
+  session.delete 'user_id'
   forget_me
   flash[:notice] = "已注销"
   redirect "/"
