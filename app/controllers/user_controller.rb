@@ -12,9 +12,9 @@ post '/user' do
     session.delete_if { |k, v| k.to_s.start_with? 'user' }
     session[:user_id] = @user.id.to_s
     flash[:notice] = '用户创建成功'
-    "window.location='/'"
+    { redirect: '/' }.to_json
   else
-    "Yava.tagFormError('#user-new', 'user', #{@user.errors.to_json})"
+    { error: { user: @user.errors } }.to_json
   end
 end
 

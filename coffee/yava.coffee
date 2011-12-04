@@ -1,6 +1,11 @@
 # utils
 
 window.Yava =
+  tagFieldError: (elem, errors) ->
+    elem.parent().find('.field-error').remove()
+    errors = errors.join '. ' if errors.join
+    elem.after("<div class='field-error'>#{errors}</div>")
+
   tagFormError: (elem, prefix, errors) ->
     elem = $ elem
     elem.find('.field-error').remove()

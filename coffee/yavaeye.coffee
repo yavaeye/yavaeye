@@ -16,4 +16,19 @@ $ ->
   $('[data-title]').live('mouseover', Yava.showTip).live 'mouseleave', Yava.hideTip
 
 $('form').live 'ajax:success', (e, data)->
-  eval data
+  elem = $ @
+  data = $.parseJSON data
+  if data.error
+    for prefix, error of data.error
+      Yava.tagFormError elem, prefix, error
+  else if data.redirect
+    window.location = data.redirect
+  else if data.notice
+    Yava.setNotice data.notice
+  else
+    console.log 'unsupported response:'
+    console.log data
+
+$('form').live 'ajax:aborted:required', (e, elems)->
+  elems.each (elem)->
+    Yava.tagFieldError elem, '不能为空'
