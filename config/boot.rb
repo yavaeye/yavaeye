@@ -41,7 +41,11 @@ configure :development do
   # js/css autocompile
   require "./script/asset"
   set :asset, Asset.new
-  before { I18n.locale = :'zh-CN'; settings.asset.compile }
+  before do
+    I18n.locale = :'zh-CN'
+    settings.asset.compile
+    YavaUtils.instance_variable_set :@boot_timestamp, Time.now.to_i
+  end
 end
 
 puts "=> Loading I18n"
