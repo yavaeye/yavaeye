@@ -17,12 +17,15 @@ group :production do
 end
 
 group :development, :test do
-  gem "compass"
   gem "socksify", git: "git://github.com/luikore/socksify-ruby.git", require: "socksify/http"
   gem "rack-test"
   gem "factory_girl"
-  gem "capistrano"
   gem "simplecov"
   gem "pry"
   gem "nokogiri"
+end
+
+group :deploy do
+  gem "compass"
+  gem "capistrano"
 end
