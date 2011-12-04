@@ -29,6 +29,7 @@ set :github, YAML::load_file(settings.root + '/config/oauth.yml')['github']
 use Rack::YavaProtection
 
 configure :development do
+  also_reload "lib/**/*.rb", "app/{models,helpers}/*.rb"
   require "./script/asset"
   # proxy for openid
   if port = ENV['openid_proxy_port']
