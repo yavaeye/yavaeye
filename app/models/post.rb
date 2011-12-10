@@ -33,24 +33,10 @@ class Post
     end
   end
 
-  before_create do
-    if link.blank?
-      res = "self.#{board.name}"
-    else
-      res = link[/(\.?[\p{Word}-]+\.?)+(\/|:\d+|$)/]
-      res.sub!(/^www\./i, '') if res
-      res.sub!(/\/$/, '') if res
-    end
-    self.domain = res
-    marks << user._id
-  end
+  before_save :generate_domain, :calculate_score
 
   after_create do
     user.inc(:karma, 3)
-  end
-
-  before_save do
-    self.score =  YavaUtils.hot_value( marks.size - dislikes.size, created_at)
   end
 
   after_destroy do
@@ -66,11 +52,23 @@ class Post
   end
 
   def url
-    if link.present?
-      link
+    link.present? ? link : "/post/#{token}"
+  end
+
+  protected
+  def generate_domain
+    if link.blank?
+      res = "self.#{board.name}"
     else
-      "/post/#{token}"
+      res = link[/(\.?[\p{Word}-]+\.?)+(\/|:\d+|$)/]
+      res.sub!(/^www\./i, '') if res
+      res.sub!(/\/$/, '') if res
     end
+    self.domain = res
+  end
+
+  def calculate_score
+    self.score =  YavaUtils.hot_value( marks.size - dislikes.size, created_at)
   end
 end
 

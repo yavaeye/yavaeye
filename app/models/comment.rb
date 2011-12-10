@@ -11,21 +11,27 @@ class Comment
   validates_presence_of :content, :user, :post
   validates_length_of :content, maximum: 10240
 
+  after_create :mention_users
+
   after_create do
     user.inc(:karma, 1)
-    return if user.id == post.user.id
-    mention_new ["post","reply"]
   end
 
   after_destroy do
     user.inc(:karma, -1)
   end
 
+  protected
+  def mention_users
+    if user.id != post.user.id
+      mention_new ["post", "reply"]
+    end
+  end
+
   private
   def mention_new types
     types.each do |type|
-      mention = Mention.where(event: post.id, type: type).first
-      if mention
+      if mention = Mention.where(type: type, event: post.id).first
         mention.add_to_set(:triggers, user.nick)
         mention.update_attributes(read: false)
       else
@@ -34,4 +40,3 @@ class Comment
     end
   end
 end
-

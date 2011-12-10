@@ -52,8 +52,7 @@ class User
 
   def follow user_id
     return if user_id == _id
-    user = User.where(_id: user_id).first
-    if user
+    if user = User.where(_id: user_id).first
       user.pull(:unfollower_ids, _id)
       pull(:unfollowing_ids, user_id)
     end
@@ -61,8 +60,7 @@ class User
 
   def unfollow user_id
     return if user_id == _id
-    user = User.where(_id: user_id).first
-    if user
+    if user = User.where(_id: user_id).first
       user.add_to_set(:unfollower_ids, _id)
       add_to_set(:unfollowing_ids, user_id)
       Mention.new(type: "unfollow", triggers: [nick], event: user.id).deliver
@@ -70,15 +68,13 @@ class User
   end
 
   def subscribe board_name
-    board = Board.where(name: board_name).first
-    if board
+    if board = Board.where(name: board_name).first
       pull(:unsubscribes, board.name)
     end
   end
 
   def unsubscribe board_name
-    board = Board.where(name: board_name).first
-    if board
+    if board = Board.where(name: board_name).first
       add_to_set(:unsubscribes, board.name)
       Mention.new(type: "unsubscribe", triggers: [nick], event: board.id).deliver
     end
