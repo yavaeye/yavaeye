@@ -28,7 +28,15 @@ get '/openid/authorize' do
     flash[:notice] = '邮件地址错误...'
     redirect '/session/login'
   else
-    if @user = User.where('credentials.google_openid' => openid).first
+    if current_user.present?
+      current_user.credentials[:google_openid] = openid
+      if current_user.save
+        flash[:notice] = "绑定google账号成功"
+      else
+        flash[:notice] = "绑定google账号失败"
+      end
+      redirect '/'
+    elsif @user = User.where('credentials.google_openid' => openid).first
       session[:user_id] = @user.id.to_s
       remember_me @user
       flash[:notice] = "登录成功"
@@ -51,7 +59,15 @@ get '/oauth/authorize' do
     token = github_client.auth_code.get_token(code)
     request = token.get("https://api.github.com/user", params: {access_token: token})
     body = JSON.parse(request.body)
-    if @user = User.where('credentials.github_oauth_token' => token.token).first
+    if current_user.present?
+      current_user.credentials[:github_oauth_token] = token.token
+      if current_user.save
+        flash[:notice] = "绑定github账号成功"
+      else
+        flash[:notice] = "绑定github账号失败"
+      end
+      redirect '/'
+    elsif @user = User.where('credentials.github_oauth_token' => token.token).first
       session[:user_id] = @user.id.to_s
       remember_me @user
       flash[:notice] = "登录成功"

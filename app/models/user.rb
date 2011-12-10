@@ -13,11 +13,11 @@ class User
 
   embeds_one :profile
 
-  has_many :posts, :dependent => :destroy
-  has_many :boards, :dependent => :destroy
-  has_many :comments, :dependent => :destroy
-  has_many :messages, :dependent => :destroy
-  has_many :achievements, :dependent => :destroy
+  has_many :posts
+  has_many :boards
+  has_many :comments
+  has_many :messages
+  has_many :achievements
 
   validates_uniqueness_of :nick
   validates_presence_of :nick, :gravatar_id, :credentials
