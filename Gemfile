@@ -1,16 +1,16 @@
 source "https://rubygems.org"
 
 gem "slim"
-gem "sqlite3"
-gem "sequel"
+gem "pony"
 gem "sinatra"
+gem "mongoid"
+gem "bson_ext"
+gem "mongoid_token"
 gem "sinatra-contrib"
 gem "sinatra-flash"
 gem "sprockets"
 gem "sprockets-helpers"
-
-# If you want to use mail
-# gem "pony"
+gem "ruby-readability", :require => 'readability'
 
 group :development do
   gem "pry"

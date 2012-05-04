@@ -1,2 +1,4 @@
-class User < Sequel::Model
+class User
+  include Mongoid::Document
+  include Mongoid::Timestamps
 end

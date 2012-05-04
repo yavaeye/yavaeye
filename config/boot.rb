@@ -7,7 +7,7 @@ ENV["RACK_ENV"] ||= "development"
 Bundler.require(:default, ENV["RACK_ENV"].to_sym)
 
 # init database
-DB = Sequel.connect(YAML.load_file("./config/database.yml")["default"]["url"])
+require_relative "database.rb"
 
 # init sinatra
 set :sessions, true
