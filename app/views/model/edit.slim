@@ -1,9 +1,0 @@
-nav.tertiary
-  - obj_path = "/admin/#{@object.class.name.underscore}/#{@object.id}"
-  - model_path = File.dirname obj_path
-  a href=model_path list
-  a href="#{model_path}/new" new
-  a.active href=request.path edit
-
-.content
-  == slim :"model/_form", locals: {action: obj_path, method: 'put'}
