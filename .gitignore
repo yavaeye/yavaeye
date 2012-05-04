@@ -1,8 +1,5 @@
 .DS_Store
 .sass-cache
-db/
-public/yavaeye.js
-public/yavaeye.css
-config/secret.rb
-config/oauth.yml
+*.db
+public/*.*
 coverage/
