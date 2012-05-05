@@ -10,7 +10,7 @@ class Post
   field :domain
   field :score, type: Float, default: 0.0
 
-  token :length => 6, :contains => :alphanumeric
+  token :length => 5, :contains => :alphanumeric
 
   belongs_to :author, class_name: 'User'
   has_many :comments

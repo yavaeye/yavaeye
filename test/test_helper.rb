@@ -3,9 +3,7 @@ require_relative "../config/boot.rb"
 
 # factory_girl
 dir = File.expand_path File.dirname(__FILE__)
-Dir.glob "#{dir}/factory/**/*_factory.rb" do |f|
-  require f
-end
+require_relative "factory/factories.rb"
 
 require "minitest/autorun"
 require "rack/test"

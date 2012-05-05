@@ -22,7 +22,7 @@ if development?
 end
 
 # assets
-require "sprockets/sass/functions"
+require "sprockets/sass/functions" if development?
 require settings.root + "/config/assets.rb"
 use Assets::Middleware if development?
 
