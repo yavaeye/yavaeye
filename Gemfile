@@ -17,6 +17,7 @@ gem "ruby-readability", :require => 'readability'
 group :development do
   gem "pry"
   gem "sass"
+  gem "compass"
   gem "sprockets-sass"
   gem "coffee-script"
   gem "uglifier"
