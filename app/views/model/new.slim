@@ -1,0 +1,8 @@
+nav.tertiary
+  - model_path = "/admin/#{@object.class.name.underscore}"
+  - new_path = model_path + "/new"
+  a href=model_path list
+  a.active href=new_path new
+
+.content
+  == slim :"model/_form", locals: {action: model_path, method: 'post'}

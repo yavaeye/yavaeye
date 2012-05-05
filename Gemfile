@@ -13,6 +13,7 @@ gem "sinatra-flash"
 gem "sprockets"
 gem "sprockets-helpers"
 gem "ruby-readability", :require => 'readability'
+gem "bcrypt-ruby", :require => 'bcrypt'
 
 group :development do
   gem "pry"
