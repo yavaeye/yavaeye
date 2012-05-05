@@ -15,7 +15,7 @@ class Post
   belongs_to :author, class_name: 'User'
   has_many :comments
   has_and_belongs_to_many :tags
-  has_and_belongs_to_many :readers,  inverse_of: :read_posts, class_name: 'User'
+  has_and_belongs_to_many :likers,  inverse_of: :liked_posts, class_name: 'User'
   has_and_belongs_to_many :markers,  inverse_of: :marked_posts, class_name: 'User'
 
   validates_presence_of :title, :author
