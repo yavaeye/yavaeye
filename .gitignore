@@ -1,7 +1,9 @@
 .DS_Store
 .sass-cache
 *.db
-public/*.*
+public/js/
+public/css/
+public/img/
 coverage/
 db/*
 oauth.yml

@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /img/
+Disallow: /js/
+Disallow: /css/
+Disallow: /user/
+Disallow: /admin/
+Disallow: /admin-login
+Disallow: /admin-logout

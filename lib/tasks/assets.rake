@@ -12,8 +12,7 @@ Rake::SprocketsTask.new do |t|
     img_assets = Dir.glob('app/assets/img/**/*.*')
     css_assets = Dir.glob('app/assets/css/*.{sass,scss,less,css}').map{|f| f.sub /#{File.extname f}$/, '.css'}
     js_assets  = Dir.glob('app/assets/js/*.{coffee,js}').map{|f| f.sub /#{File.extname f}$/, '.js'}
-    other_assets = Dir.glob('app/assets/*.*')
-    (other_assets + img_assets + css_assets + js_assets).select do |f|
+    (img_assets + css_assets + js_assets).select do |f|
       f.sub! 'app/assets/', ''
       ! File.basename(f).start_with?('_')
     end
