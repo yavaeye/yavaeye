@@ -2,6 +2,7 @@ require "open-uri"
 
 helpers do
   include Sprockets::Helpers
+  include FormProxy::Helpers
 
   def js file
     file = "js/#{file}.js"
