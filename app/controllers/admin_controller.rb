@@ -91,7 +91,7 @@ end
 
 post "/admin/:model/?" do |model|
   @object = @model.new
-  @object.assign_jsonify_attrs params[model.singularize]
+  Admin.assign_jsonify_attrs @object, params[model.singularize]
   # tricky: @object.errors.empty? will remove errors
   if @object.errors.to_hash.empty? and @object.save
     flash[:notice] = 'created.'
@@ -108,7 +108,7 @@ end
 
 put "/admin/:model/:id/?" do |model, id|
   @object = @model.unscoped.find id
-  @object.assign_jsonify_attrs params[model.singularize]
+  Admin.assign_jsonify_attrs @object, params[model.singularize]
   if @object.errors.to_hash.empty? and @object.save
     flash[:notice] = 'updated.'
     redirect "/admin/#{model}/#{id}/edit"
