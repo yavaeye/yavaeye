@@ -10,7 +10,7 @@ class User
 
   embeds_one :profile
 
-  has_many :metions
+  has_many :mentions
   has_many :posts, inverse_of: :author
   has_many :comments, inverse_of: :author
   has_and_belongs_to_many :read_posts, inverse_of: :readers, class_name: 'Post'

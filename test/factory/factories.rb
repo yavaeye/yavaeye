@@ -1,8 +1,12 @@
 # https://github.com/thoughtbot/factory_girl/wiki/Usage
 FactoryGirl.define do
+
+  sequence(:name) {|n| "person-#{n}" }
+  sequence(:email) {|n| "person-#{n}@example.com" }
+
   factory :user do
-    name "yavaeye"
-    email "yavaeye@gmail.com"
+    name
+    email
     credentials github: "xyz"
   end
 

@@ -30,6 +30,8 @@ class Post
   end
 
   before_save :generate_domain, :calculate_score
+  after_create :increase_authors_karma
+  after_destroy :decrease_authors_karma
 
   def url
     link.present? ? link : "/post/#{token}"
@@ -38,7 +40,7 @@ class Post
   protected
   def generate_domain
     if link.blank?
-      res = "self.#{board.name}"
+      res = "yavaeye.com"
     else
       res = link[/(\.?[\p{Word}-]+\.?)+(\/|:\d+|$)/]
       res.sub!(/^www\./i, '') if res
@@ -48,6 +50,14 @@ class Post
   end
 
   def calculate_score
-    self.score =  YavaUtils.hot_value( markers.size, created_at)
+    self.score = Ranking.hot_value(markers.size, created_at)
+  end
+
+  def increase_authors_karma
+    author.inc(:karma, 3)
+  end
+
+  def decrease_authors_karma
+    author.inc(:karma, -3)
   end
 end
