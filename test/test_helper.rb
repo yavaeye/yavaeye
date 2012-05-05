@@ -1,4 +1,13 @@
 ENV['RACK_ENV'] ||= "test"
+
+if $coverage
+  # https://github.com/colszowka/simplecov
+  # NOTE only lines after loading simplecov can be verified
+  require "simplecov"
+  SimpleCov.start 'rails'
+  SimpleCov.command_name 'Unit Tests'
+end
+
 require_relative "../config/boot.rb"
 
 # factory_girl

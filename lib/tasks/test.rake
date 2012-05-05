@@ -13,3 +13,11 @@ task "test" do
     require f
   end
 end
+
+desc "run all tests and display coverage data"
+task "test:coverage" do
+  $coverage = true
+  Dir.glob "./test/**/*_test.rb" do |f|
+    require f
+  end
+end
