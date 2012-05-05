@@ -13,6 +13,21 @@ class FormProxy
     %(<input type="text" #{opts.to_attrs}></input>)
   end
 
+  def date field, opts={}
+    opts = normalize field, opts
+    %(<input type="date" #{opts.to_attrs}></input>)
+  end
+
+  def number field, opts={}
+    opts = normalize field, opts
+    %(<input type="number" #{opts.to_attrs}></input>)
+  end
+
+  def email field, opts={}
+    opts = normalize field, opts
+    %(<input type="email" #{opts.to_attrs}></input>)
+  end
+
   def hidden field, opts={}
     opts = normalize field, opts
     %(<input type="hidden" #{opts.to_attrs}></input>)
@@ -82,10 +97,12 @@ class FormProxy
   end
 
   module Helpers
-    # call-seq:
+    # call-seq (with object):
     #
     #   == form @post, action: '/a/b', method: 'delete' do |f|
     #     == f.text 'nick'
+    #
+    # call-seq (you should give a name when without object):
     #
     #   == form action: '/a/b', method: 'get' do
     #     input type='text' name='n' value='xx'

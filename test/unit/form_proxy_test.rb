@@ -7,9 +7,11 @@ class FormProxyTest < TestCase
     @f = FormProxy.new(User.new nick: 'hello')
   end
 
-  def test_text
-    out = @f.text :nick, 'readonly' => true
-    assert_equal '<input type="text" id="user_nick" name="user[nick]" readonly="readonly" value="hello"></input>', out
+  def test_text_date_number_email
+    %w[text date number email].each do |kind|
+      out = @f.send kind, :nick, 'readonly' => true
+      assert_equal '<input type="' + kind + '" id="user_nick" name="user[nick]" readonly="readonly" value="hello"></input>', out
+    end
   end
 
   def test_hidden
