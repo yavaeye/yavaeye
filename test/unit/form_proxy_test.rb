@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+require "cgi"
 require_relative "../test_helper"
 
 class FormProxyTest < TestCase
