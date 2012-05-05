@@ -6,14 +6,6 @@ class Hash
                        defer reversed ismap seemless muted required
                        autofocus novalidate formnovalidate open].to_set
   BOOLEAN_ATTRIBUTES.merge(BOOLEAN_ATTRIBUTES.map &:to_sym)
-  MATCHER = /
-    (?<!\\)
-    ((?:\\\\)*)\\
-    (?:
-      u(\h{4}) | x(\h{2})
-    )
-  /x
-  REPLACER = '\1&#x\2\3;'
 
   def to_attrs
     r = []
@@ -28,9 +20,8 @@ class Hash
         else
           value = value.to_s
         end
-        value = value.inspect
-        value.gsub! MATCHER, REPLACER
-        r << "#{key}=#{value}"
+        value.gsub! '"', '&quot;' # http://www.w3.org/TR/html4/intro/sgmltut.html#h-3.2.2
+        r << %Q|#{key}="#{value}"|
       end
     end
     r.sort!
