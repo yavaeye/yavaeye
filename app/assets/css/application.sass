@@ -1,0 +1,47 @@
+@import compass
++global-reset
++reset-html5
+
+@import utils
+@import sprite
+@import typo
+@import tipsy
+
+#body
+  width: 100%
+
+#posts
+  margin-left: 181px
+  .post
+    padding:
+      left: 10px
+      right: 10px
+      top: 8px
+    border-bottom: $soft-border
+    &:hover
+      background: #efefef
+
+  .post > a
+    font-size: 18px
+    display: block
+    padding-bottom: 25px
+    &:hover
+      text-decoration: none
+    span
+      @extend .gray
+      font-size: 0.85em
+      margin-left: 5px
+
+  .toolbar
+    @extend .gray
+    margin:
+      top: -23px
+    float: right
+
+  .load-more a
+    display: block
+    background: #eef
+    text-align: center
+    padding: 5px
+    &:hover
+      background: #f4f4ff
