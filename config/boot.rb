@@ -7,7 +7,7 @@ ENV["RACK_ENV"] ||= "development"
 Bundler.require(:default, ENV["RACK_ENV"].to_sym)
 
 # init database
-require_relative "database.rb"
+require_relative "database"
 
 # init sinatra
 set :sessions, true
@@ -20,6 +20,10 @@ if development?
   require "sinatra/reloader"
   also_reload "lib/**/*.rb", "app/{models,helpers}/**/*.rb"
 end
+
+# csrf
+require_relative "csrf_protection"
+use Rack::CsrfProtection unless test?
 
 # assets
 require "sprockets/sass/functions" if development?
