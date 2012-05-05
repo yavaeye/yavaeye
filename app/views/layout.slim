@@ -8,4 +8,5 @@ html
     == js :application
     == css :application
   body
+    .notice = flash[:notice]
     == yield

@@ -1,1 +1,11 @@
 == slim :'posts/_header'
+
+#posts
+  - @posts.each do |post|
+    .post
+      a href="/posts/#{post.token}"
+        = post.title
+      span
+        ' -->
+        a href=post.url
+          = post.domain
