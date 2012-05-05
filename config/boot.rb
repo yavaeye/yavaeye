@@ -11,7 +11,7 @@ require_relative "database"
 
 # init sinatra
 set :sessions, true
-set :session_secret, "33929a92388e209c848519ac6dff0c2e"
+require_relative "secret"
 set :root, File.expand_path(".")
 set :views, settings.root + "/app/views"
 

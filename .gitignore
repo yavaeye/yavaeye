@@ -7,3 +7,4 @@ public/img/
 coverage/
 db/*
 oauth.yml
+config/secret.rb
