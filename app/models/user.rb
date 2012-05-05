@@ -21,7 +21,7 @@ class User
   validates_presence_of :name, :email, :credentials
   validates_length_of :name, minimum: 2, maximum: 32
   validates_format_of :name, with: /^[\p{Word}-]+$/u
-  validates_format_of :email, with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/u
+  validates_format_of :email, with: /\A.+@.+\z/u
 
   class Profile
     include Mongoid::Document
