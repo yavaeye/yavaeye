@@ -3,6 +3,7 @@ class Post
   include Mongoid::Timestamps
   include Mongoid::Paranoia
   include Mongoid::Token
+  extend Paginate
 
   field :title
   field :link
