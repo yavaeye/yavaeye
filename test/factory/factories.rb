@@ -7,7 +7,7 @@ FactoryGirl.define do
   factory :user do
     name
     email
-    credentials github: "xyz"
+    gravatar_id "xyz"
   end
 
   factory :post do

@@ -6,7 +6,7 @@ class User
   field :name
   field :email
   field :intro
-  field :credentials, type: Hash, default: {}
+  field :gravatar_id
   field :karma, type: Float, default: 0.0
 
   embeds_one :profile
@@ -19,7 +19,7 @@ class User
 
 
   validates_uniqueness_of :name
-  validates_presence_of :name, :email, :credentials
+  validates_presence_of :name, :gravatar_id
   validates_length_of :name, minimum: 2, maximum: 32
   validates_format_of :name, with: /^[\p{Word}-]+$/u
   validates_format_of :email, with: /\A.+@.+\z/u
