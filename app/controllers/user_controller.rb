@@ -2,7 +2,7 @@
 
 post '/user' do
   @user = User.new\
-    email: session[:user_email]
+    email: session[:user_email],
     gravatar_id: session[:user_gravatar_id],
     name: params[:user][:name]
   if @user.save

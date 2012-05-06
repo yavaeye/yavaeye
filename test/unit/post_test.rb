@@ -15,7 +15,7 @@ class PostTest < TestCase
 
   def test_post_combine_content_and_link
     post = @man.posts.build(title: "post", link: "http://123.com", content: "123")
-    assert_equal false, post.valid?
+    assert_equal true, post.valid?
     post = @man.posts.build(title: "post")
     assert_equal false, post.valid?
   end

@@ -25,7 +25,7 @@ class Post
   validates_format_of :link, with: /\A#{URI::regexp}\Z/, if: ->{ link.present? }
 
   validate do
-    unless link.blank? ^ content.blank?
+    if link.blank? and content.blank?
       errors.add :base, 'link or content has some problems'
     end
   end
