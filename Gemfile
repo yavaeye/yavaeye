@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 gem "slim"
 gem "pony"
+gem "oauth2"
 gem "coderay"
 gem "sinatra"
 gem "mongoid"
