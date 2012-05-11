@@ -14,7 +14,6 @@ FactoryGirl.define do
     title "yavaeye.com"
     link "http://yavaeye.com"
     author { User.first or Factory(:user) }
-    tag { Tag.first or Factory(:tag) }
   end
 
   factory :comment do

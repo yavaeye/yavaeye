@@ -48,4 +48,10 @@ class PostTest < TestCase
     later_post = @man.posts.create(title: "post", link: "http://123.com")
     assert_equal true, later_post.score > early_post.score
   end
+
+  def test_paginate_on_post
+    10.times.each{|i| FactoryGirl.create(:post)}
+    assert_equal 10, Post.all.size
+    assert_equal 5, Post.paginate(1, 5).to_a.size
+  end
 end
