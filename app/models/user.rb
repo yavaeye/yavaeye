@@ -24,4 +24,8 @@ class User
   validates_format_of :name, with: /^[\p{Word}-]+$/u
   validates_format_of :email, with: /\A.+@.+\z/u
   validates_length_of :intro, maximum: 1024
+
+  def read_mentions mentions
+    mentions.update_all(read: true)
+  end
 end

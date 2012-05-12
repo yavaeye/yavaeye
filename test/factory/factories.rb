@@ -13,16 +13,24 @@ FactoryGirl.define do
   factory :post do
     title "yavaeye.com"
     link "http://yavaeye.com"
-    author { User.first or Factory(:user) }
+    author { User.first or FactoryGirl.create(:user) }
   end
 
   factory :comment do
     content "hello world"
-    author { User.first or Factory(:user) }
-    post { Post.first or Factory(:post) }
+    author { User.first or FactoryGirl.create(:user) }
+    post { Post.first or FactoryGirl.create(:post) }
   end
 
   factory :tag do
     name "ruby"
+  end
+
+  factory :mention do
+    user { User.first or FactoryGirl.create(:user) }
+    type 'post'
+    triggers { [FactoryGirl.create(:user).name] }
+    event { FactoryGirl.create(:post)._id }
+    text "Hello World"
   end
 end
