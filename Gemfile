@@ -16,7 +16,7 @@ gem "sprockets-helpers"
 gem "ruby-readability", :require => 'readability'
 gem "bcrypt-ruby", :require => 'bcrypt'
 
-group :development do
+group :development, :test do
   gem "pry"
   gem "sass"
   gem "compass"
@@ -31,7 +31,6 @@ group :production do
 end
 
 group :test do
-  gem "pry"
   gem "rack-test"
   gem "factory_girl"
   gem "database_cleaner"
