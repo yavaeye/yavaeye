@@ -31,9 +31,16 @@ require "sprockets/sass/functions" if development?
 require settings.root + "/config/assets.rb"
 use Assets::Middleware if development?
 
-# oauth app token
-set :github, YAML::load_file(settings.root + '/config/oauth.yml')['github']
-set :google, YAML::load_file(settings.root + '/config/oauth.yml')['google']
+# oauth app
+set :oauth, YAML::load_file(settings.root + '/config/oauth.yml')
+set :github_oauth_client, OAuth2::Client.new(settings.oauth["github"]["id"], settings.oauth["github"]["secret"],
+                                             :site => "https://github.com",
+                                             :authorize_url => "/login/oauth/authorize",
+                                             :token_url => "/login/oauth/access_token")
+set :google_oauth_client, OAuth2::Client.new(settings.oauth["google"]["id"], settings.oauth["google"]["secret"],
+                                             :site => "https://accounts.google.com",
+                                             :authorize_url => "/o/oauth2/auth",
+                                             :token_url => "/o/oauth2/token")
 
 # require project files
 Dir.glob "./{lib,app/models,app/helpers,app/controllers}/**/*.rb" do |f|

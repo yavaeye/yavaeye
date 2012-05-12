@@ -2,10 +2,10 @@
 post '/session/?' do
   case params[:identifier]
   when 'google'
-    redirect google_oauth_client.auth_code.authorize_url(scope: "https://www.googleapis.com/auth/userinfo.email",
+    redirect settings.google_oauth_client.auth_code.authorize_url(scope: "https://www.googleapis.com/auth/userinfo.email",
       redirect_uri: "http://localhost:9292/auth/google/callback")
   when 'github'
-    redirect github_oauth_client.auth_code.authorize_url(scope: "user")
+    redirect settings.github_oauth_client.auth_code.authorize_url(scope: "user")
   else
     flash[:notice] = "缺少登录提供商"
     redirect '/'
@@ -19,13 +19,13 @@ get '/auth/:provider/callback' do |provider|
     redirect '/session/login'
   else
     if provider == "github"
-      access_token = github_oauth_client.auth_code.get_token(code)
+      access_token = settings.github_oauth_client.auth_code.get_token(code)
       response = access_token.get("https://api.github.com/user")
       body = JSON.parse(response.body)
       email = body["email"] if body["email"]
       gravatar_id = body["gravatar_id"]
     elsif provider == "google"
-      access_token = google_oauth_client.auth_code.get_token(code, 'redirect_uri' => 'http://localhost:9292/auth/google/callback')
+      access_token = settings.google_oauth_client.auth_code.get_token(code, 'redirect_uri' => 'http://localhost:9292/auth/google/callback')
       response = access_token.get("https://www.googleapis.com/oauth2/v1/userinfo")
       body = JSON.parse(response.body)
       email = body["email"]
