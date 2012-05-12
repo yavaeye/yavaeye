@@ -1,0 +1,18 @@
+| <?xml version='1.0' encoding='utf-8'?>
+rss version="2.0"
+  channel
+    title Yavaeye
+    == link 'http://yavaeye.com'
+    description 做最糟糕的开发社区
+    pubDate == Date.today
+    lastBuildDate == @posts[0].created_at
+    - if @posts
+      - @posts.each do |post|
+        item
+          title = post.title
+          == link "http://yavaeye.com/posts/#{post.token}"
+          - if post.content.blank?
+            description == "<![CDATA[#{post.link}]]>"
+          - else
+            description == "<![CDATA[#{markdown(post.content)}]]>"
+          pubDate == post.created_at
