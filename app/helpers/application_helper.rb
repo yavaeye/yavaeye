@@ -24,8 +24,8 @@ helpers do
     redirect '/' unless current_user
   end
 
-  def gravatar_url email
-    "https://secure.gravatar.com/avatar/#{Digest::MD5.hexdigest email}?s=32"
+  def gravatar_url gravatar_id
+    "https://secure.gravatar.com/avatar/#{gravatar_id}?s=32"
   end
 
   def readify(link)
