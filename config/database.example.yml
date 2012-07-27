@@ -1,0 +1,19 @@
+default: &default
+  adapter: postgresql
+  host: localhost
+  username: postgres
+  password:
+  pool: 5
+  encoding: utf8
+
+development:
+  <<: *default
+  database: yavaeye_dev
+
+test:
+  <<: *default
+  database: yavaeye_test
+
+production:
+  <<: *default
+  database: yavaeye_prod

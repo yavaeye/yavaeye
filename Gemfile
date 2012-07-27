@@ -1,20 +1,19 @@
-source "https://rubygems.org"
+source :rubygems
 
 gem "slim"
 gem "pony"
 gem "oauth2"
 gem "coderay"
 gem "sinatra"
-gem "mongoid"
-gem "bson_ext"
 gem "redcarpet"
-gem "mongoid_token"
 gem "sinatra-contrib"
 gem "sinatra-flash"
 gem "sprockets"
 gem "sprockets-helpers"
-gem "ruby-readability", :require => 'readability'
-gem "bcrypt-ruby", :require => 'bcrypt'
+gem "ruby-readability", require: 'readability'
+gem "bcrypt-ruby", require: 'bcrypt'
+gem "activerecord", require: 'active_record'
+gem "pg"
 
 group :development, :test do
   gem "pry"
@@ -34,5 +33,5 @@ group :test do
   gem "rack-test"
   gem "factory_girl"
   gem "database_cleaner"
-  gem "simplecov", :require => false
+  gem "simplecov", require: false
 end

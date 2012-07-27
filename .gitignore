@@ -8,3 +8,4 @@ coverage/
 db/*
 oauth.yml
 config/secret.rb
+config/database.yml

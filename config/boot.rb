@@ -7,9 +7,6 @@ require "yaml"
 ENV["RACK_ENV"] ||= "development"
 Bundler.require(:default, ENV["RACK_ENV"].to_sym)
 
-# init database
-require_relative "database"
-
 # init sinatra
 set :sessions, true
 require_relative "secret"
@@ -42,7 +39,10 @@ set :google_oauth_client, OAuth2::Client.new(settings.oauth["google"]["id"], set
                                              :authorize_url => "/o/oauth2/auth",
                                              :token_url => "/o/oauth2/token")
 
+# init database
+ActiveRecord::Base.establish_connection YAML.load_file(settings.root + '/config/database.yml')[ENV['RACK_ENV'].to_s]
+
 # require project files
-Dir.glob "./{lib,app/models,app/helpers,app/controllers}/**/*.rb" do |f|
-  require f
-end
+# Dir.glob "./{lib,app/models,app/helpers,app/controllers}/**/*.rb" do |f|
+#   require f
+# end
