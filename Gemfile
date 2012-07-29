@@ -12,7 +12,12 @@ gem "sprockets"
 gem "sprockets-helpers"
 gem "ruby-readability", require: 'readability'
 gem "bcrypt-ruby", require: 'bcrypt'
-gem "activerecord", require: 'active_record'
+
+# activerecord 4 with postgres hstore support !
+git "git://github.com/rails/rails.git" do
+  gem "activerecord", require: 'active_record'
+end
+gem "active_record_deprecated_finders", git: "git://github.com/rails/active_record_deprecated_finders.git"
 gem "pg"
 
 group :development, :test do

@@ -1,17 +1,30 @@
+GIT
+  remote: git://github.com/rails/active_record_deprecated_finders.git
+  revision: ca40701c124e23c351b37e7a9fe9feb7c62ded4b
+  specs:
+    active_record_deprecated_finders (0.0.1)
+
+GIT
+  remote: git://github.com/rails/rails.git
+  revision: 07ecaf5063c06558e0566f70cafdfdbe2b7ac2cb
+  specs:
+    activemodel (4.0.0.beta)
+      activesupport (= 4.0.0.beta)
+      builder (~> 3.0.0)
+    activerecord (4.0.0.beta)
+      active_record_deprecated_finders (= 0.0.1)
+      activemodel (= 4.0.0.beta)
+      activesupport (= 4.0.0.beta)
+      arel (~> 3.0.2)
+    activesupport (4.0.0.beta)
+      i18n (~> 0.6)
+      minitest (~> 3.2)
+      multi_json (~> 1.3)
+      tzinfo (~> 0.3.33)
+
 GEM
   remote: http://rubygems.org/
   specs:
-    activemodel (3.2.3)
-      activesupport (= 3.2.3)
-      builder (~> 3.0.0)
-    activerecord (3.2.3)
-      activemodel (= 3.2.3)
-      activesupport (= 3.2.3)
-      arel (~> 3.0.2)
-      tzinfo (~> 0.3.29)
-    activesupport (3.2.3)
-      i18n (~> 0.6)
-      multi_json (~> 1.0)
     arel (3.0.2)
     backports (2.5.1)
     bcrypt-ruby (3.0.1)
@@ -53,6 +66,7 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.7.1)
     mime-types (1.18)
+    minitest (3.3.0)
     multi_json (1.3.4)
     multipart-post (1.1.5)
     net-scp (1.0.4)
@@ -135,7 +149,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord
+  active_record_deprecated_finders!
+  activerecord!
   bcrypt-ruby
   capistrano
   coderay
