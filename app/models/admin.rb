@@ -1,6 +1,4 @@
-class Admin
-  include Mongoid::Document
-  field :password, type: String
+class Admin < ActiveRecord::Base
 
   def self.initialized?
     doc = last

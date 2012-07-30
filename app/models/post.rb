@@ -1,23 +1,9 @@
-class Post
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  include Mongoid::Paranoia
-  include Mongoid::Token
+class Post < ActiveRecord::Base
   extend Paginate
-
-  field :title
-  field :link
-  field :content
-  field :domain
-  field :score, type: Float, default: 0.0
-
-  token :length => 5, :contains => :alphanumeric
-
-  belongs_to :author, class_name: 'User'
+  
+  belongs_to :user
   has_many :comments
-  has_and_belongs_to_many :tags
-  has_and_belongs_to_many :likers,  inverse_of: :liked_posts, class_name: 'User'
-  has_and_belongs_to_many :markers,  inverse_of: :marked_posts, class_name: 'User'
+  has_and_belongs_to_many :likers, join_table: "users_liked_posts"
 
   validates_presence_of :title, :author
   validates_length_of :title, maximum: 128
