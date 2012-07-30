@@ -1,4 +1,5 @@
 class Post < ActiveRecord::Base
+  include Hstore
   extend Paginate
   
   belongs_to :user
@@ -21,10 +22,9 @@ class Post < ActiveRecord::Base
   after_destroy :decrease_authors_karma
 
   def url
-    link.present? ? link : "/post/#{token}"
+    link.present? ? link : "/post/#{id}"
   end
 
-  protected
   def generate_domain
     if link.blank?
       res = "yavaeye.com"
@@ -41,10 +41,12 @@ class Post < ActiveRecord::Base
   end
 
   def increase_authors_karma
-    author.inc(:karma, 3)
+    user.karma += 3
+    user.save!
   end
 
   def decrease_authors_karma
-    author.inc(:karma, -3)
+    user.karma -= 3
+    user.save!
   end
 end

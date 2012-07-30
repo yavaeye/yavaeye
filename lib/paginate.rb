@@ -4,6 +4,6 @@ module Paginate
     page = 1 if page < 1
     per_page = per_page.to_i
     offset = (page.to_i - 1) * per_page
-    skip(offset).limit(per_page)
+    offset(offset).limit(per_page)
   end
 end

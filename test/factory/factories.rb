@@ -1,4 +1,5 @@
 # https://github.com/thoughtbot/factory_girl/wiki/Usage
+
 FactoryGirl.define do
 
   sequence(:name) {|n| "person-#{n}" }
@@ -27,10 +28,8 @@ FactoryGirl.define do
   end
 
   factory :mention do
-    user { User.first or FactoryGirl.create(:user) }
     type 'post'
-    triggers { [FactoryGirl.create(:user).name] }
-    event { FactoryGirl.create(:post)._id }
-    text "Hello World"
+    link '/posts/12'
+    content 'Hello World'
   end
 end
