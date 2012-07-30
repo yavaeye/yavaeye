@@ -13,13 +13,13 @@ class InitTables < ActiveRecord::Migration
       t.string :intro
       t.string :gravatar_id
       t.float :karma, null: false, default: 0.0
+      t.integer :profile_id, null: false
 
       t.datetime :deleted_at
       t.timestamps
     end
 
     create_table :profiles do |t|
-      t.integer :user_id, null: false
       t.hstore :marked_post_ids, null: false, default: {}
       t.hstore :read_post_ids, null: false, default: {}
       t.hstore :tag_category, null: false, default: {}
@@ -30,8 +30,10 @@ class InitTables < ActiveRecord::Migration
     create_table :mentions do |t|
       t.integer :user_id, null: false
       t.string :type
-      t.string :link
+      t.string :mentioner
+      t.string :mentioner_href
       t.string :content
+      t.string :content_href
       t.boolean :read, default: false
 
       t.timestamps
@@ -42,6 +44,9 @@ class InitTables < ActiveRecord::Migration
       t.string :title
       t.string :link
       t.string :domain
+      t.integer :marker_count, null: false, default: 0
+      t.integer :liker_count, null: false, default: 0
+      t.integer :reader_count, null: false, default: 0
       t.float :score
       t.text :content
       t.text :content_html

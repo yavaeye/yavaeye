@@ -2,28 +2,28 @@ require_relative '../test_helper'
 
 class CommentTest < TestCase
   def setup
-    @man = FactoryGirl.create(:user)
-    @women = FactoryGirl.create(:user)
-    @middle = FactoryGirl.create(:user)
-    @post = @women.posts.create!(title: "post", content: "nothing")
+    @man = create :user
+    @woman = create :user
+    @middle = create :user
+    @post = @woman.posts.create!(title: "post", content: "nothing")
   end
 
   def test_karma_with_reply
-    comment = Comment.create!(content: "comment", author: @man, post: @post)
-    assert_equal 3.5, @women.karma
+    comment = @post.comments.create!(content: "comment", user: @man)
+    assert_equal 3.5, @woman.reload.karma
     comment.destroy
-    assert_equal 3, @women.karma
+    assert_equal 3, @woman.reload.karma
   end
 
   def test_karma_with_reply_by_himself
-    comment = Comment.create!(content: "comment", author: @women, post: @post)
-    assert_equal 3, @women.karma
+    comment = @post.comments.create!(content: "comment", user: @woman)
+    assert_equal 3, @woman.reload.karma
     comment.destroy
-    assert_equal 3, @women.karma
+    assert_equal 3, @woman.reload.karma
   end
 
   def test_mention_with_reply
-    comment = Comment.create!(content: "comment", author: @man, post: @post)
-    assert_equal 1, @women.mentions.size
+    comment = @post.comments.create!(content: "comment", user: @man)
+    assert_equal 1, @woman.mentions.size
   end
 end

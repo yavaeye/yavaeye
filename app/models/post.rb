@@ -1,12 +1,12 @@
 class Post < ActiveRecord::Base
   include Hstore
   extend Paginate
-  
+
   belongs_to :user
   has_many :comments
   has_and_belongs_to_many :likers, join_table: "users_liked_posts"
 
-  validates_presence_of :title, :author
+  validates_presence_of :title, :user
   validates_length_of :title, maximum: 128
   validates_length_of :content, maximum: 10240
   validates_format_of :link, with: /\A#{URI::regexp}\Z/, if: ->{ link.present? }
@@ -18,8 +18,12 @@ class Post < ActiveRecord::Base
   end
 
   before_save :generate_domain, :calculate_score
-  after_create :increase_authors_karma
-  after_destroy :decrease_authors_karma
+  after_create do
+    user.inc_karma! 3
+  end
+  after_destroy do
+    user.inc_karma! -3
+  end
 
   def url
     link.present? ? link : "/post/#{id}"
@@ -37,16 +41,6 @@ class Post < ActiveRecord::Base
   end
 
   def calculate_score
-    self.score = Ranking.hot_value(markers.size, created_at)
-  end
-
-  def increase_authors_karma
-    user.karma += 3
-    user.save!
-  end
-
-  def decrease_authors_karma
-    user.karma -= 3
-    user.save!
+    self.score = Ranking.hot_value(marker_count, created_at)
   end
 end

@@ -2,8 +2,8 @@ require_relative '../test_helper'
 
 class PostTest < TestCase
   def setup
-    @man = FactoryGirl.create(:user)
-    @women = FactoryGirl.create(:user)
+    @man = create :user
+    @women = create :user
   end
 
   def test_post_with_link
@@ -22,8 +22,10 @@ class PostTest < TestCase
 
   def test_karma_with_post
     post = @man.posts.create!(title: "post", content: "nothing")
+    @man.reload
     assert_equal 3, @man.karma
     post.destroy
+    @man.reload
     assert_equal 0, @man.karma
   end
 
@@ -36,13 +38,6 @@ class PostTest < TestCase
     assert_equal "yavaeye.com", post.domain
   end
 
-  def test_markers_on_post
-    post = @man.posts.create(title: "post", link: "http://123.com")
-    @women.marked_posts << post
-    @women.save
-    assert_equal @women.name, post.markers.first.name
-  end
-
   def test_score_on_post
     early_post = @man.posts.create(title: "post", link: "http://123.com", created_at: Time.now-100)
     later_post = @man.posts.create(title: "post", link: "http://123.com")
@@ -50,7 +45,7 @@ class PostTest < TestCase
   end
 
   def test_paginate_on_post
-    10.times.each{|i| FactoryGirl.create(:post)}
+    10.times.each{|i| create :post }
     assert_equal 10, Post.all.size
     assert_equal 5, Post.paginate(1, 5).to_a.size
   end
