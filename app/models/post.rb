@@ -1,10 +1,10 @@
 class Post < ActiveRecord::Base
-  include Hstore
-  extend Paginate
+  include ActiveRecord::Hstore
+  extend ActiveRecord::Paginate
 
   belongs_to :user
   has_many :comments
-  has_and_belongs_to_many :likers, join_table: "users_liked_posts"
+  has_and_belongs_to_many :likers, join_table: "users_liked_posts", class_name: 'User'
 
   validates_presence_of :title, :user
   validates_length_of :title, maximum: 128

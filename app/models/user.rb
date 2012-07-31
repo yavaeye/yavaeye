@@ -22,28 +22,28 @@ class User < ActiveRecord::Base
 
   def mark post
     transaction do
-      profile.hstore_update! :marked_post_ids, post.id => '1'
+      profile.hstore_update! :marked_posts, post.id => '1'
       post.update_columns marker_count: (post.marker_count + 1)
     end
   end
 
   def unmark post
     transaction do
-      profile.hstore_delete! :marked_post_ids, post.id
+      profile.hstore_delete! :marked_posts, post.id
       post.update_columns marker_count: (post.marker_count - 1)
     end
   end
 
   def read post
     transaction do
-      profile.hstore_update! :read_post_ids, post.id => '1'
+      profile.hstore_update! :read_posts, post.id => '1'
       post.update_columns reader_count: (post.reader_count + 1)
     end
   end
 
   def unread post
     transaction do
-      profile.hstore_delete! :read_post_ids, post.id
+      profile.hstore_delete! :read_posts, post.id
       post.update_columns reader_count: (post.reader_count - 1)
     end
   end

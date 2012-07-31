@@ -1,5 +1,5 @@
 class Profile < ActiveRecord::Base
-  include Hstore
+  include ActiveRecord::Hstore
 
   has_one :user
 end

@@ -1,5 +1,5 @@
 class Mention < ActiveRecord::Base
-  extend Paginate
+  extend ActiveRecord::Paginate
   belongs_to :user
 
   scope :unread, -> { where read: false }

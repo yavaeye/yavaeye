@@ -2,7 +2,7 @@
 
 # store per-app specific preferences
 class Pref < ActiveRecord::Base
-  include Hstore
+  include ActiveRecord::Hstore
 
   def self.[] key
     where(key: key).first || create!(key: key)

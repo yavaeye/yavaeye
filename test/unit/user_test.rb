@@ -32,24 +32,24 @@ class UserTest < TestCase
   def test_read_unread
     @user.read @post
     @user.profile.reload
-    assert_equal 1, @user.profile.read_post_ids.size
+    assert_equal 1, @user.profile.read_posts.size
     assert_equal 1, @post.reader_count
 
     @user.unread @post
     @user.profile.reload
-    assert_equal 0, @user.profile.read_post_ids.size
+    assert_equal 0, @user.profile.read_posts.size
     assert_equal 0, @post.reader_count
   end
 
   def test_mark_unmark
     @user.mark @post
     @user.profile.reload
-    assert_equal 1, @user.profile.marked_post_ids.size
+    assert_equal 1, @user.profile.marked_posts.size
     assert_equal 1, @post.marker_count
 
     @user.unmark @post
     @user.profile.reload
-    assert_equal 0, @user.profile.marked_post_ids.size
+    assert_equal 0, @user.profile.marked_posts.size
     assert_equal 0, @post.marker_count
   end
 end

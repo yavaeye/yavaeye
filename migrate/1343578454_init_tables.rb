@@ -20,8 +20,8 @@ class InitTables < ActiveRecord::Migration
     end
 
     create_table :profiles do |t|
-      t.hstore :marked_post_ids, null: false, default: {}
-      t.hstore :read_post_ids, null: false, default: {}
+      t.hstore :marked_posts, null: false, default: {}
+      t.hstore :read_posts, null: false, default: {}
       t.hstore :tag_category, null: false, default: {}
 
       t.timestamps
@@ -53,7 +53,6 @@ class InitTables < ActiveRecord::Migration
 
       t.hstore :tags, null: false, default: {}
       t.column :keywords, 'tsvector'
-      t.hstore :liker_ids, null: false, default: {}
 
       t.datetime :deleted_at
       t.timestamps
