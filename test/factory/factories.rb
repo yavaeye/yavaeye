@@ -33,7 +33,7 @@ FactoryGirl.define do
 
   factory :mention do
     type 'post'
-    link '/posts/12'
     content 'Hello World'
+    content_href '/posts/12'
   end
 end

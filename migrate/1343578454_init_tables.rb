@@ -1,10 +1,10 @@
 class InitTables < ActiveRecord::Migration
   def change
     create_table :prefs do |t|
-      t.string :keys
+      t.string :key
       # NOTE if an hstore field = null, field || ('a' => 'b') will be null instead of a new hash
       #      so a default empty hash is required
-      t.hstore :values, null: false, default: {}
+      t.hstore :value, null: false, default: {}
     end
 
     create_table :users do |t|
