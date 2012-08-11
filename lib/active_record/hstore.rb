@@ -14,13 +14,16 @@ module ActiveRecord
       end
     end
 
+    # NOTE be care that the record in memory is not changed
     def hstore_update! field, hash
       table = self.class.table_name
-      value = hash.map { |k, v|
-        "#{Hstore.escape k}=>#{Hstore.escape v}"
-      }.join ','
-      ActiveRecord::Base.connection.update_sql \
-        %<update #{table} set "#{field}" = "#{field}" || (#{value}) where id=#{id}>
+      unless hash.empty?
+        value = hash.map { |k, v|
+          "#{Hstore.escape k}=>#{Hstore.escape v}"
+        }.join ','
+        ActiveRecord::Base.connection.update_sql \
+          %<update #{table} set "#{field}" = "#{field}" || (#{value}) where id=#{id}>
+      end
     end
 
     def hstore_delete! field, key
