@@ -6,34 +6,33 @@
 @import sprite
 @import typo
 @import tipsy
+@import components
+@import nav
 
 #body
   width: 100%
 
 #posts
   .post
-    padding:
-      left: 10px
-      right: 10px
-      top: 8px
-    border-bottom: $soft-border
+    font-size: 16px
+    padding-left: 40px
+    height: 60px
     &:hover
-      background: #efefef
-
-  .post > a
-    font-size: 18px
-    &:hover
-      text-decoration: none
-  .post > span
-    @extend .gray
-    font-size: 0.85em
-    margin-left: 5px
-
-  .toolbar
-    @extend .gray
-    margin:
-      top: -23px
-    float: right
+      background: #f5f5f5
+    .user
+      float: left
+      width: 100px
+      padding-top: 8px
+    .content
+      float: left
+      height: 44px
+      border-left: $soft-border
+      padding: 8px 10px
+      > a
+        font-size: 20px
+    .toolbar
+      font-size: 14px
+      margin-top: 5px
 
   .load-more a
     display: block

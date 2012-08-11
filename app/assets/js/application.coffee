@@ -4,11 +4,6 @@
 #= require js/yava
 
 $ ->
-  # aside height
-  unless /^\/admin\//.test window.location.pathname
-    Yava.layout()
-    $(window).resize Yava.layout
-
   # hide notice
   Yava.setNotice $('.notice').html()
 

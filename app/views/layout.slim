@@ -8,5 +8,24 @@ html
     == js :application
     == css :application
   body
-    .notice = flash[:notice]
-    == yield
+    ruby:
+      logo = %w[fishy clover caty fishy].sample
+      @logo_img = asset_path "/img/logo-#{logo}.png"
+    #nav
+      img role="logo" src=@logo_img height='60' width='94'
+      img role="toggle" src=asset_path('/img/toggle-up.png') height='60' width='26'
+      - if current_user
+        a.login href='/settings'
+          img src='' alt='settings'
+        span.login 设置 >
+      - else
+        a.login href='/login/google' rel='nofollow'
+          img alt='google' src=asset_path('/img/google.png') height='50' width='50'
+        a.login href='/login/github' rel='nofollow'
+          img alt='github' src=asset_path('/img/github.png') height='50' width='50'
+        span.login 登录 >
+    #body
+      #notice = flash[:notice]
+      #side
+      #body
+        == yield

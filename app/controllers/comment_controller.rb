@@ -1,6 +1,7 @@
-##encoding: utf-8
+# encoding: utf-8
+
 get '/comment/:id' do |id|
-  comment = Comment.where(_id: id).first
+  comment = Comment.where(id: id).first
   respond_with :'comment/show', comment
 end
 
@@ -10,7 +11,7 @@ end
 
 post '/comment' do
   authenticate!
-  @post = Post.where(_id: params[:post_id]).first
+  @post = Post.where(id: params[:post_id]).first
   @comment = Comment.new(params[:comment])
   @comment.post = @post
   @comment.user = current_user
