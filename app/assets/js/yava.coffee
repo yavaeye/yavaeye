@@ -74,3 +74,21 @@ window.Yava =
     $(@).removeData('active.tipsy')
     tip.remove() if tip
     undefined
+  
+  rotate: (e, fromDeg, toDeg, len) ->
+    e = $(e)
+    step = (toDeg - fromDeg) / len
+    degs = (fromDeg + step * i for i in [0...len])
+    console.log degs
+    i = 0
+    timer = setInterval (->
+      if i < degs.length
+        rot = 'rotate(' + degs[i] + 'deg)'
+        console.log rot
+        $(e).css({'-webkit-transform': rot, 'transform': rot, '-moz-transform': rot})
+        i++
+      else
+        rot = 'rotate(' + toDeg + ')'
+        $(e).css({'-webkit-transform': rot, 'transform': rot, '-moz-transform': rot})
+        clearInterval(timer)
+    ), 50
