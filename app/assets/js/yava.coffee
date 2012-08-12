@@ -74,21 +74,40 @@ window.Yava =
     $(@).removeData('active.tipsy')
     tip.remove() if tip
     undefined
-  
-  rotate: (e, fromDeg, toDeg, len) ->
+
+  toggleNav: ->
+    nav = $ '#nav'
+    if nav.hasClass 'nav-up'
+      fromDeg = -16
+      toDeg = 0
+      fromClass = 'nav-up'
+      toClass = 'nav-down'
+    else
+      fromDeg = 0
+      toDeg = -16
+      fromClass = 'nav-down'
+      toClass = 'nav-up'
+    Yava.rotate '#nav', fromDeg, toDeg, 6, ->
+      nav.removeClass fromClass
+      nav.addClass toClass
+      img = nav.find '.toggle img'
+      img.attr 'src', img.data(fromClass)
+
+  # helper for toggleNav
+  rotate: (e, fromDeg, toDeg, len, onComplete) ->
     e = $(e)
     step = (toDeg - fromDeg) / len
     degs = (fromDeg + step * i for i in [0...len])
-    console.log degs
     i = 0
     timer = setInterval (->
       if i < degs.length
         rot = 'rotate(' + degs[i] + 'deg)'
-        console.log rot
         $(e).css({'-webkit-transform': rot, 'transform': rot, '-moz-transform': rot})
         i++
       else
-        rot = 'rotate(' + toDeg + ')'
+        rot = 'rotate(' + toDeg + 'deg)'
         $(e).css({'-webkit-transform': rot, 'transform': rot, '-moz-transform': rot})
+        if onComplete
+          onComplete()
         clearInterval(timer)
-    ), 50
+    ), 40

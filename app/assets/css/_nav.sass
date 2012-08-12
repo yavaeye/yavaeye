@@ -1,26 +1,31 @@
 #nav
   position: fixed
   width: 100%
+  padding: 2px 5px 0 5px
   background: rgba(0,0,0,0.7)
   +box-shadow(0 2px 6px rgba(0,0,0,0.5), inset 0 1px rgba(255,255,255,0.3), inset 0 -15px 30px rgba(0,0,0,0.3))
-  padding-left: 5px
-  padding-right: 5px
   +transform-origin(0, 0)
-  > img
-    margin-top: 2px
+
   .login
     display: block
     float: right
-    margin-top: 10px
-    height: 50px
+    margin-top: 13px
     img
       margin-right: 3px
+    label
+      display: inline
+      margin: 0
+
   span.login
     padding-right: 10px
-    padding-top: 10px
-    line-height: 40px
+    padding-top: 15px
     color: #fff
+  
+  a.login
+    height: 50px
 
 .nav-up
   +transform(rotate(-16deg))
 
+.nav-down
+  +transform(rotate(0))

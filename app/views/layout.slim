@@ -13,7 +13,8 @@ html
       @logo_img = asset_path "/img/logo-#{logo}.png"
     #nav.nav-up
       img role="logo" src=@logo_img height='60' width='94'
-      img role="toggle" src=asset_path('/img/toggle-up.png') height='60' width='26'
+      a.toggle href='#' onclick='Yava.toggleNav();return false'
+        img role="toggle" src=asset_path('/img/toggle-down.png') data-nav-up=asset_path('/img/toggle-up.png') data-nav-down=asset_path('/img/toggle-down.png') height='60' width='26'
       - if current_user
         a.login href='/settings'
           img alt='settings' src='' height='50' width='50'
@@ -23,9 +24,11 @@ html
           img alt='google' src=asset_path('/img/google.png') height='50' width='50'
         a.login href=='/session?identifier=github' rel='nofollow' data-method='post'
           img alt='github' src=asset_path('/img/github.png') height='50' width='50'
-        span.login 登录 >
+        span.login
+          ' 登录 >
+          label.inline
+            input#openid-remember type="checkbox"
+            | 记住
     #body
       #notice = flash[:notice]
-      #side
-      #body
-        == yield
+      == yield

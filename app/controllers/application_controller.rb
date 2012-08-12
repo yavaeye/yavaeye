@@ -1,3 +1,4 @@
 get '/' do
-  slim :'home/index'
+  @posts = []
+  slim :'posts/index'
 end
