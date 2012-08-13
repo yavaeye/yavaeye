@@ -20,9 +20,14 @@ class InitTables < ActiveRecord::Migration
     end
 
     create_table :profiles do |t|
+      # id -> timestamp
       t.hstore :marked_posts, null: false, default: {}
+      # id -> timestamp
       t.hstore :read_posts, null: false, default: {}
+      # child -> parent
       t.hstore :tag_category, null: false, default: {}
+      # name -> timestamp
+      t.hstore :subscribed_tags, null: false, default: {}
 
       t.timestamps
     end
@@ -74,7 +79,7 @@ class InitTables < ActiveRecord::Migration
     end
 
     create_table :tags do |t|
-      t.string :name, null: false
+      t.string :name, null: false, unique: true
       t.text :content
       t.text :content_html
 

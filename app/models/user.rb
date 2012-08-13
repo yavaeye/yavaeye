@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
 
   def mark post
     transaction do
-      profile.hstore_update! :marked_posts, post.id => '1'
+      profile.hstore_update! :marked_posts, post.id => Time.now.to_i
       post.update_columns marker_count: (post.marker_count + 1)
     end
   end
@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
 
   def read post
     transaction do
-      profile.hstore_update! :read_posts, post.id => '1'
+      profile.hstore_update! :read_posts, post.id => Time.now.to_i
       post.update_columns reader_count: (post.reader_count + 1)
     end
   end
@@ -64,5 +64,10 @@ class User < ActiveRecord::Base
 
   def to_href
     "/users/#{id}"
+  end
+
+  def ordered_subscribed_tags
+    tags = Profile.where(id: profile_id).pluck('subscribed_tags').first
+    tags.sort_by {|k, v| -v.to_i }.map &:first
   end
 end

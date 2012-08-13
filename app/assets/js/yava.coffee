@@ -102,12 +102,18 @@ window.Yava =
     timer = setInterval (->
       if i < degs.length
         rot = 'rotate(' + degs[i] + 'deg)'
-        $(e).css({'-webkit-transform': rot, 'transform': rot, '-moz-transform': rot})
+        $(e).css(Yava.browserPrefixes 'transform', rot)
         i++
       else
         rot = 'rotate(' + toDeg + 'deg)'
-        $(e).css({'-webkit-transform': rot, 'transform': rot, '-moz-transform': rot})
+        $(e).css(Yava.browserPrefixes 'transform', rot)
         if onComplete
           onComplete()
         clearInterval(timer)
     ), 40
+
+  browserPrefixes: (key, value) ->
+    r = {}
+    for prefix in ['', '-webkit-', '-moz-', '-ms', '-o-']
+      r[prefix + key] = value
+    r

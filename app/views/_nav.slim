@@ -1,0 +1,37 @@
+ruby:
+  logo = %w[fishy clover caty fishy].sample
+  logo_img = asset_path "/img/logo-#{logo}.png"
+  toggle_down_img = asset_path '/img/toggle-down.png'
+  toggle_up_img = asset_path '/img/toggle-up.png'
+  tags = Tag.for current_user, 18
+
+/ black bar
+#nav.nav-up
+  .container
+    img role="logo" src=logo_img height='60' width='94'
+    a.toggle href='#' onclick='Yava.toggleNav();return false'
+      img role="toggle" src=toggle_down_img data-nav-up=toggle_up_img data-nav-down=toggle_down_img height='60' width='26'
+    - if current_user
+      a.login href='/settings'
+        img alt='settings' src='' height='50' width='50'
+      span.login 设置 >
+    - else
+      a.login href=='/session?identifier=google' rel='nofollow' data-method='post'
+        img alt='google' src=asset_path('/img/google.png') height='50' width='50'
+      a.login href=='/session?identifier=github' rel='nofollow' data-method='post'
+        img alt='github' src=asset_path('/img/github.png') height='50' width='50'
+      span.login
+        ' 登录 >
+        label.inline
+          input#openid-remember type="checkbox"
+          | 记住
+
+/ tags list under the black bar
+#tags
+  / for indenting first 2 lines
+  i.spacer
+  - tags.each do |tag|
+    - if "/tag/#{tag}" == request.path
+      span.tag-card = tag
+    - else
+      a.tag-card href="/tag/#{tag}" = tag
