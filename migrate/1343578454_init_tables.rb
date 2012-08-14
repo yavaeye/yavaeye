@@ -9,7 +9,6 @@ class InitTables < ActiveRecord::Migration
 
     create_table :users do |t|
       t.string :name, null: false
-      t.string :email
       t.string :intro
       t.string :gravatar_id
       t.float :karma, null: false, default: 0.0
@@ -24,8 +23,6 @@ class InitTables < ActiveRecord::Migration
       t.hstore :marked_posts, null: false, default: {}
       # id -> timestamp
       t.hstore :read_posts, null: false, default: {}
-      # child -> parent
-      t.hstore :tag_category, null: false, default: {}
       # name -> timestamp
       t.hstore :subscribed_tags, null: false, default: {}
 
@@ -46,8 +43,8 @@ class InitTables < ActiveRecord::Migration
 
     create_table :posts do |t|
       t.integer :user_id, null: false
-      t.string :title
-      t.string :link
+      t.string :title, limit: 1023
+      t.string :link, limit: 1023
       t.string :domain
       t.integer :marker_count, null: false, default: 0
       t.integer :liker_count, null: false, default: 0
@@ -56,6 +53,7 @@ class InitTables < ActiveRecord::Migration
       t.text :content
       t.text :content_html
 
+      # tag -> synonym
       t.hstore :tags, null: false, default: {}
       t.column :keywords, 'tsvector'
 

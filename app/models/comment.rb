@@ -13,7 +13,7 @@ class Comment < ActiveRecord::Base
       type: 'post',
       mentioner: user.name,
       mentioner_href: user.to_href,
-      content: content, # TODO cut text
+      content: content.mb_chars.limit(255),
       content_href: to_href
   end
 

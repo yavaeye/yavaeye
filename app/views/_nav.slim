@@ -3,7 +3,6 @@ ruby:
   logo_img = asset_path "/img/logo-#{logo}.png"
   toggle_down_img = asset_path '/img/toggle-down.png'
   toggle_up_img = asset_path '/img/toggle-up.png'
-  tags = Tag.for current_user, 18
 
 / black bar
 #nav.nav-up
@@ -30,8 +29,4 @@ ruby:
 #tags
   / for indenting first 2 lines
   i.spacer
-  - tags.each do |tag|
-    - if "/tag/#{tag}" == request.path
-      span.tag-card = tag
-    - else
-      a.tag-card href="/tag/#{tag}" = tag
+  / filled by js

@@ -9,7 +9,6 @@ class User < ActiveRecord::Base
   validates_presence_of :name, :gravatar_id
   validates_length_of :name, minimum: 2, maximum: 32
   validates_format_of :name, with: /\A[\p{Word}-]+\z/u
-  validates_format_of :email, with: /\A.+@.+\z/u
   validates_length_of :intro, maximum: 1024
 
   def read_mentions
@@ -66,8 +65,30 @@ class User < ActiveRecord::Base
     "/users/#{id}"
   end
 
-  def ordered_subscribed_tags
-    tags = Profile.where(id: profile_id).pluck('subscribed_tags').first
-    tags.sort_by {|k, v| -v.to_i }.map &:first
+  # TODO digest profile for updating
+
+  def profile_hash min_tag_size
+    subscribed_tags = Profile.where(id: profile_id).pluck('subscribed_tags').first
+    subscribed_tags.sort_by {|k, v| -v.to_i }.map &:first
+
+    if subscribed_tags.size < min_tag_size
+      subscribed_tags += Tag.limit(n - subscribed_tags.size).pluck(:name)
+    end
+
+    {
+      subscribed_tags: subscribed_tags,
+      liked_posts: Hash[liked_posts.map{|p| [p.id, p.updated_at]}],
+      marked_posts: profile.marked_posts,
+      read_posts: profile.read_posts
+    }
+  end
+
+  def self.default_profile_hash min_tag_size
+    {
+      subscribed_tags: ::Tag.limit(min_tag_size).pluck(:name),
+      liked_posts: {},
+      marked_posts: {},
+      read_posts: {}
+    }
   end
 end

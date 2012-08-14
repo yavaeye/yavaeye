@@ -3,14 +3,14 @@
 FactoryGirl.define do
 
   sequence(:name) {|n| "person-#{n}" }
-  sequence(:email) {|n| "person-#{n}@example.com" }
+  sequence(:gravatar_id) {|n| Digest::MD5.hexdigest "person-#{n}@example.com" }
 
   factory :profile do
   end
 
   factory :user do
     name
-    email
+    gravatar_id
     gravatar_id "xyz"
     profile { FactoryGirl.create :profile }
   end

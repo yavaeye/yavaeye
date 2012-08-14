@@ -14,3 +14,12 @@ post '/user' do
     { error: { user: @user.errors } }.to_json
   end
 end
+
+get '/user/profile' do
+  max_displayed_tags = 20
+  if current_user
+    current_user.profile_hash(max_displayed_tags).to_json
+  else
+    User.default_profile_hash(max_displayed_tags).to_json
+  end
+end

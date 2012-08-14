@@ -2,6 +2,7 @@
 #= require js/jquery-ujs
 #= require js/jquery-cookie
 #= require js/yava
+#= require js/profile
 
 $ ->
   # hide notice
@@ -9,6 +10,18 @@ $ ->
 
   # tooltip
   $('[data-title]').live('mouseover', Yava.showTip).live 'mouseleave', Yava.hideTip
+
+  # profile
+  Profile.ready ->
+    tags = $ '#tags'
+    for tag in Profile.data['subscribed_tags']
+      elem =
+        if "/tag/#{tag}" == window.location.path
+          $('<span/>')
+        else
+          $("<a href='/tag/#{encodeURIComponent tag}'/>")
+      elem.addClass('tag-card').text(tag)
+      tags.append elem
 
 $('form').live 'ajax:success', (e, data)->
   elem = $ @
