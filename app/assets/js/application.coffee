@@ -1,8 +1,11 @@
 #= require js/jquery-1.7.2
 #= require js/jquery-ujs
 #= require js/jquery-cookie
+#= require js/modernizr
 #= require js/yava
 #= require js/profile
+
+# NOTE modernizr is a shear one with only prefixed() and load()
 
 $ ->
   # hide notice

@@ -5,14 +5,14 @@
     .post
       .user
         a href="#"
-          img.avatar src=gravatar_url(post.author.gravatar_id)
+          img.avatar src=gravatar_url(post.user.gravatar_id)
       .content
-        a href="/posts/#{post.token}"
+        a href="/posts/#{post.id}"
           = post.title
         span.gray
           '  -->
           a.url-card href=post.url
             = post.domain
         .toolbar.gray
-          a.name-card href="#" = post.author.name
+          a.name-card href="#" = post.user.name
           '  发表于 3 天前

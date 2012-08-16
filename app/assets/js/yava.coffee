@@ -87,33 +87,38 @@ window.Yava =
       toDeg = -16
       fromClass = 'nav-down'
       toClass = 'nav-up'
-    Yava.rotate '#nav', fromDeg, toDeg, 6, ->
-      nav.removeClass fromClass
-      nav.addClass toClass
-      img = nav.find '.toggle img'
-      img.attr 'src', img.data(fromClass)
 
-  # helper for toggleNav
-  rotate: (e, fromDeg, toDeg, len, onComplete) ->
-    e = $(e)
+    # browser vendor prefix detect
+    transform = Modernizr.prefixed 'transform'
+    transform = transform.replace(/([A-Z])/g, (str, m1) ->
+      '-' + m1.toLowerCase()
+    ).replace(/^ms-/,'-ms-')
+    vendorPrefix = transform.replace('transform', '')
+
+    # rotate nav bar
+    Yava.animate fromDeg, toDeg, 6, (deg, isLast) ->
+      nav.css(transform, "rotate(#{deg}deg)")
+      if isLast
+        nav.removeClass fromClass
+        nav.addClass toClass
+        img = nav.find '.toggle img'
+        img.attr 'src', img.data(fromClass)
+
+    # rotate new-post gradient
+    newPost = $ '#tools .new-post'
+    Yava.animate (-90 - fromDeg), (-90 - toDeg), 6, (deg, isLast) ->
+      newPost.css 'background', vendorPrefix + "linear-gradient(#{deg}deg, #AAA 5%, #999 18%, #959595 22%, #555 24%, black 45%,#444 80%)"
+
+  # len: frame count
+  animate: (fromDeg, toDeg, len, stepper) ->
     step = (toDeg - fromDeg) / len
     degs = (fromDeg + step * i for i in [0...len])
     i = 0
     timer = setInterval (->
       if i < degs.length
-        rot = 'rotate(' + degs[i] + 'deg)'
-        $(e).css(Yava.browserPrefixes 'transform', rot)
+        stepper(degs[i], false)
         i++
       else
-        rot = 'rotate(' + toDeg + 'deg)'
-        $(e).css(Yava.browserPrefixes 'transform', rot)
-        if onComplete
-          onComplete()
+        stepper(toDeg, true)
         clearInterval(timer)
     ), 40
-
-  browserPrefixes: (key, value) ->
-    r = {}
-    for prefix in ['', '-webkit-', '-moz-', '-ms', '-o-']
-      r[prefix + key] = value
-    r

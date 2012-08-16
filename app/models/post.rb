@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class Post < ActiveRecord::Base
   include ActiveRecord::Hstore
   extend ActiveRecord::Paginate
@@ -13,7 +15,7 @@ class Post < ActiveRecord::Base
 
   validate do
     unless link.blank? ^ content.blank?
-      errors.add :base, 'link or content has some problems'
+      errors.add :base, '内容出错'
     end
   end
 

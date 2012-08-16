@@ -1,7 +1,8 @@
 # encoding: UTF-8
 
-before 'post/:token/?*' do |token, path|
-  @post = Post.find_by_token(token)
+before 'post/:id/?*' do |id, path|
+  @post = Post.where(id).first
+  # TODO halt 404
 end
 
 get '/posts' do
@@ -14,7 +15,7 @@ get '/post/new' do
   slim :'post/new'
 end
 
-get '/post/:token' do |token|
+get '/post/:id' do |id|
   slim :'post/show'
 end
 
@@ -31,14 +32,14 @@ post '/post' do
   end
 end
 
-get '/post/:token/edit' do |token|
+get '/post/:id/edit' do
   slim :'post/edit'
 end
 
-put '/post/:token' do |token|
+put '/post/:id' do |id|
   if @post.update_attributes(params[:post])
     respond_to do |f|
-      f.html { flash[:notice] = '更新成功'; redirect "/post/#{@post.token}" }
+      f.html { flash[:notice] = '更新成功'; redirect "/post/#{@post.id}" }
       f.json { @post.to_json }
     end
   else
@@ -46,7 +47,7 @@ put '/post/:token' do |token|
   end
 end
 
-delete '/post/:token' do |token|
+delete '/post/:id' do |id|
   flash[:notice] = @post.destroy ? '删掉了' : '删不掉'
   redirect back
 end

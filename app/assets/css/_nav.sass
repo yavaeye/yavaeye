@@ -38,7 +38,9 @@
 #tags
   text-indent: 110px
   line-height: 30px
+  min-height: 60px
   font-size: 16px
+  font-weight: bold
   padding-top: 8px
   position: relative
   z-index: 0
@@ -48,3 +50,34 @@
     float: left
     width: 150px
     height: 60px
+
+#tools
+  // border-top: 1px solid #18f
+  margin-bottom: 3px
+  +box-shadow(0 0 2px rgba(0,0,0,0.7))
+  // height: 33px
+
+  .sort,.search,.new-post
+    display: inline-block
+    margin-left: 15px
+
+  .sort
+    padding-top: 6px
+    color: black
+
+  .search
+    // TODO narrow width for narrow screen?
+    width: 450px
+    margin-top: 6px
+    // for narrow screen
+    margin-bottom: 6px
+
+  .new-post
+    padding-left: 20px
+    padding-right: 20px
+    padding-top: 6px
+    height: 23px
+    border-bottom: 4px solid #18f
+    color: white
+    +background(linear-gradient(-74deg, #AAA 5%, #999 18%, #959595 22%, #555 24%, black 45%,#444 80%))
+    +box-shadow(1px 0 6px rgba(0,0,0,0.5))
